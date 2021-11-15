@@ -1,5 +1,11 @@
+<script>
+	import Aside from "../components/aside.svelte";
+</script>
+
 <main>
-	<div class="left-container"></div>
+	<div class="left-container">
+		<Aside/>
+	</div>
 
 	<div class="right-container">
 		<nav>
