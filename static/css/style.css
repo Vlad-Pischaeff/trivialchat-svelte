@@ -1,0 +1,57 @@
+@font-face {
+  font-family: Esqadero;
+  src: url("../fonts/Esqadero FF CY 4F-Regular.woff2") format("woff2");
+  src: url("../fonts/Esqadero FF CY 4F-Regular.woff") format("woff");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: Jura;
+  src: url("../fonts/Jura.woff2") format("woff2");
+  src: url("../fonts/Jura.woff") format("woff");
+  font-style: normal;
+  font-weight: normal;
+}
+
+:root {
+  --height-footer: 3rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Jura;
+  color: white;
+}
+main {
+  width: 100vw;
+  height: calc(100vh - var(--height-footer));
+  background: black;
+  display: flex;
+  flex-flow: row nowrap;
+}
+footer {
+  height: var(--height-footer);
+  width: 100vw;
+  line-height: var(--height-footer);
+  background: #1f1818;
+  opacity: 0.9;
+  text-transform: uppercase;
+  text-align: center;
+}
+footer p {
+  color:gray;
+  font-size: calc(var(--height-footer) / 4);
+  letter-spacing: .4rem;
+}
+input::placeholder {
+  color: gray;
+  font-size: .8rem;
+}
+/* input {
+  border-bottom: 1px solid #888;
+} */
+h1 {
+  color: darkblue;
+}
