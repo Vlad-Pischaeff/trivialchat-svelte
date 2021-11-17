@@ -1,7 +1,16 @@
 <script>
+	import { goto } from '$app/navigation';
 	import Asideslider from "../components/asideslider.svelte";
 	import Asideprofile from "../components/asideprofile.svelte";
 	import { isAuthorized } from "../store/store";
+
+	function routeToPage(route, replaceState = true) {
+    goto(`/${route}`, { replaceState });
+  }
+
+	function handleAnimEnd() {
+		routeToPage('about');
+	}
 </script>
 
 <main>
@@ -31,7 +40,7 @@
 	<p>Trivial Chat 2021 &copy;</p>
 </footer>
 
-<div class="logo {$isAuthorized ? 'logo_notauth' : 'logo_auth'}">
+<div class="logo {$isAuthorized ? 'logo_notauth' : 'logo_auth'}" on:transitionend={handleAnimEnd}>
 	trivial chat
 </div>
 
@@ -48,13 +57,13 @@
 		background: black;
 	}
 	.left-container_notauth {
-		width: 13rem;
+		flex: 0 0 10rem;
 	}
 	.left-container_auth {
-		width: 10rem;
+		flex: 0 0 8rem;
 	}
 	.right-container {
-		width: 100%;
+		flex: 1 1 auto;
 		background: gray;
 		display: flex;
 		flex-flow: column nowrap;
@@ -76,23 +85,5 @@
 	}
 	nav a {
 		padding: 0 1rem;
-	}
-	.logo {
-		position: absolute;
-		font-family: Esqadero;
-		color: deeppink;
-		text-shadow: 0px 0px 15px rgba(255, 255, 255, 0.8);
-		text-transform: uppercase;
-		transition: all 1s ease-in-out;
-	}
-	.logo_auth {
-		font-size: 3.3rem;
-		top: 3rem;
-		left: 5rem;
-	}
-	.logo_notauth {
-		font-size: 2rem;
-		top: .6rem;
-		left: 10rem;
 	}
 </style>

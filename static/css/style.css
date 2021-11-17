@@ -1,3 +1,5 @@
+@import "./clients.css";
+
 @font-face {
   font-family: Esqadero;
   src: url("../fonts/Esqadero FF CY 4F-Regular.woff2") format("woff2");
@@ -53,9 +55,6 @@ input::placeholder {
 /* input {
   border-bottom: 1px solid #888;
 } */
-h1 {
-  color: deeppink;
-}
 .hide0 {
   opacity: 0;
 }
@@ -73,6 +72,27 @@ h1 {
 }
 .flip-180 {
   transform: rotateY(-180deg);
+}
+/** 
+ * logo style 
+ */
+.logo {
+  position: absolute;
+  font-family: Esqadero;
+  color: deeppink;
+  text-shadow: 0px 0px 15px rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  transition: all 1s ease-in-out;
+}
+.logo_auth {
+  font-size: 3.3rem;
+  top: 3rem;
+  left: 5rem;
+}
+.logo_notauth {
+  font-size: 1.4rem;
+  top: .9rem;
+  left: 9rem;
 }
 /** 
  * login/signup card style 
@@ -103,6 +123,7 @@ h1 {
   color: deeppink;
 }
 .card_form-fieldset {
+  width: 100%;
   border: none;
   border-radius: .3rem;
   margin: 1rem 0;
@@ -272,4 +293,27 @@ h1 {
   transition: flex 1s linear;
   height: 100%;
   width: 100%;
+}
+/**
+ * icons style
+ */
+.b-icon, .w-icon {
+  height: 2rem;
+  padding-left: .5rem;
+}
+.b-icon:hover,
+.w-icon:hover,
+.p_icon:hover {
+  cursor: pointer;
+  filter: drop-shadow(0px 0px .5rem aqua);
+}
+.w-icon, .p_icon {
+  filter: grayscale(100%);
+}
+.b-icon {
+  filter: grayscale(100%) invert(100%);
+}
+.p_icon {
+  width: 2.5rem;
+  margin: .5rem;
 }

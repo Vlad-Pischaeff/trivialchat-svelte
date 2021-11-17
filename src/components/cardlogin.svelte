@@ -1,14 +1,16 @@
 <script>
-  import { switchToLogin } from '../store/store'
+  import { switchToLogin, isAuthorized } from '../store/store';
   let email;
   let password;
-  // $: {
-  //   console.log('email...', email, 'password...', password, 'switchToLogin...', $switchToLogin)
-  // }
+
+  function validate() {
+    $isAuthorized = true;
+  }
+
 </script>
 
 <div class="card {$switchToLogin ? "flip0" : "flip180"}">
-  <form class="card_form" autoComplete="off" >
+  <form class="card_form" autoComplete="off" on:submit|preventDefault={validate}>
 
     <h2 class="card_form-title">Login</h2>
 
@@ -40,7 +42,3 @@
     </div>
   </form>
 </div>
-
-<style>
-
-</style>

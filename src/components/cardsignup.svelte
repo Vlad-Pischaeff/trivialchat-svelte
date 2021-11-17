@@ -6,9 +6,7 @@
   function validate() {
     $isAuthorized = true;
   }
-  // $: {
-  //   console.log('email...', email, 'password...', password, 'switchToLogin...', $switchToLogin)
-  // }
+
 </script>
 
 <div class="card {$switchToLogin ? "flip-180" : "flip0"} ">
@@ -43,7 +41,3 @@
     </div>
   </form>
 </div>
-
-<style>
-  
-</style>
