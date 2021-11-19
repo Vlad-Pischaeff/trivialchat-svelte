@@ -43,6 +43,9 @@ footer {
   text-transform: uppercase;
   text-align: center;
 }
+hr {
+  margin: .5rem 0 .5rem 0;
+}
 footer p {
   color:gray;
   font-size: calc(var(--height-footer) / 4);
@@ -55,6 +58,9 @@ input::placeholder {
 /* input {
   border-bottom: 1px solid #888;
 } */
+.none {
+  display: none;
+}
 .hide0 {
   opacity: 0;
 }
@@ -316,4 +322,43 @@ input::placeholder {
 .p_icon {
   width: 2.5rem;
   margin: .5rem;
+}
+/**
+ *************************************** Modal windows style
+ */
+.modal_bg {
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(50, 50, 50, .6);
+  animation: modal-bg-app .25s linear;
+}
+.modal_form {
+  padding: 1rem;
+  /* max-width: 60%; */
+  background: white;
+  border-radius: .3rem;
+  box-shadow: 0 0 15px #333;
+  animation: modal-app .25s linear;
+}
+@keyframes modal-bg-app {
+  from {
+    background: transparent;
+  }
+  to {
+    background: rgba(50, 50, 50, .6);
+  }
+}
+@keyframes modal-app {
+  from {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+  to {
+    opacity: 1;
+  }
 }

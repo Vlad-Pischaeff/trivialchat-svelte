@@ -1,16 +1,11 @@
 <script>
-	import { goto } from '$app/navigation';
 	import Asideslider from "../components/asideslider.svelte";
 	import Asideprofile from "../components/asideprofile.svelte";
-	import { isAuthorized } from "../store/store";
+	import Footer from "../components/footer.svelte";
+	import Logo from "../components/logo.svelte";
+	import { isAuthorized, modalAction, modalDialogs } from "../store/store";
 
-	function routeToPage(route, replaceState = true) {
-    goto(`/${route}`, { replaceState });
-  }
-
-	function handleAnimEnd() {
-		routeToPage('about');
-	}
+	// $: console.log('modalAction...', $modalAction);
 </script>
 
 <main>
@@ -36,13 +31,10 @@
 	</div>
 </main>
 
-<footer>
-	<p>Trivial Chat 2021 &copy;</p>
-</footer>
+<Footer/>
+<Logo/>
 
-<div class="logo {$isAuthorized ? 'logo_notauth' : 'logo_auth'}" on:transitionend={handleAnimEnd}>
-	trivial chat
-</div>
+<svelte:component this={$modalDialogs[$modalAction]} />
 
 <style>
 	.left-container, .right-container {
