@@ -1,5 +1,5 @@
 <script>
-  import Client from './client.svelte';
+  import Client from './Client.svelte';
   let clients = [];
 </script>
 

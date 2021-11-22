@@ -34,6 +34,7 @@
     font-size: 1.1rem;
     font-weight: 200;
     padding: 0 .5rem 0 .5rem;
+    margin-right: .5rem;
     background: #454545;
     width: 80%;
   }

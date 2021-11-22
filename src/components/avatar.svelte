@@ -43,9 +43,6 @@
 </section>
 
 <style>
-  .none {
-    display: none;
-  }
   .profile {
     width: 5rem;
     height: 5rem;

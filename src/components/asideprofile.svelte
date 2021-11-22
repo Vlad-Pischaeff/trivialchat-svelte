@@ -1,5 +1,5 @@
 <script>
-  import Avatar from './avatar.svelte';
+  import Avatar from './Avatar.svelte';
 </script>
 
 <aside class="left_aside">

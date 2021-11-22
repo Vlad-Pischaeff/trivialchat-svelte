@@ -1,20 +1,17 @@
+<script>
+  import TemplatesHeader from "./TemplatesHeader.svelte";
+  import TemplatesFooter from './TemplatesFooter.svelte';
+  let value;
+</script>
+
 <aside class="templates">
-  <!-- <TemplatesHeader idx={idx} setIdx={setIdx} /> -->
+  <TemplatesHeader bind:idx={value}/>
   <section class="templates_body">
     <div>
       <!-- { body[idx] } -->
+      {value}
+
     </div>
   </section>
-  <!-- <TemplatesFooter idx={idx} /> -->
+  <TemplatesFooter/>
 </aside>
-
-<style>
-  .templates {
-    flex: 1 1 35%;
-    /* width: 20rem; */
-    height: 100%;
-    background: #888;
-    display: flex;
-    flex-flow: column nowrap;
-  }
-</style>

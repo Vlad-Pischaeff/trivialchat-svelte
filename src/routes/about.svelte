@@ -1,8 +1,8 @@
 <script>
-  import Clients from '../components/clients.svelte';
-  import Messages from '../components/messages.svelte';
-  import Templates from '../components/templates.svelte';
-  import MessageInput from '../components/messageinput.svelte';
+  import Clients from '../components/Clients.svelte';
+  import Messages from '../components/Messages.svelte';
+  import Templates from '../components/Templates.svelte';
+  import MessageInput from '../components/MessageInput.svelte';
 </script>
 
 <Clients/>

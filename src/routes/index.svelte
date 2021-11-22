@@ -1,7 +1,7 @@
 <script>
-  import Cardlogin from '../components/cardlogin.svelte'
-  import Carddescription from '../components/carddescription.svelte';
-  import Cardsignup from '../components/cardsignup.svelte';
+  import Cardlogin from '../components/CardLogin.svelte'
+  import Carddescription from '../components/CardDescription.svelte';
+  import Cardsignup from '../components/CardSignup.svelte';
 </script>
 
 <Carddescription/>

@@ -2,15 +2,20 @@
   export let handlerClose = () => {}
 </script>
 
-<div class="btn_close-std" on:click={handlerClose}></div>
+<div class="btn">
+  <div class="btn_close-std" on:click={handlerClose}></div>
+</div>
 
 <style>
-  .btn_close-std {
-    /* position: absolute;
-    right: 0rem;
-    top: 0rem; */
+  .btn {
+    position: relative;
     width: 2rem;
     height: 2rem;
+  }
+  .btn_close-std {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     padding: 0.3rem;
   }
@@ -18,7 +23,7 @@
   .btn_close-std::after {
     position: absolute;
     top: .5rem;
-    right: .95rem;
+    left: .95rem;
     display: block;
     content: '';
     height: 1rem;

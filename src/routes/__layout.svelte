@@ -1,8 +1,8 @@
 <script>
-	import Asideslider from "../components/asideslider.svelte";
-	import Asideprofile from "../components/asideprofile.svelte";
-	import Footer from "../components/footer.svelte";
-	import Logo from "../components/logo.svelte";
+	import Asideslider from "../components/AsideSlider.svelte";
+	import Asideprofile from "../components/AsideProfile.svelte";
+	import Footer from "../components/Footer.svelte";
+	import Logo from "../components/Logo.svelte";
 	import { isAuthorized, modalAction, modalDialogs } from "../store/store";
 
 	// $: console.log('modalAction...', $modalAction);
