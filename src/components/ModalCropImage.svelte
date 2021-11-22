@@ -1,15 +1,9 @@
 <script>
-  import { onMount } from "svelte";
   import { avatar, avatarTemp, modalAction } from "../store/store";
   import ButtonClose from './ButtonClose.svelte';
 
   let previewCanvasRef, hiddenCanvasRef, cropCanvasRef;
-  let croppedImage;
-
-  onMount(() => {
-    cropper.start(cropCanvasRef, 1);
-    cropper.startCropping();
-  });
+  let croppedImage, ratio;
   
   const getCroppedImage = () => {
     croppedImage = cropper.getCroppedImageSrc();
@@ -39,7 +33,23 @@
     $modalAction = null;
   }
 
-  $: cropper.showImage($avatarTemp);
+  const getRatio = (img) => {
+    let i = new Image(); 
+    i.onload = function() {
+      ratio = i.width / i.height;
+    };
+    i.src = img;
+  }
+
+  const setCanvasRatio = (ref) => {
+    ref.width = 300 * ratio;
+    cropper.start(cropCanvasRef, 1);
+    cropper.showImage($avatarTemp); 
+    cropper.startCropping();
+  }
+
+  $: if (ratio) setCanvasRatio(cropCanvasRef);
+  $: getRatio($avatarTemp)
   $: if (croppedImage) previewCroppedImage();
 
 </script>
@@ -54,12 +64,12 @@
       </section>
 
       <div class="forms_wrap">
-        <section class="forms_wrap-left">
+        <section>
           <canvas bind:this={previewCanvasRef} class="prev_canvas" width="200" height="200"/>
           <canvas bind:this={hiddenCanvasRef}  class="none" width='64' height='64' />
         </section>
 
-        <section class="forms_wrap-right">
+        <section>
           <canvas bind:this={cropCanvasRef} width="300" height="300" 
               on:mouseup={getCroppedImage} />
         </section>
