@@ -63,7 +63,7 @@
         <ButtonClose handlerClose={closeModal} />
       </section>
 
-      <div class="forms_wrap">
+      <div class="forms_body">
         <section>
           <canvas bind:this={previewCanvasRef} class="prev_canvas" width="200" height="200"/>
           <canvas bind:this={hiddenCanvasRef}  class="none" width='64' height='64' />
@@ -74,6 +74,7 @@
               on:mouseup={getCroppedImage} />
         </section>
       </div>
+      
       <hr>
       <div>
         <input class="card_form-submit" type="submit" value="save"/>
@@ -84,24 +85,6 @@
 </div>
 
 <style>
-  .forms_header {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .forms_title {
-    font-family: Esqadero;
-    font-size: 1.5rem;
-    color: deeppink;
-  }
-  .forms_wrap {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 1rem;
-  }
   .prev_canvas {
     background: lightblue;
     margin-right: 1rem;

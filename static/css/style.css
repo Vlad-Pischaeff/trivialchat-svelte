@@ -339,13 +339,35 @@ input::placeholder {
   animation: modal-bg-app .25s linear;
 }
 .modal_form {
+  max-width: 60%;
+  min-width: 30rem;
   padding: 1rem;
-  /* max-width: 60%; */
   background: white;
   border-radius: .3rem;
   box-shadow: 0 0 15px #333;
   animation: modal-app .25s linear;
 }
+
+.forms_header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.forms_title {
+  font-family: Esqadero;
+  font-size: 1.5rem;
+  color: deeppink;
+  padding-right: 2rem;
+}
+.forms_body {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+}
+
 @keyframes modal-bg-app {
   from {
     background: transparent;
