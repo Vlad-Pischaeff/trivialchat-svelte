@@ -7,7 +7,9 @@ export function tooltip(element) {
 		title = element.getAttribute('title');
 		element.removeAttribute('title');
 		
+		document.querySelectorAll('.tooltip').forEach(e => e.remove());
 		div = document.createElement('div');
+		div.classList.add("tooltip");
 		div.textContent = title;
 		div.style = `
 			box-shadow: 0 0 4px #222;

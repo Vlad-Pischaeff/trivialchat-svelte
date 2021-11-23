@@ -3,45 +3,55 @@
 </script>
 
 <div class="btn">
-  <div class="btn_close-std" on:click={handlerClose}></div>
+  <div class="btn_close" on:click={handlerClose}></div>
 </div>
 
 <style>
+  :root {
+    --h: 2rem;
+    --half-h: calc(var(--h)/2);
+    --w: 2px;
+    --ratio: 1.5;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }  
+  .btn, .btn_close {
+    width: var(--h);
+    height: var(--h);
+  }
   .btn {
     position: relative;
-    width: 2rem;
-    height: 2rem;
   }
-  .btn_close-std {
+  .btn_close {
     position: absolute;
-    width: 100%;
-    height: 100%;
     border-radius: 50%;
-    padding: 0.3rem;
   }
-  .btn_close-std::before, 
-  .btn_close-std::after {
+  .btn_close::before, 
+  .btn_close::after {
     position: absolute;
-    top: .5rem;
-    left: .95rem;
+    top: calc(var(--half-h) - var(--half-h)/var(--ratio));
+    left: calc(var(--half-h) - var(--w)/2);
     display: block;
     content: '';
-    height: 1rem;
-    width: 2px;
+    height: calc(var(--h)/var(--ratio));
+    width: var(--w);
     background-color: #aaa;
   }
-  .btn_close-std::before {
+  .btn_close::before {
     transform: rotate(45deg);
   }
-  .btn_close-std::after {
+  .btn_close::after {
     transform: rotate(-45deg);
   }
-  .btn_close-std:hover {
+  .btn_close:hover {
     cursor: pointer;
     background: deeppink;
   }
-  .btn_close-std:hover:before,
-  .btn_close-std:hover::after {
+  .btn_close:hover::before,
+  .btn_close:hover::after {
     background-color: white;
   }
 </style>

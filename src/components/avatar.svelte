@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import __AvatarEffect from '../js/__AvatarEffect';
   import __ResizeImage from '../js/__ResizeImage';
-  import { tooltip } from '../helpers/tooltip'
+  import { tooltip } from '../js/__Tooltip'
   import { modalAction } from "../store/store";
   import { avatar, avatarTemp } from "../store/store";
 

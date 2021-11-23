@@ -75,7 +75,7 @@
         </section>
       </div>
       
-      <hr>
+      <!-- <hr> -->
       <div>
         <input class="card_form-submit" type="submit" value="save"/>
       </div>

@@ -339,8 +339,6 @@ input::placeholder {
   animation: modal-bg-app .25s linear;
 }
 .modal_form {
-  max-width: 60%;
-  min-width: 30rem;
   padding: 1rem;
   background: white;
   border-radius: .3rem;
@@ -365,7 +363,9 @@ input::placeholder {
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  padding-top: 1rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  background: oldlace;
 }
 
 @keyframes modal-bg-app {
