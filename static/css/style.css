@@ -158,6 +158,28 @@ input::placeholder {
   border-right: none;
   outline: none;
 }
+.card_form-textarea {
+  font-family: Esqadero;
+  font-size: 1.2rem;
+  letter-spacing: .1rem;
+  color: black;
+  background: transparent;
+  padding: .3rem;
+  margin: .5rem 0;
+  border-radius: .2rem;
+  border: 1px solid gray;
+  width: 100%;
+  resize: none;
+}
+.card_form-textarea::placeholder {
+  color:gray;
+  font-size: .8rem;
+}
+.card_form-textarea:focus,
+.card_form-textarea:active {
+  outline: none;
+  border: 2px solid gray;
+}
 .card_form-buttons {
   display: flex;
   justify-content: space-between;

@@ -2,7 +2,7 @@
   import ButtonClose from './ButtonClose.svelte';
   import { modalAction } from '../store/store';
 
-  let org, title, address;
+  let org, title, address, greeting;
 
   const closeModal = () => {
     $modalAction = null;
@@ -43,6 +43,15 @@
                   name="address" 
                   placeholder="www.mysite.com" 
                   bind:value={address} />
+        </div>
+        <div>
+          <p style="color:transparent">Greeting</p>        
+          <textarea class="card_form-textarea" 
+                  type="text" 
+                  name="greeting" 
+                  placeholder="Place Your greeting here..." 
+                  rows="3"
+                  bind:value={greeting} />
         </div>
       </fieldset>
 
