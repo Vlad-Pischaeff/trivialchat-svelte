@@ -1,16 +1,23 @@
 <script>
+  import { operator, modalAction } from "../store/store";
   import ButtonClose from './ButtonClose.svelte';
-  import { modalAction } from '../store/store';
 
-  let address;
+  let site;
 
   const closeModal = () => {
     $modalAction = null;
   }
 
-  const updateProfile = () => {
-
+  const updateProfile = async () => {
+    operator.modify({ site });
+    closeModal();
   }
+
+  const initValues = () => {
+    site = $operator.site;
+  }
+
+  $: if (operator) initValues();
 </script>
 
 <div class="modal_bg">
@@ -25,10 +32,10 @@
       <fieldset class="card_form-fieldset">  
         <input  class="card_form-input" 
                 type="text" 
-                name="address" 
+                name="site" 
                 placeholder="www.mysite.com" 
                 required
-                bind:value={address} />
+                bind:value={site} />
       </fieldset>
 
       <!-- <hr> -->

@@ -1,5 +1,5 @@
 <script>
-  import { avatar, operator, avatarTemp, modalAction } from "../store/store";
+  import { operator, avatarTemp, modalAction } from "../store/store";
   import ButtonClose from './ButtonClose.svelte';
 
   let previewCanvasRef, hiddenCanvasRef, cropCanvasRef;
@@ -24,8 +24,9 @@
     return hiddenCanvasRef.toDataURL('image/jpeg');
   }
 
-  const updateProfile = () => { 
-    $operator.avatar = setFinalImage();
+  const updateProfile = async () => {
+    let avatar = setFinalImage();
+    operator.modify({avatar});
     closeModal();
   }
 

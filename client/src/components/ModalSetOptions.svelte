@@ -1,16 +1,26 @@
 <script>
+  import { operator, modalAction } from "../store/store";
   import ButtonClose from './ButtonClose.svelte';
-  import { modalAction } from '../store/store';
 
-  let org, title, address, greeting;
+  let title, desc, site, greeting;
 
   const closeModal = () => {
     $modalAction = null;
   }
 
-  const updateProfile = () => {
-
+  const updateProfile = async () => {
+    operator.modify({ title, desc, site, greeting });
+    closeModal();
   }
+
+  const initValues = () => {
+    title = $operator.title;
+    desc = $operator.desc;
+    site = $operator.site;
+    greeting = $operator.greeting;
+  }
+
+  $: if (operator) initValues();
 </script>
 
 <div class="modal_bg">
@@ -26,23 +36,23 @@
         <div>        
           <input  class="card_form-input" 
                   type="text" 
-                  name="org" 
-                  placeholder="Fake Corp." 
-                  bind:value={org} />
-        </div>
-        <div>
-          <input  class="card_form-input" 
-                  type="text" 
                   name="title" 
-                  placeholder="Manager" 
+                  placeholder="Fake Corp." 
                   bind:value={title} />
         </div>
         <div>
           <input  class="card_form-input" 
                   type="text" 
-                  name="address" 
+                  name="desc" 
+                  placeholder="Manager" 
+                  bind:value={desc} />
+        </div>
+        <div>
+          <input  class="card_form-input" 
+                  type="text" 
+                  name="site" 
                   placeholder="www.mysite.com" 
-                  bind:value={address} />
+                  bind:value={site} />
         </div>
         <div>
           <p style="color:transparent">Greeting</p>        

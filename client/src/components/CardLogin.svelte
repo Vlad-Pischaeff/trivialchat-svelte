@@ -1,20 +1,11 @@
 <script>
-  import { switchToLogin, isAuthorized, operator } from '../store/store';
-  import { httpRequest } from '../js/__HttpRequest';
+  import { switchToLogin, operator } from '../store/store';
 
   let email;
   let password;
 
-  const handlerClick = async (e) => {
-    const body = { email, password };
-    try {
-      const data = await httpRequest('/api/auth/login', 'POST', body);
-      $isAuthorized = true;
-      $operator = { ...data };
-    } catch(e) {
-      // handlingErrors(e);
-      alert('data error...', e.value);
-    }
+  const handlerClick = () => {
+    operator.init({ email, password });
   }
 
 </script>
