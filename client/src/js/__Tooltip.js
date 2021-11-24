@@ -12,13 +12,6 @@ export function tooltip(element) {
 		div.classList.add("tooltip");
 		div.textContent = title;
 		div.style = `
-			box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-			background: deeppink;
-      opacity: 0.7;
-			border-radius: .3rem;
-			padding: .3rem;
-			position: absolute;
-      max-width: 8rem;
 			top: ${event.pageX + 7}px;
 			left: ${event.pageY + 5}px;
 		`;

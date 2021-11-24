@@ -1,14 +1,14 @@
 <script>
   export let handlerClose = () => {}
+  export let size = '2rem';
 </script>
 
-<div class="btn">
+<div class="btn" style="--h: {size}">
   <div class="btn_close" on:click={handlerClose}></div>
 </div>
 
 <style>
   * {
-    --h: 2rem;
     --half-h: calc(var(--h)/2);
     --w: 2px;
     --ratio: 1.5;

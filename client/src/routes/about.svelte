@@ -4,7 +4,7 @@
   import Templates from '../components/Templates.svelte';
   import MessageInput from '../components/MessageInput.svelte';
   import { onMount} from 'svelte';
-  import { isAuthorized, operator } from '../store/store';
+  import { isAuthorized, operator, clients, url } from '../store/store';
 
   let WS_URL;
 
@@ -15,8 +15,8 @@
 
     WS.onmessage = (msg) => {
       let data = JSON.parse(msg.data);
-      // Emitter.emit('received message from', data)
       console.log('received message from', data);
+      clients.modify(data);
     }
 
     WS.onopen = () => {
@@ -28,6 +28,7 @@
     let { hostname, protocol : httpPrefix } = window.location;
     let wsPrefix = httpPrefix === 'http:' ? 'ws:' : 'wss:';
     WS_URL = `${wsPrefix}//${hostname}:5001/ws`;
+    $url = `${httpPrefix}//${hostname}:5001`
   })
 
   $: if ($isAuthorized && WS_URL) initWS();

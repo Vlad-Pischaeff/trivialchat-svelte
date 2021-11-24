@@ -418,3 +418,23 @@ input::placeholder {
     opacity: 1;
   }
 }
+
+.tooltip {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  background: deeppink;
+  opacity: 0.6;
+  border-radius: .3rem;
+  padding: .3rem;
+  position: absolute;
+  max-width: 8rem;
+  /* animation: showtooltip 1s ease-in-out .5s; */
+}
+
+@keyframes showtooltip {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.8;
+  }
+}

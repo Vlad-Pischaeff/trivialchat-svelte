@@ -21,7 +21,7 @@
   background: deeppink;
   box-shadow: 0px 0px 8px 4px deeppink;
 }
-.clients_item:hover .btn_close-min {
+.clients_item:hover .btn_close-client{
   visibility: visible;
 }
 .clients_item-avatar {
@@ -34,7 +34,7 @@
   padding: 0.3rem;
   width: 60%;
 }
-.clients_item-desc {
+.clients_item-status-desc {
   color: #999;
   padding-top: .5rem;
   font-size: .8rem;
@@ -42,7 +42,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.clients_item-title {
+.clients_item-status-title {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -53,14 +53,32 @@
   height: 3rem;
   margin: 0 .5rem 0 0;
 }
-.clients_item-img, 
-.clients_item-pulse {
+.clients_item-img-img, 
+.clients_item-img-pulse {
   position: absolute;
   width: 100%;
   height: 100%;
   border-radius: 50%;
 }
+.client-selected {
+  background: #4c4c4c;
+}
 .client-empty {
   margin: 1rem;
   color: #bbb;
+}
+.btn_close-client {
+  visibility: hidden;
+}
+.pulse {
+  animation: pulsing 1s ease-out infinite;
+}
+@keyframes pulsing {
+  from {
+    background: aquamarine;
+  }
+  to {
+    transform: scale(1.4);
+    opacity: 0;
+  }
 }

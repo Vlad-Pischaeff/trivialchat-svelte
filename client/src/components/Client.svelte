@@ -1,11 +1,51 @@
-<div class={"clients_item " + ($selectedUserIdx === i ? "client-selected" : "")} onClick={handlerClick}>
+<script>
+  import { selectedUserIdx, url, clients } from '../store/store';
+  import ButtonClose from './ButtonClose.svelte';
+
+  export let index;
+  export let item;
+
+  let user_msgs, arr_last;
+  let newMsgTrigger = true;
+
+  const handlerClick = () => {
+    newMsgTrigger = false;
+    $selectedUserIdx = index;
+    clients.resetCounter();
+  }
+
+  $: {
+      user_msgs = item.msgarr.filter(n => n.msg1);
+      arr_last = user_msgs.length - 1;
+      if (item.cnt) newMsgTrigger = true;
+      // console.log('user_msgs...', item, user_msgs, index);
+    }
+</script>
+
+<div class={"clients_item " + ($selectedUserIdx === index ? "client-selected" : "")} on:click={handlerClick}>
   <div class="clients_item-img">
-    <div class={"clients_item-img-pulse " + (newMsgTrigger && $selectedUserIdx !== i ? 'pulse' : '')}></div>
-    <img class="clients_item-img-img" src={`${$URL}/img/users/user${n.pict}.png`} alt=''/>
+    <div class={"clients_item-img-pulse " + (newMsgTrigger && $selectedUserIdx !== index ? 'pulse' : '')}></div>
+    <img class="clients_item-img-img" src={`${$url}/img/users/user${item.pict}.png`} alt=''/>
   </div>
   <div class="clients_item-status">
-    <div class="clients_item-status-title">Banjo {i}</div>
+    <div class="clients_item-status-title">Banjo {index}</div>
     <div class="clients_item-status-desc">{user_msgs[arr_last].msg1}</div>
   </div>
-  <div class="btn_close-min"></div>
+  <div>
+    <div class="btn_close-client">
+      <ButtonClose size="1rem"/>
+    </div>
+    <div class="counter">
+      {item.cnt ? item.cnt : ''}
+    </div>
+  </div>
 </div>
+
+<style>
+  .counter {
+    margin: .2rem 0;
+    text-align: center;
+    font-size: .9rem;
+    color:deepskyblue;
+  }
+</style>
