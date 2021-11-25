@@ -1,0 +1,9 @@
+<script>
+  export let handlerClick = () => {};
+</script>
+
+<div class="h-2rem" position="tip" title="Send quick answer...">
+  <img  class="b-icon" alt='send'
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAC4jAAAuIwF4pT92AAADYElEQVR4nNWaW2sTQRiGdybr8af4H3rt+Sxe9caKomJvrFhpJRqxeG5tbbXaohgPpaVFpSqKoojnP+CNIP4FTyDS5PP9Jp8hzWk2yexu9oVkmo+SeZ7Mzm5mNj4ReWFEaa28XG7QI/pGWg+H0gnih/GmAj/sKdWNl6Ty+b+QuBpGX84FyuA5v718/rOnteuuTJwKVMAT/cLrdeT7b1z2UxpnAgI/AviDphABPMeJQFzwnJYFasCvBfzblukCpCUBgR8F/AFTIPopn3wk8JymBQR+DPD7TSEGeE5TAu0Cz2lYoAb8GsC/d04XIA0JCPwVwO8zBaIfMmFjgecEFhD4ccDvNYU2gOcEEmhXeI5VQGUyWuD3mEIbwXPqChj4dLocnifsh0joAqSmQBLgOVUFBP464HebAtF3gf8YKV2AVAgI/ATgu0yhAL8a8J8ipwuQRQJJg+cUBZIIzzECAj8J+F2mmhB4ji/wtwDfaSpEf/CcxRq2A4vxjnjx7PHlbNNZrCi1HM/daOOjaiA+PvF3aLsAnAzisvik9U0cKjwXrhmJwk7XAObA47jhgsRMYkhMQILBWUJDog9z4Avq2Zj5rCmeRgE7CQk+jAoSnneDpVC/HR+ePYsuZDISKfzJixZu+fDKoX4vHjx7Kr5KAHZcJC6LRFZGYip6PHuqfpkD7JgcTiMlEnnUp6PFs6fm12nAjspIDEGC/++OjMRMdHj21F3Q8L6+GQml/kvcVblcnlKp2Yj4rLEuKSFxCRIap9WLRgITGhIEibkoAG0JtKiHxKBInIfEErRTkNgJiQdhA9oSeFsFEhdE4qxIzLSDREMbW5A4JxKnRWIaEjsgMR8WoC0Nby1C4ow5O2l9ChJL0c5CYjskHoUBaEtTm7uQGBCJTInENkg8cQ1oS9Pb65A4aU6xWp+AxDK0c5DYComnLgFtaekGByQyCpc2CKTNQkjr+5DYAolnrgBtafkWEyl1HBIpCPSXSGyGxHMXgLY4uckHiWOQ4Ct2Hx4rIPEQEpsg8cLF+9eLs9uskOiXkegtkdgIiZeu+qgWpze6IXFURuIIHishMQ+JDZB45bKf0jj/qQEkemUkeooSCwvryfdfu+6LE8qPPSBxWEbiEF6yxCq0yRHgQKLHnGKJvob1SxXOPwqctQ8lK3zQAAAAAElFTkSuQmCC"
+        on:click={handlerClick} />
+</div>

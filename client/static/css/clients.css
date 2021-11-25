@@ -60,6 +60,12 @@
   height: 100%;
   border-radius: 50%;
 }
+.clients_item-tools {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: center;
+}
 .client-selected {
   background: #4c4c4c;
 }

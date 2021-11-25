@@ -1,5 +1,5 @@
 <script>
-  export let handlerClose = () => {}
+  export let handlerClose = () => {};
   export let size = '2rem';
 </script>
 

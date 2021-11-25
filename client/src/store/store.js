@@ -43,6 +43,22 @@ const createOperator = () => {
         alert('Error while update User profile ...' + e.val);
       }
     }),
+    setAnswer: (item, i) => update(n => {
+      n.answer[i] = item;
+      return n;
+    }),
+    delAnswer: (i) => update(n => {
+      n.answer.splice(i, 1);
+      return n;
+    }),
+    setNote: (item, i) => update(n => {
+      n.notes[i] = item;
+      return n;
+    }),
+    delNote: (i) => update(n => {
+      n.notes.splice(i, 1);
+      return n;
+    }),
 		reset: () => set({})
 	};
 }

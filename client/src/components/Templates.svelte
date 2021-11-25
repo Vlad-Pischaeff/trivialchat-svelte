@@ -1,23 +1,26 @@
 <script>
   import TemplatesHeader from "./TemplatesHeader.svelte";
   import TemplatesFooter from './TemplatesFooter.svelte';
-  let value;
+  import NotesList from './NotesList.svelte';
+  import AnswersList from './AnswersList.svelte';
+
+  let index;
+  let component = [AnswersList, NotesList]
+  console.log('templates...', component, index, component[0])
 </script>
 
 <aside class="templates">
-  <TemplatesHeader bind:idx={value}/>
+  <TemplatesHeader bind:idx={index}/>
   <section class="templates_body">
-    <div class="no_templates">
-      <!-- { body[idx] } -->
-      {value}
-
+    <div class="content">
+      <svelte:component this={component[index]} />
     </div>
   </section>
-  <TemplatesFooter/>
+  <TemplatesFooter idx={index}/>
 </aside>
 
 <style>
-  .no_templates {
+  .content {
     margin: .5rem;
   }
 </style>

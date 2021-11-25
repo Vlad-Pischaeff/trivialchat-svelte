@@ -18,7 +18,6 @@
       user_msgs = item.msgarr.filter(n => n.msg1);
       arr_last = user_msgs.length - 1;
       if (item.cnt) newMsgTrigger = true;
-      // console.log('user_msgs...', item, user_msgs, index);
     }
 </script>
 
@@ -31,7 +30,7 @@
     <div class="clients_item-status-title">Banjo {index}</div>
     <div class="clients_item-status-desc">{user_msgs[arr_last].msg1}</div>
   </div>
-  <div>
+  <div class="clients_item-tools">
     <div class="btn_close-client">
       <ButtonClose size="1rem"/>
     </div>
@@ -43,7 +42,7 @@
 
 <style>
   .counter {
-    margin: .2rem 0;
+    /* margin: .2rem 0; */
     text-align: center;
     font-size: .9rem;
     color:deepskyblue;
