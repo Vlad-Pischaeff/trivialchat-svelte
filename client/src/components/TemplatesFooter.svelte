@@ -9,9 +9,8 @@
                 () => operator.setNote('new note...', notes.length)]
 
   $: {
-    if ($operator.notes) notes = $operator.notes;
-    if ($operator.answer) answers = $operator.answer;
-    console.log('idx...', notes, answers)
+      if ($operator.notes) notes = $operator.notes;
+      if ($operator.answer) answers = $operator.answer;
     }
 </script>
 

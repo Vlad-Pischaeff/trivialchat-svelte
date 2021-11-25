@@ -6,7 +6,7 @@
 
   $: {
     notes = $operator.notes;
-    console.log('notes...', notes);
+    // console.log('notes...', notes);
   }
 </script>
 

@@ -27,9 +27,9 @@
 
   const onKeyPress = e => { if (e.charCode === 13) saveNote(); };
   
-  $: if (refView) {
-      if (index === ($operator.notes.length - 2)) refView.scrollIntoView({behavior: "smooth"})
-    }
+  // $: if (refView) {
+  //     if (index === ($operator.notes.length - 2)) refView.scrollIntoView({behavior: "smooth"})
+  //   }
 </script>
 
 <div class="templates_body-item">

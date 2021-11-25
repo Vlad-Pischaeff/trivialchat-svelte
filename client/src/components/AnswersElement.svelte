@@ -27,9 +27,9 @@
 
   const onKeyPress = e => { if (e.charCode === 13) saveAnswer(); };
 
-  $: if (refView) {
-      if (index === ($operator.answer.length - 2)) refView.scrollIntoView({behavior: "smooth"})
-    }
+  // $: if (refView) {
+  //     if (index === ($operator.answer.length - 2)) refView.scrollIntoView({behavior: "smooth"})
+  //   }
 
 </script>
 
