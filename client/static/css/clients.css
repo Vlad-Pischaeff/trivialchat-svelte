@@ -1,5 +1,6 @@
 .clients {
   flex: 0 0 12rem;
+  /* width: 20%; */
   height: 100%;
   overflow: auto;
   background: #444;

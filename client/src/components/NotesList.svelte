@@ -10,7 +10,7 @@
   }
 </script>
 
-{#if notes.length !== 0 }
+{#if (notes && notes.length !== 0) }
 
   {#each notes as note, idx }
     <NotesElement item={note} index={idx} />

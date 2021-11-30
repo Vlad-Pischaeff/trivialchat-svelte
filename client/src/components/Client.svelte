@@ -42,7 +42,6 @@
 
 <style>
   .counter {
-    /* margin: .2rem 0; */
     text-align: center;
     font-size: .9rem;
     color:deepskyblue;

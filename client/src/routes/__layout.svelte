@@ -55,7 +55,7 @@
 		flex: 0 0 8rem;
 	}
 	.right-container {
-		flex: 1 1 auto;
+		flex: 1 1 80%;
 		background: gray;
 		display: flex;
 		flex-flow: column nowrap;

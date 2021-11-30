@@ -38,13 +38,9 @@
   <ButtonSend handlerClick={sendMessage}/>
 
   <div class="templates_body-itemtext">
-    {#if isEditable} 
-      <p contenteditable=true bind:this={refAnswer} on:keypress={onKeyPress}>
-        {item}
-      </p>
-    {:else}
-      <p contenteditable=false bind:this={refView}>{item}</p>
-    {/if}
+    <p contenteditable={isEditable} bind:this={refAnswer} on:keypress={onKeyPress}>
+      {item}
+    </p>
   </div>
 
   {#if isEditable}

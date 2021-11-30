@@ -7,7 +7,7 @@
   $: answers = $operator.answer;
 </script>
 
-{#if answers.length !== 0 }
+{#if (answers && answers.length !== 0) }
 
   {#each answers as answer, idx }
     <AnswerElement item={answer} index={idx} />

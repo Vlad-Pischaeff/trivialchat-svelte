@@ -7,7 +7,7 @@
 
   export let item, index;
   let isEditable = false;
-  let refNote, refView;
+  let refNote;
 
   const saveNote = ()  => {
     isEditable = false;
@@ -15,8 +15,8 @@
   };
 
   const deleteNote = ()  => {
-    operator.delNote(index);
     isEditable = false;
+    operator.delNote(index);
   }
   
   const editNote = async () => {
@@ -35,13 +35,9 @@
 <div class="templates_body-item">
 
   <div class="templates_body-itemtext">
-    {#if isEditable} 
-      <p contenteditable=true bind:this={refNote} on:keypress={onKeyPress}>
-        {item}
-      </p>
-    {:else}
-      <p contenteditable=false bind:this={refView}>{item}</p>
-    {/if}
+    <p contenteditable={isEditable} bind:this={refNote} on:keypress={onKeyPress}>
+      {item}
+    </p>
   </div>
 
   {#if isEditable}

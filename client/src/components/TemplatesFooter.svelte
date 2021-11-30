@@ -5,8 +5,8 @@
   export let idx;
   let answers, notes;
   let title = ['add new answer...', 'add new note...'];
-  let action = [() => operator.setAnswer('new answer...', answers.length), 
-                () => operator.setNote('new note...', notes.length)]
+  let action = [() => operator.setAnswer(`${answers.length} new answer...`, answers.length), 
+                () => operator.setNote(`${notes.length} new note...`, notes.length)]
 
   $: {
       if ($operator.notes) notes = $operator.notes;

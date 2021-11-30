@@ -1,5 +1,6 @@
 .templates {
-  flex: 1 1 35%;
+  flex: 0 0 35%;
+  /* width: 35%; */
   height: 100%;
   background: #888;
   display: flex;

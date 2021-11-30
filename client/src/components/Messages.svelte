@@ -1,27 +1,25 @@
 <script>
-  let messages = [];
+  import { selectedUserIdx, clients } from '../store/store';
+  import Message from './Message.svelte';
+
+  let messages = [], msgRef;
+
+  $: if (msgRef && messages) msgRef.scrollIntoView({ behavior: 'smooth' }); 
+  $: if ($selectedUserIdx !== null) { 
+      messages = $clients[$selectedUserIdx]?.msgarr;
+      console.log('messages1...', $selectedUserIdx, $clients, messages);
+    }
+    console.log('messages2...', messages);
 </script>
 
 <div class="chat_field">
-  {#if messages.length === 0}
-    <div class="messages-empty">No messages...</div>
+  {#if (messages.length === 0)}
+    <div class="no-msg">No messages...</div>
   {:else}
-    messages.map((item, idx) => (
-          <div  key={idx} 
-                class="chat_field-message"
-                data-align={item.msg1 ? 'from': 'to'} >
-            <Message item={item} />
-          </div>
-        ))
+    {#each messages as message, idx}  
+      <div class="chat_field-message" data-align={message.msg1 ? 'from': 'to'} bind:this={msgRef}>
+        <Message item={message} />
+      </div>
+    {/each}
   {/if}
 </div>
-
-<style>
-  .chat_field {
-    padding: 1rem;
-    overflow: auto;  
-  }
-  .messages-empty {
-    color: #bbb;
-  }
-</style>
