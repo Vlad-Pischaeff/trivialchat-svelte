@@ -4,12 +4,13 @@
 	import Footer from "../components/Footer.svelte";
 	import Logo from "../components/Logo.svelte";
 	import { isAuthorized, modalAction, modalDialogs } from "../store/store";
+	let leftWidth = '10rem';
 
-	// $: console.log('modalAction...', $modalAction);
+	$: if ($isAuthorized) leftWidth = '8rem';
 </script>
 
 <main>
-	<div class="left-container {$isAuthorized ? 'left-container_auth' : 'left-container_notauth'}">
+	<div class="left-container" style="--left-aside-width: {leftWidth};">
 		{#if $isAuthorized}
 			<Asideprofile/>
 		{:else}
@@ -17,7 +18,7 @@
 		{/if}
 	</div>
 
-	<div class="right-container">
+	<div class="right-container" style="--left-aside-width: {leftWidth};">
 		<section class="header">
 			<nav>
 				<a href="/">Home</a>
@@ -44,18 +45,15 @@
 		justify-content: space-between;
 		align-items: center;
 		transition: all 1s linear;
+		height: 100%;
 	}
 	.left-container {
+		width: var(--left-aside-width);
 		background: black;
-	}
-	.left-container_notauth {
-		flex: 0 0 10rem;
-	}
-	.left-container_auth {
-		flex: 0 0 8rem;
+		float: left;
 	}
 	.right-container {
-		flex: 1 1 80%;
+		width: calc(100vw - var(--left-aside-width));
 		background: gray;
 		display: flex;
 		flex-flow: column nowrap;

@@ -33,8 +33,7 @@ main {
   width: 100vw;
   height: calc(100vh - var(--height-footer));
   background: black;
-  display: flex;
-  flex-flow: row nowrap;
+  display: inline-block;
 }
 footer {
   height: var(--height-footer);

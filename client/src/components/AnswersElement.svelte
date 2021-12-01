@@ -8,7 +8,7 @@
 
   export let item, index;
   let isEditable = false;
-  let refAnswer, refView;
+  let refAnswer;
 
   const sendMessage = ()  => {};
   
@@ -26,10 +26,6 @@
   };
 
   const onKeyPress = e => { if (e.charCode === 13) saveAnswer(); };
-
-  // $: if (refView) {
-  //     if (index === ($operator.answer.length - 2)) refView.scrollIntoView({behavior: "smooth"})
-  //   }
 
 </script>
 
