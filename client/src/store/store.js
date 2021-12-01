@@ -22,6 +22,15 @@ export const modalDialogs = writable({
 const createOperator = () => {
 	const { subscribe, set, update } = writable({});
 
+  const updateOperatorProfile = async (n, e) => {
+    try {
+      const data = await httpRequest(`/api/auth/user/${n._id}`, 'PATCH', e, n.token);
+      if (data) set({ ...n, ...data});
+    } catch(e) {
+      alert('Error while update User profile ...' + e.val);
+    }
+  }
+
 	return {
 		subscribe,
 		init: async (e) => {
@@ -29,35 +38,32 @@ const createOperator = () => {
         const data = await httpRequest('/api/auth/login', 'POST', e);
         set({ ...data });
         isAuthorized.set(true);
-        // console.log('isAuthorized...', get(isAuthorized));
+        console.log('isAuthorized...', get(isAuthorized), this);
       } catch(e) {
         // handlingErrors(e);
         alert('data error...', e.value);
       }
     },
 		// modify: (e) => update(n => ({ ...n, ...e }) ),
-    modify: (e) => update(async (n) => {
-      try {
-        const data = await httpRequest(`/api/auth/user/${n._id}`, 'PATCH', e, n.token);
-        if (data) set({ ...n, ...data});
-      } catch(e) {
-        alert('Error while update User profile ...' + e.val);
-      }
-    }),
+    modify: (e) => update(n => updateOperatorProfile(n, e)),
     setAnswer: (item, i) => update(n => {
       n.answer[i] = item;
+      updateOperatorProfile(n, {'answer': n.answer});
       return n;
     }),
     delAnswer: (i) => update(n => {
       n.answer.splice(i, 1);
+      updateOperatorProfile(n, {'answer': n.answer});
       return n;
     }),
     setNote: (item, i) => update(n => {
       n.notes[i] = item;
+      updateOperatorProfile(n, {'notes': n.notes});
       return n;
     }),
     delNote: (i) => update(n => {
       n.notes.splice(i, 1);
+      updateOperatorProfile(n, {'notes': n.notes});
       return n;
     }),
 		reset: () => set({})

@@ -20,7 +20,7 @@
     greeting = $operator.greeting;
   }
 
-  $: if (operator) initValues();
+  $: if ($operator) initValues();
 </script>
 
 <div class="modal_bg">

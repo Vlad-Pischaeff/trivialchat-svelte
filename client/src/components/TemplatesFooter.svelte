@@ -5,13 +5,18 @@
   export let idx;
   let answers, notes;
   let title = ['add new answer...', 'add new note...'];
-  let action = [() => operator.setAnswer(`${answers.length} new answer...`, answers.length), 
-                () => operator.setNote(`${notes.length} new note...`, notes.length)]
+  let action = [() => {
+                        answers.push(`${answers.length} new answer...`);
+                        operator.modify({'answer': answers});
+                      }, 
+                () => {
+                        notes.push(`${notes.length} new note...`);
+                        operator.modify({notes});
+                      }
+              ]
 
-  $: {
-      if ($operator.notes) notes = $operator.notes;
-      if ($operator.answer) answers = $operator.answer;
-    }
+  $: notes = $operator.notes;
+  $: answers = $operator.answer;
 </script>
 
 <section class="templates_footer">

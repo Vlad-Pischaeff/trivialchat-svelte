@@ -29,6 +29,9 @@
   font-family: Jura;
   color: white;
 }
+body {
+  overflow: hidden;
+}
 main {
   width: 100vw;
   height: calc(100vh - var(--height-footer));
