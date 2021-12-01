@@ -1,5 +1,6 @@
 <script>
   import { selectedUserIdx, clients, ws } from '../store/store';
+  import wstore from '../store/wstore';
   import { tooltip } from '../js/__Tooltip';
   let message;
 
@@ -12,6 +13,7 @@
   }
 
   const onKeyPress = e => { if (e.charCode === 13) sendMessage(); };
+  console.log('input message...', $wstore);
 </script>
 
 <div class="chat_input">

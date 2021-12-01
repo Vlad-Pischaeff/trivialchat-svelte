@@ -26,8 +26,8 @@ const createOperator = () => {
     try {
       const data = await httpRequest(`/api/auth/user/${n._id}`, 'PATCH', e, n.token);
       if (data) set({ ...n, ...data});
-    } catch(e) {
-      alert('Error while update User profile ...' + e.val);
+    } catch(err) {
+      alert('Error while update User profile ...' + err.val);
     }
   }
 
@@ -38,13 +38,11 @@ const createOperator = () => {
         const data = await httpRequest('/api/auth/login', 'POST', e);
         set({ ...data });
         isAuthorized.set(true);
-        console.log('isAuthorized...', get(isAuthorized), this);
-      } catch(e) {
+      } catch(err) {
         // handlingErrors(e);
-        alert('data error...', e.value);
+        alert('data error...', err.value);
       }
     },
-		// modify: (e) => update(n => ({ ...n, ...e }) ),
     modify: (e) => update(n => updateOperatorProfile(n, e)),
     setAnswer: (item, i) => update(n => {
       n.answer[i] = item;
