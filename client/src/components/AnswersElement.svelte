@@ -1,6 +1,6 @@
 <script>
   import { tick } from 'svelte';
-  import { operator } from '../store/store';
+  import { operator, ws, clients, selectedUserIdx } from '../store/store';
   import ButtonEdit from './ButtonEdit.svelte';
   import ButtonSave from './ButtonSave.svelte';
   import ButtonDelete from './ButtonDelete.svelte';
@@ -10,7 +10,10 @@
   let isEditable = false;
   let refAnswer;
 
-  const sendMessage = ()  => {};
+  const sendMessage = ()  => {
+    clients.reply(item);
+    $ws.send(JSON.stringify({ 'to': $clients[$selectedUserIdx]['user'], 'msg': item, 'date': Date.now() }));
+  };
   
   const saveAnswer = ()  => {
     isEditable = false;
