@@ -4,6 +4,7 @@ import { operator, clients, selectedUserIdx } from './store';
 let { hostname, protocol : httpPrefix } = window.location;
 let wsPrefix = httpPrefix === 'http:' ? 'ws:' : 'wss:';
 let ws_url = `${wsPrefix}//${hostname}:5001/ws`;
+
 export const url = writable(`${httpPrefix}//${hostname}:5001`);
 
 const messageStore = writable('');
@@ -13,7 +14,6 @@ const socket = new WebSocket(ws_url + '?userName=' + manager.email);
 
 // Connection opened
 socket.addEventListener('open', function (event) {
-	console.log("WebSocket open...");
 	let email = manager.email;
 	socket.send(JSON.stringify({ 'newManagerConnection': email, 'msg': 'initial connection...', 'date': Date.now() }));
 });

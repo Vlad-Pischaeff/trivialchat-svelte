@@ -2,12 +2,13 @@ export function tooltip(element) {
 	let div;
 	let title;
 	let offsetTop = 5, offsetLeft = 25;
-
-	if ((document.documentElement.clientWidth - element.offsetLeft) < 300) {
-		offsetLeft = -140;
-	}
+	let position = 'right';
 
 	function mouseOver(event) {
+
+		if ((document.documentElement.clientWidth - element.offsetLeft) < 250) {
+			position = 'left';
+		}
 		// NOTE: remove the `title` attribute, to prevent showing the default browser tooltip
 		// remember to set it back on `mouseleave`
 		title = element.getAttribute('title');
@@ -18,8 +19,7 @@ export function tooltip(element) {
 		div.classList.add("tip");
 		div.textContent = title;
 		div.style = `
-			top: ${event.pageX + offsetLeft}px;
-			left: ${event.pageY + offsetTop}px;
+			top: ${event.pageY + offsetTop}px;
 			border-radius: .3rem;
 			padding: .3rem;
 			position: absolute;
@@ -28,12 +28,21 @@ export function tooltip(element) {
 			background: deeppink;
 			opacity: 0.7;
 		`;
+		position === 'right'
+			? div.style.left = `${event.pageX + offsetLeft}px`
+			: div.style.right = `${document.documentElement.clientWidth - event.pageX}px`;
+
 		document.body.appendChild(div);
 	}
+
 	function mouseMove(event) {
-		div.style.left = `${event.pageX + offsetLeft}px`;
+		position === 'right'
+			? div.style.left = `${event.pageX + offsetLeft}px`
+			: div.style.right = `${document.documentElement.clientWidth - event.pageX}px`;
+			
 		div.style.top = `${event.pageY + offsetTop}px`;
 	}
+
 	function mouseLeave() {
 		document.body.removeChild(div);
 		// NOTE: restore the `title` attribute

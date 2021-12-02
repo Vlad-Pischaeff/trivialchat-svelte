@@ -34,7 +34,7 @@ const createOperator = () => {
 		init: async (e) => {
       try {
         const data = await httpRequest('/api/auth/login', 'POST', e);
-        set({ ...data });
+        set(data);
         isAuthorized.set(true);
       } catch(err) {
         // handlingErrors(e);
@@ -93,7 +93,8 @@ const createClients = () => {
       return users;
     }),
     resetCounter: () => update(n => {
-      n[get(selectedUserIdx)]['cnt'] = 0;
+      let idx = get(selectedUserIdx);
+      n[idx]['cnt'] = 0;
       return n;
     }),
     reply: (message) => update(n => {

@@ -1,9 +1,10 @@
 <script>
+  import { tooltip } from '../js/__Tooltip';
   export let handlerClick = () => {};
 </script>
 
-<div class="h-2rem" position="tip-left" tip="Delete note...">
-  <img  class="b-icon" alt='delete'
+<div class="h-2rem" >
+  <img  class="b-icon" alt='delete' title ="Delete note..." use:tooltip
         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACkAAAAwCAYAAACMuVOlAAAACXBIWXMAAC4jAAAuIwF4pT92AAADUUlEQVR4nO2Zz0sUYRjHn3fnB7uYi7q4tGKKURAUiiuBHsIuXSQP4nqqQ/9ARBCSYRoKlRBCh24dIqLTioc8FHQpIiJK0MKEwlhiUdEWaUVXZ3eennfdtXVnxp1pHXcO+4V5f8zzPO/74X3mHdd3REQEq2KKchpE8QE1O4Exj6kgxF9UPoGRkTs4PKxamU/8T8APBHfEWiA7RuVtGBpyU91vJdQyJAE+3gVEjFC5YjKymeJkqq+zROIRut0RWyBZMnmOINszgN8gGm3D+vpNU7GIo1QNEqgIsnyJ2ndtgQRB6NltI46ZBUxLUZ4S3GC6zdh5sA0S4GK6REzC+voL8HpNB6Isf6fVXCTAAHU7mMvFUFVN7VqRUthGKxQyASzRBCcz7VWorBxg1t8M2+mSP9Op1EOK3yrgnyS/sEiAUxR01NJUO/43rBLmjXHVlJ8gXOGrt0CXNcjD1YIIS0sXoLY2mN51ThN/9ldWpkUMBDao+67UPIYKBLSbhalqP61qZSl40kJcR5drLPeWNsWMXaOr7tCgtFqkqwBk6aV5rxlDIv4GVb1sK06uXK5nlEGfnmm/lUygILy0CUmj/V7sTko3y9QW0q03SizmpT+HTShJM7r26WkJmptbYHZ2BoNBRddHUVogHv+JNTV/zM5rGpKFwwL09n6m5+YEvaYG6DVxX+PU2vqc7CGqw9Tr04yhqjdBku5BdfUPGu8UhkKpA4WErq5aDrgzG+sw8OrIq/MoM3F8HD4ewFKuNVMXlW5m0NbzKWTfz0cjJ22crIrbODbLcGWdBGkoJ0KW022bnAhZTrdtchLkwfwKKpXKkBZVTrftchJkOd22y0mQ5XQftIpYyfn5Vfp/Onsw/8XAi9+vK2DvBn7Az8cLBnNtxf8K4icSbHPzLMjyGZicfA2hkNYpFuuDqqpOWFt7Az6ds6eJiSHo6XkL29tfjU44zEImMrWXRSJubGzM9gE9nihVUV1Abvf54lRN6QJy+86JxSvw7P0cyZaXK8Dvz34GjJuB/EjX8fRpb0PDHONHgHbL7/fnnNl/yjdrIRVlFCSpm4Iq6GqiO002I/4T4gbNP06P1J7bGkiU5TmmKPwb4jh12wnUfQhw/PPfe0ilbtH88/nmv0Al+fHv4NoGAAAAAElFTkSuQmCC"
         on:click={handlerClick}/>
 </div>
