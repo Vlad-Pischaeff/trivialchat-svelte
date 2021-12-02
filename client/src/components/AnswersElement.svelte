@@ -1,6 +1,7 @@
 <script>
   import { tick } from 'svelte';
-  import { operator, ws, clients, selectedUserIdx } from '../store/store';
+  import { operator, clients } from '../store/store';
+  import { wstore } from '../store/wstore';
   import ButtonEdit from './ButtonEdit.svelte';
   import ButtonSave from './ButtonSave.svelte';
   import ButtonDelete from './ButtonDelete.svelte';
@@ -12,7 +13,7 @@
 
   const sendMessage = ()  => {
     clients.reply(item);
-    $ws.send(JSON.stringify({ 'to': $clients[$selectedUserIdx]['user'], 'msg': item, 'date': Date.now() }));
+    wstore.sendMessage(item);
   };
   
   const saveAnswer = ()  => {

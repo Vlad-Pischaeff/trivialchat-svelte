@@ -7,9 +7,7 @@
   $: if (msgRef && messages) msgRef.scrollIntoView({ behavior: 'smooth' }); 
   $: if ($selectedUserIdx !== null) { 
       messages = $clients[$selectedUserIdx]?.msgarr;
-      console.log('messages1...', $selectedUserIdx, $clients, messages);
     }
-    console.log('messages2...', messages);
 </script>
 
 <div class="chat_field">

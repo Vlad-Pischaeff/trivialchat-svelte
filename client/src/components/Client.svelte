@@ -1,5 +1,6 @@
 <script>
-  import { selectedUserIdx, url, clients } from '../store/store';
+  import { selectedUserIdx, clients } from '../store/store';
+  import { url } from '../store/wstore';
   import ButtonClose from './ButtonClose.svelte';
 
   export let index;

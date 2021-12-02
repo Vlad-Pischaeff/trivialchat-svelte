@@ -10,8 +10,6 @@ export const isAuthorized = writable(false);
 export const selectedUserIdx = writable(null);
 export const avatarTemp = writable(null);
 export const modalAction = writable(null);
-export const url = writable(null);
-export const ws = writable(null);
 
 export const modalDialogs = writable({
   cropImage: ModalCropImage,
@@ -92,7 +90,6 @@ const createClients = () => {
           }
         })
       }
-      // console.log('clients...', users);
       return users;
     }),
     resetCounter: () => update(n => {
@@ -101,7 +98,6 @@ const createClients = () => {
     }),
     reply: (message) => update(n => {
       let idx = get(selectedUserIdx);
-      // ws.send(JSON.stringify({ 'to': n[idx]['user'], 'msg': message, 'date': Date.now() }));
       n[idx]['msgarr'].push({ 'msg0': message, 'date': Date.now() });
       return n;
     }),

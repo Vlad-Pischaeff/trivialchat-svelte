@@ -1,19 +1,19 @@
 <script>
-  import { selectedUserIdx, clients, ws } from '../store/store';
-  import wstore from '../store/wstore';
+  import { selectedUserIdx, clients } from '../store/store';
+  import { wstore } from '../store/wstore';
   import { tooltip } from '../js/__Tooltip';
   let message;
 
   const sendMessage = () => {
     if (message && $selectedUserIdx !== undefined) {
       clients.reply(message);
-      $ws.send(JSON.stringify({ 'to': $clients[$selectedUserIdx]['user'], 'msg': message, 'date': Date.now() }));
+      wstore.sendMessage(message);
       message = '';
     }
   }
 
   const onKeyPress = e => { if (e.charCode === 13) sendMessage(); };
-  console.log('input message...', $wstore);
+
 </script>
 
 <div class="chat_input">

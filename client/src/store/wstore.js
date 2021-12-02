@@ -1,33 +1,40 @@
-import { writable } from 'svelte/store';
+import { writable, get } from 'svelte/store';
+import { operator, clients, selectedUserIdx } from './store';
 
 let { hostname, protocol : httpPrefix } = window.location;
 let wsPrefix = httpPrefix === 'http:' ? 'ws:' : 'wss:';
 let ws_url = `${wsPrefix}//${hostname}:5001/ws`;
-let url = `${httpPrefix}//${hostname}:5001`
+export const url = writable(`${httpPrefix}//${hostname}:5001`);
 
 const messageStore = writable('');
+const manager = get(operator);
 
-const socket = new WebSocket(ws_url);
+const socket = new WebSocket(ws_url + '?userName=' + manager.email);
 
 // Connection opened
 socket.addEventListener('open', function (event) {
-    console.log("It's open");
+	console.log("WebSocket open...");
+	let email = manager.email;
+	socket.send(JSON.stringify({ 'newManagerConnection': email, 'msg': 'initial connection...', 'date': Date.now() }));
 });
 
 // Listen for messages
 socket.addEventListener('message', function (event) {
-    messageStore.set(event.data);
+	let data = JSON.parse(event.data);
+	console.log('received message from', event);
+	clients.modify(data);
 });
 
-const sendMessage = (message) => {
+const sendMessage = (msg) => {
 	if (socket.readyState <= 1) {
+		let client = get(clients);
+		let clientIdx = get(selectedUserIdx);
+		let message = JSON.stringify({ 'to': client[clientIdx]['user'], msg, 'date': Date.now() })
 		socket.send(message);
 	}
-}
+};
 
-console.log('wstore...', window.location);
-
-export default {
+export const wstore = {
 	subscribe: messageStore.subscribe,
 	sendMessage
-}
+};
