@@ -1,19 +1,32 @@
 <script>
-  import { operator } from '../store/store';
+  import { tick } from 'svelte';
+  import { operator, scrollList } from '../store/store';
   import NotesElement from './NotesElement.svelte';
 
-  let notes;
+  let notes, notesRef, timerId;
+  
+  const updateNotes = async () => {
+      await tick();
+      notes = $operator.notes;
+      // console.log('notes...',notes, notesRef);
+    }
 
-  $: {
-    notes = $operator.notes;
-    console.log('notes...', notes);
-  }
+  $: if ($operator.notes) updateNotes();
+
+  $: if (!$scrollList) clearTimeout(timerId);
+
+  $: if (notesRef && $scrollList) {
+      notesRef.scrollIntoView({ behavior: 'smooth'});
+      timerId = setTimeout(() => $scrollList = false, 500);
+    }
 </script>
 
 {#if (notes && notes.length !== 0) }
 
   {#each notes as note, idx }
-    <NotesElement item={note} index={idx} />
+    <div class="templates_body-item" bind:this={notesRef}>
+      <NotesElement item={note} index={idx} />
+    </div>
   {/each}
 
 {:else}

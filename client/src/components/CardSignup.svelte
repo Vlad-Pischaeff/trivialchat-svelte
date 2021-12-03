@@ -34,8 +34,8 @@
     </div>
 
     <div class="card_form-warnings">
-      <p class="card_form-warning">Warning 1</p>
-      <p class="card_form-warning">Warning 2</p>
+      <!-- <p class="card_form-warning">Warning 1</p>
+      <p class="card_form-warning">Warning 2</p> -->
     </div>
   </form>
 </div>

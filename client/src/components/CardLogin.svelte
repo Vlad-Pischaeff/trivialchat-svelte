@@ -3,7 +3,7 @@
 
   let email, password;
 
-  const handlerClick = () => operator.init({ email, password });
+  const handlerClick = () => operator.login({ email, password });
 
 </script>
 
@@ -34,9 +34,9 @@
     </div>
 
     <div class="card_form-warnings">
-      <p class="card_form-warning">Warning 1</p>
+      <!-- <p class="card_form-warning">Warning 1</p>
       <p class="card_form-warning">Warning 2</p>
-      <p class="card_form-warning">Warning 3</p>
+      <p class="card_form-warning">Warning 3</p> -->
     </div>
   </form>
 </div>

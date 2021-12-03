@@ -29,19 +29,17 @@
   
 </script>
 
-<div class="templates_body-item">
 
-  <div class="templates_body-itemtext">
-    <p contenteditable={isEditable} bind:this={refNote} on:keypress={onKeyPress}>
-      {item}
-    </p>
-  </div>
-
-  {#if isEditable}
-    <ButtonSave handlerClick={saveNote}/>
-  {:else}
-    <ButtonEdit handlerClick={editNote}/>
-  {/if}
-
-  <ButtonDelete handlerClick={deleteNote}/>
+<div class="templates_body-itemtext">
+  <p contenteditable={isEditable} bind:this={refNote} on:keypress={onKeyPress}>
+    {item}
+  </p>
 </div>
+
+{#if isEditable}
+  <ButtonSave handlerClick={saveNote}/>
+{:else}
+  <ButtonEdit handlerClick={editNote}/>
+{/if}
+
+<ButtonDelete handlerClick={deleteNote}/>

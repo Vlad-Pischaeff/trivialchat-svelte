@@ -10,6 +10,7 @@ export const isAuthorized = writable(false);
 export const selectedUserIdx = writable(null);
 export const avatarTemp = writable(null);
 export const modalAction = writable(null);
+export const scrollList = writable(false);
 
 export const modalDialogs = writable({
   cropImage: ModalCropImage,
@@ -31,14 +32,16 @@ const createOperator = () => {
 
 	return {
 		subscribe,
-		init: async (e) => {
+		login: async (e) => {
       try {
         const data = await httpRequest('/api/auth/login', 'POST', e);
-        set(data);
-        isAuthorized.set(true);
+        if (data) {
+          set(data);
+          isAuthorized.set(true);
+        }
       } catch(err) {
         // handlingErrors(e);
-        alert('data error...', err.value);
+        alert('Authorization error...', err.value);
       }
     },
     modify: (e) => update(n => updateOperatorProfile(n, e)),
