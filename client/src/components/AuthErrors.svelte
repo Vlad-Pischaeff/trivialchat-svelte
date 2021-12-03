@@ -21,5 +21,11 @@
     opacity: 0.8;
     margin: .2rem;
     padding: .5rem;
+    animation: show 1s ease-in-out;
+  }
+  @keyframes show {
+    from {
+      opacity: 0;
+    }
   }
 </style>
