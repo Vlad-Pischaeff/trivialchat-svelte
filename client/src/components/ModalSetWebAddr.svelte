@@ -4,18 +4,14 @@
 
   let site;
 
-  const closeModal = () => {
-    $modalAction = null;
-  }
+  const closeModal = () => $modalAction = null;
 
   const updateProfile = async () => {
     operator.modify({ site });
     closeModal();
   }
 
-  const initValues = () => {
-    site = $operator.site;
-  }
+  const initValues = () => site = $operator.site;
 
   $: if ($operator) initValues();
 </script>

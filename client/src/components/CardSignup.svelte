@@ -1,16 +1,14 @@
 <script>
-  import { switchToLogin, isAuthorized } from '../store/store'
-  let email;
-  let password;
+  import { switchToLogin, isAuthorized } from '../store/store';
 
-  function validate() {
-    $isAuthorized = true;
-  }
+  let email, password;
+
+  const handlerClick = () => $isAuthorized = true;
 
 </script>
 
 <div class="card {$switchToLogin ? "flip-180" : "flip0"} ">
-  <form class="card_form" autoComplete="off" on:submit|preventDefault={validate}>
+  <form class="card_form" autoComplete="off" on:submit|preventDefault={handlerClick}>
 
     <h2 class="card_form-title">Signup</h2>
 

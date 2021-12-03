@@ -5,9 +5,9 @@
   import MessageInput from '../components/MessageInput.svelte';
 </script>
 
-<Clients/>
-<div class="chat">
-  <Messages/>
-  <MessageInput />
-</div>
-<Templates/>
+  <Clients/>
+  <div class="chat">
+    <Messages/>
+    <MessageInput />
+  </div>
+  <Templates/>

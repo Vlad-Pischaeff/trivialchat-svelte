@@ -4,9 +4,7 @@
 
   let title, desc, site, greeting;
 
-  const closeModal = () => {
-    $modalAction = null;
-  }
+  const closeModal = () => $modalAction = null;
 
   const updateProfile = async () => {
     operator.modify({ title, desc, site, greeting });

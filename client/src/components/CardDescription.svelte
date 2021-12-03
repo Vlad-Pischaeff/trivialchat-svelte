@@ -1,15 +1,13 @@
 <script>
-  import { switchToLogin } from '../store/store'
-  let triggerAnimation = false
+  import { switchToLogin } from '../store/store';
+  let triggerAnimation = false;
 
-  function handleClick() {
-    $switchToLogin = !$switchToLogin
-    triggerAnimation = true
+  const handleClick = () => {
+    $switchToLogin = !$switchToLogin;
+    triggerAnimation = true;
   }
 
-  function handleAnimEnd() {
-    triggerAnimation = false
-  }
+  const handleAnimEnd = () => triggerAnimation = false;
 </script>
 
 <div class="description_form">

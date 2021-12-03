@@ -83,6 +83,7 @@
 }
 .templates_body-itemtext p {
   padding: .5rem;
+  background: gray;
 }
 
 .tab {

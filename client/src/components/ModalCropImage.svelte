@@ -30,9 +30,7 @@
     closeModal();
   }
 
-  const closeModal = () => {
-    $modalAction = null;
-  }
+  const closeModal = () => $modalAction = null;
 
   const getRatio = (img) => {
     let i = new Image(); 

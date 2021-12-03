@@ -1,12 +1,9 @@
 <script>
   import { switchToLogin, operator } from '../store/store';
 
-  let email;
-  let password;
+  let email, password;
 
-  const handlerClick = () => {
-    operator.init({ email, password });
-  }
+  const handlerClick = () => operator.init({ email, password });
 
 </script>
 

@@ -1,8 +1,6 @@
 <script>
   import { onMount } from 'svelte';
   import __AsideSlider from '../js/__AsideSlider'
-
-  // $: console.log('imgRef...',  imgRef);
   
   let imgRef;
 
