@@ -1,10 +1,15 @@
 <script>
-  import { switchToLogin, isAuthorized } from '../store/store';
+  import { switchToLogin, operator, authErrors } from '../store/store';
 
   let email, password;
 
-  const handlerClick = () => $isAuthorized = true;
+  const handlerClick = () => operator.signup({ email, password });
 
+  const focusEmail = () => email = null;
+
+  const focusPassword = () => password = null;
+
+  $: if (!email || !password) $authErrors = [];
 </script>
 
 <div class="card {$switchToLogin ? "flip-180" : "flip0"} ">
@@ -17,14 +22,14 @@
                 type="email" 
                 name="email" 
                 placeholder="Email" 
-                required
+                required on:focus={focusEmail}
                 bind:value={email} />
 
         <input  class="card_form-input" 
                 type="password" 
                 name="password" 
                 placeholder="Password" 
-                required
+                required on:focus={focusPassword}
                 bind:value={password} />
     </fieldset>
 
@@ -34,8 +39,9 @@
     </div>
 
     <div class="card_form-warnings">
-      <!-- <p class="card_form-warning">Warning 1</p>
-      <p class="card_form-warning">Warning 2</p> -->
+      {#each $authErrors as error }
+        <p class="card_form-warning">{error.msg}</p>
+      {/each}
     </div>
   </form>
 </div>

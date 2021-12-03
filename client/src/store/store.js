@@ -11,6 +11,7 @@ export const selectedUserIdx = writable(null);
 export const avatarTemp = writable(null);
 export const modalAction = writable(null);
 export const scrollList = writable(false);
+export const authErrors = writable([]);
 
 export const modalDialogs = writable({
   cropImage: ModalCropImage,
@@ -28,7 +29,13 @@ const createOperator = () => {
     } catch(err) {
       alert('Error while update User profile ...' + err.val);
     }
-  }
+  };
+
+  const handlingErrors = (err) => {
+    ( typeof err.val[0] === 'object' )
+      ? authErrors.set(err.val)
+      : authErrors.set([{'msg': err.val[0]}]);
+  };
 
 	return {
 		subscribe,
@@ -40,8 +47,20 @@ const createOperator = () => {
           isAuthorized.set(true);
         }
       } catch(err) {
-        // handlingErrors(e);
-        alert('Authorization error...', err.value);
+        console.log('Authorization error...', err);
+        handlingErrors(err);
+      }
+    },
+    signup: async (e) => {
+      try {
+        const data = await httpRequest('/api/auth/register', 'POST', e);
+        if (data) {
+          set(data);
+          isAuthorized.set(true);
+        }
+      } catch(err) {
+        console.log('registration errors...', err);
+        handlingErrors(err);
       }
     },
     modify: (e) => update(n => updateOperatorProfile(n, e)),
