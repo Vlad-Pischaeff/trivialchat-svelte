@@ -10,6 +10,7 @@
   function addNewAnswer() {
     answers.push(`${answers.length} new answer...`);
     operator.modify({'answer': answers});
+    $scrollList = true;
   };
 
   function addNewNote() {

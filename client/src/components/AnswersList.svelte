@@ -1,16 +1,32 @@
 <script>
-  import { operator } from '../store/store';
+  import { tick } from 'svelte';
+  import { operator, scrollList } from '../store/store';
   import AnswerElement from './AnswersElement.svelte';
 
-  let answers;
+  let answers, answersRef, timerId;
+  
+  const updateAnswers = async () => {
+    await tick();
+    answers = $operator.answer;
+  };
 
-  $: answers = $operator.answer;
+  $: if ($operator.answer) updateAnswers();
+  
+  $: if (!$scrollList) clearTimeout(timerId);
+
+  $: if (answersRef && $scrollList) {
+      answersRef.scrollIntoView({ behavior: 'smooth'});
+      timerId = setTimeout(() => $scrollList = false, 500);
+    }
+  // $: answers = $operator.answer;
 </script>
 
 {#if (answers && answers.length !== 0) }
 
   {#each answers as answer, idx }
-    <AnswerElement item={answer} index={idx} />
+    <div class="templates_body-item" bind:this={answersRef}>
+      <AnswerElement item={answer} index={idx} />
+    </div>
   {/each}
 
 {:else}

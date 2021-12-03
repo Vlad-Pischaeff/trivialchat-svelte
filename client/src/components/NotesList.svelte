@@ -6,10 +6,10 @@
   let notes, notesRef, timerId;
   
   const updateNotes = async () => {
-      await tick();
-      notes = $operator.notes;
-      // console.log('notes...',notes, notesRef);
-    }
+    await tick();
+    notes = $operator.notes;
+    // console.log('notes...',notes, notesRef);
+  }
 
   $: if ($operator.notes) updateNotes();
 

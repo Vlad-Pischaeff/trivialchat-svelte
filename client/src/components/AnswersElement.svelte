@@ -33,22 +33,19 @@
 
 </script>
 
-<div class="templates_body-item">
 
-  <ButtonSend handlerClick={sendMessage}/>
+<ButtonSend handlerClick={sendMessage}/>
 
-  <div class="templates_body-itemtext">
-    <p contenteditable={isEditable} bind:this={refAnswer} on:keypress={onKeyPress}>
-      {item}
-    </p>
-  </div>
-
-  {#if isEditable}
-    <ButtonSave handlerClick={saveAnswer}/>  
-  {:else}
-    <ButtonEdit handlerClick={editAnswer}/> 
-  {/if}
-
-  <ButtonDelete handlerClick={deleteAnswer}/> 
-
+<div class="templates_body-itemtext">
+  <p contenteditable={isEditable} bind:this={refAnswer} on:keypress={onKeyPress}>
+    {item}
+  </p>
 </div>
+
+{#if isEditable}
+  <ButtonSave handlerClick={saveAnswer}/>  
+{:else}
+  <ButtonEdit handlerClick={editAnswer}/> 
+{/if}
+
+<ButtonDelete handlerClick={deleteAnswer}/> 
