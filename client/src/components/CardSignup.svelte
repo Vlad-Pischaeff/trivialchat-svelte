@@ -34,14 +34,13 @@
     </fieldset>
 
     <div class="card_form-buttons">
-      <!-- <p class="card_form-forgot">Forgot password?..</p> -->
       <input class="card_form-submit" type="submit" value="signup"/>
     </div>
 
     <div class="card_form-warnings">
-      {#each $authErrors as error }
+      <!-- {#each $authErrors as error }
         <p class="card_form-warning">{error.msg}</p>
-      {/each}
+      {/each} -->
     </div>
   </form>
 </div>

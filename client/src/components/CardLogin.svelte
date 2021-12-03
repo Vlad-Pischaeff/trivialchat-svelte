@@ -39,9 +39,9 @@
     </div>
 
     <div class="card_form-warnings">
-      {#each $authErrors as error }
+      <!-- {#each $authErrors as error }
         <p class="card_form-warning">{error.msg}</p>
-      {/each}
-    </div>>
+      {/each} -->
+    </div>
   </form>
 </div>

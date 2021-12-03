@@ -2,7 +2,9 @@
   import Cardlogin from '../components/CardLogin.svelte'
   import Carddescription from '../components/CardDescription.svelte';
   import Cardsignup from '../components/CardSignup.svelte';
+  import AuthErrors from '../components/AuthErrors.svelte';
   import { isAuthorized } from '../store/store';
+
 
   let opacity = 1;
 
@@ -16,6 +18,7 @@
     <Cardlogin/>
     <Cardsignup/>
   </div>
+  <AuthErrors/>
 </section>
 
 <style>
