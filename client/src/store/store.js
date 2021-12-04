@@ -122,10 +122,10 @@ const createClients = () => {
     }),
     delete: () => update(n => {
       let idx = get(selectedUserIdx);
-      let arr = [...n];
-      arr.splice(idx, 1);
+      let users = [...n];
+      users.splice(idx, 1);
       selectedUserIdx.set(null);
-      return arr;
+      return users;
     }),
 		reset: () => set([])
 	};
