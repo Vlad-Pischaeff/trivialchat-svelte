@@ -3,6 +3,7 @@
 node_modules
 /build
 /.svelte-kit
+/client/.svelte-kit
 /package
 /keys/*
 .env
