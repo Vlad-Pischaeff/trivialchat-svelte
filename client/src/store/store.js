@@ -29,13 +29,9 @@ const createOperator = () => {
     } catch(err) {
       alert('Error while update User profile ...' + err.val);
     }
-  };
+  }
 
-  const handlingErrors = (err) => {
-    ( typeof err.val[0] === 'object' )
-      ? authErrors.set(err.val)
-      : authErrors.set([{'msg': err.val[0]}]);
-  };
+  const handlingErrors = err => authErrors.set(err.val);
 
 	return {
 		subscribe,
@@ -123,6 +119,13 @@ const createClients = () => {
       let idx = get(selectedUserIdx);
       n[idx]['msgarr'].push({ 'msg0': message, 'date': Date.now() });
       return n;
+    }),
+    delete: () => update(n => {
+      let idx = get(selectedUserIdx);
+      let arr = [...n];
+      arr.splice(idx, 1);
+      selectedUserIdx.set(null);
+      return arr;
     }),
 		reset: () => set([])
 	};
