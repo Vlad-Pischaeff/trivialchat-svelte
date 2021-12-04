@@ -12,7 +12,7 @@
   const saveNote = ()  => {
     isEditable = false;
     operator.setNote(refNote.innerText, index);
-  };
+  }
 
   const deleteNote = ()  => {
     isEditable = false;
@@ -23,9 +23,9 @@
     isEditable = true;
     await tick();
     refNote.focus();
-  };
+  }
 
-  const onKeyPress = e => { if (e.charCode === 13) saveNote(); };
+  const onKeyPress = e => { if (e.charCode === 13) saveNote(); }
   
 </script>
 
