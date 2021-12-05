@@ -6,7 +6,7 @@
 
   const sendMessage = () => {
     if (message && $selectedUserIdx !== undefined) {
-      clients.reply(message);
+      clients.reply(message, $selectedUserIdx);
       wstore.sendMessage(message);
       message = '';
     }

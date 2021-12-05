@@ -9,12 +9,12 @@
   let user_msgs, arr_last;
   let newMsgTrigger = true;
 
-  const deleteUser = () => clients.delete();
+  const deleteUser = () => clients.delete(index);
 
   const handlerClick = () => {
     newMsgTrigger = false;
     $selectedUserIdx = index;
-    clients.resetCounter();
+    clients.resetCounter(index);
   }
 
   $: {
