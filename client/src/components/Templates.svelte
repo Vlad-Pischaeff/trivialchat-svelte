@@ -6,7 +6,7 @@
 
   let index;
   let component = [AnswersList, NotesList]
-  console.log('templates...', component, index, component[0])
+
 </script>
 
 <aside class="templates">

@@ -104,9 +104,7 @@ const createClients = () => {
       } else {
         users.forEach((n, i) => {
           if (n.user === data.from) {
-            if (i !== get(selectedUserIdx)) {
-              n.cnt = n.cnt + 1;
-            }
+            if (i !== get(selectedUserIdx)) n.cnt += 1;
             n.msgarr.push({'msg1': data.msg, 'date': data.date});
           }
         })
