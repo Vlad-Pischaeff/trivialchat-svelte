@@ -82,6 +82,8 @@
   color: black;
 }
 .templates_body-itemtext p {
+  font-family: Esqadero;
+  font-size: .9rem;
   padding: .5rem;
   background: #828282;
 }

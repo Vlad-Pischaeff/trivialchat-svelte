@@ -53,7 +53,7 @@
     width: 80%;
   }
   .chat_input-text::placeholder {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
   .chat_input-text:focus {
     outline: none;
