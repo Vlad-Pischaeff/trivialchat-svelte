@@ -365,13 +365,16 @@
 
 	/* API FUNCTIONS */
 	cropper.showImage = function(src) {
-		cropping = false;
-		image = new Image();
-		image.onload = function() {
-			currentDimens = getScaledImageDimensions(image.width, image.height) ; // work out the scaling
-			draw();
-		};
-		image.src = src;
+		return new Promise(resolve => {
+			cropping = false;
+			image = new Image();
+			image.src = src;
+			image.onload = function() {
+				currentDimens = getScaledImageDimensions(image.width, image.height) ; // work out the scaling
+				draw();
+				return resolve(currentDimens); 		// ....await for cloading image, and its dimensions a known
+			};
+		});
 	};
 
 	cropper.startCropping = function() {
