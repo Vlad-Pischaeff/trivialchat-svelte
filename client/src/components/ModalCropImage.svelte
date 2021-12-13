@@ -1,4 +1,6 @@
 <script>
+import { onMount, tick } from "svelte";
+
   import { operator, avatarTemp, modalAction } from "../store/store";
   import ButtonClose from './ButtonClose.svelte';
 
@@ -40,11 +42,12 @@
     i.src = img;
   }
 
-  const setCanvasRatio = (ref) => {
+  const setCanvasRatio = async (ref) => {
     ref.width = 300 * ratio;
     cropper.start(cropCanvasRef, 1);
-    cropper.showImage($avatarTemp); 
+    await cropper.showImage($avatarTemp); 
     cropper.startCropping();
+    getCroppedImage();
   }
 
   $: if (ratio) setCanvasRatio(cropCanvasRef);
