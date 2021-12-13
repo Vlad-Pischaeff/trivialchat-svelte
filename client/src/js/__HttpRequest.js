@@ -1,7 +1,9 @@
 function UserException(val, status) {
+  this.val = ( typeof val[0] === 'object' )
+    ? val
+    : [{'msg': val[0]}];
   this.status = status;
-  this.val = val;
-};
+}
 
 export const httpRequest = async (url, method = 'GET', body = null, token = null) => {
   try {
@@ -12,11 +14,10 @@ export const httpRequest = async (url, method = 'GET', body = null, token = null
     const response = await fetch(url, {method, body, headers});
     const data = await response.json();
     if (!response.ok) {
-      // console.log('response data...', data);
       throw new UserException(Object.values(data), response.status); 
     }
     return data;
   } catch (e) {
     throw e;
   }
-};
+}

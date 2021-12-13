@@ -1,6 +1,6 @@
 <script>
   import { tick } from 'svelte';
-  import { operator, clients } from '../store/store';
+  import { operator, clients, selectedUserIdx } from '../store/store';
   import { wstore } from '../store/wstore';
   import ButtonEdit from './ButtonEdit.svelte';
   import ButtonSave from './ButtonSave.svelte';
@@ -12,7 +12,7 @@
   let refAnswer;
 
   const sendMessage = ()  => {
-    clients.reply(item);
+    clients.reply(item, $selectedUserIdx);
     wstore.sendMessage(item);
   };
   

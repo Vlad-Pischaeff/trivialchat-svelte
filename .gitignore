@@ -2,7 +2,7 @@
 .gitignore
 node_modules
 /build
-/.svelte-kit
+.svelte-kit
 /package
 /keys/*
 .env

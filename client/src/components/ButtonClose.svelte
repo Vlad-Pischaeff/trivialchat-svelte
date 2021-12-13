@@ -4,7 +4,7 @@
 </script>
 
 <div class="btn" style="--h: {size}">
-  <div class="btn_close" on:click={handlerClose}></div>
+  <div class="btn_close" on:click|stopPropagation={handlerClose}></div>
 </div>
 
 <style>

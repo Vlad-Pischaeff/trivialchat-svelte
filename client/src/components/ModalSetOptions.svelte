@@ -22,7 +22,7 @@
 </script>
 
 <div class="modal_bg">
-  <section  class="modal_form" style="width: 80%">
+  <section  class="modal_form" style="width: 60%">
 
     <form class="forms" autoComplete="off" on:submit|preventDefault={updateProfile}>
       <section class="forms_header">

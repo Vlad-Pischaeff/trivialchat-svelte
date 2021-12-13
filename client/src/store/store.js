@@ -27,15 +27,11 @@ const createOperator = () => {
       const data = await httpRequest(`/api/auth/user/${n._id}`, 'PATCH', e, n.token);
       if (data) set({ ...n, ...data});
     } catch(err) {
-      alert('Error while update User profile ...' + err.val);
+      handlingErrors(err);
     }
-  };
+  }
 
-  const handlingErrors = (err) => {
-    ( typeof err.val[0] === 'object' )
-      ? authErrors.set(err.val)
-      : authErrors.set([{'msg': err.val[0]}]);
-  };
+  const handlingErrors = err => authErrors.set(err.val);
 
 	return {
 		subscribe,
@@ -47,7 +43,6 @@ const createOperator = () => {
           isAuthorized.set(true);
         }
       } catch(err) {
-        console.log('Authorization error...', err);
         handlingErrors(err);
       }
     },
@@ -59,7 +54,6 @@ const createOperator = () => {
           isAuthorized.set(true);
         }
       } catch(err) {
-        console.log('registration errors...', err);
         handlingErrors(err);
       }
     },
@@ -93,35 +87,41 @@ export const operator = createOperator();
 const createClients = () => {
 	const { subscribe, set, update } = writable([]);
 
+  function User(user, messages, date) {
+    this.user = user;
+    this.pict = randomInteger(0,46);
+    this.msgarr = [{ 'msg1': messages, 'date': date }];
+    this.cnt = 1;
+  }
+
 	return {
 		subscribe,
     modify: (data) => update(n => {
       let users = [ ...n ];
       if (!users.some(n => n.user === data.from)) {
-        users.push({ 'user': data.from, 
-                    'pict': randomInteger(0,46), 
-                    'msgarr': [{ 'msg1': data.msg, 'date': data.date }], 
-                    'cnt': 1});
+        let client = new User(data.from, data.msg, data.date);
+        users.push(client);
       } else {
         users.forEach((n, i) => {
           if (n.user === data.from) {
-            if (i !== get(selectedUserIdx)) {
-              n.cnt = n.cnt + 1;
-            }
+            if (i !== get(selectedUserIdx)) n.cnt += 1;
             n.msgarr.push({'msg1': data.msg, 'date': data.date});
           }
         })
       }
       return users;
     }),
-    resetCounter: () => update(n => {
-      let idx = get(selectedUserIdx);
+    resetCounter: (idx) => update(n => {
       n[idx]['cnt'] = 0;
       return n;
     }),
-    reply: (message) => update(n => {
-      let idx = get(selectedUserIdx);
+    reply: (message, idx) => update(n => {
       n[idx]['msgarr'].push({ 'msg0': message, 'date': Date.now() });
+      return n;
+    }),
+    delete: (idx) => update(n => {
+      n.splice(idx, 1);
+      selectedUserIdx.set(null);
       return n;
     }),
 		reset: () => set([])

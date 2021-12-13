@@ -9,10 +9,12 @@
   let user_msgs, arr_last;
   let newMsgTrigger = true;
 
+  const deleteUser = () => clients.delete(index);
+
   const handlerClick = () => {
     newMsgTrigger = false;
     $selectedUserIdx = index;
-    clients.resetCounter();
+    clients.resetCounter(index);
   }
 
   $: {
@@ -33,7 +35,7 @@
   </div>
   <div class="clients_item-tools">
     <div class="btn_close-client">
-      <ButtonClose size="1rem"/>
+      <ButtonClose size="1rem" handlerClose={deleteUser}/>
     </div>
     <div class="counter">
       {item.cnt ? item.cnt : ''}
