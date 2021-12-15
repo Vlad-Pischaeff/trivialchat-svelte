@@ -55,6 +55,8 @@ export function tooltip(element) {
 	
 	return {
 		destroy() {
+			let tips =  document.querySelectorAll('.tip');
+			if (tips) tips.forEach(el => el.remove());
 			element.removeEventListener('mouseover', mouseOver);
 			element.removeEventListener('mouseleave', mouseLeave);
 			element.removeEventListener('mousemove', mouseMove);
