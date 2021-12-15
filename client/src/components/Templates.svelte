@@ -11,16 +11,22 @@
 
 <aside class="templates">
   <TemplatesHeader bind:idx={index}/>
+  <section class="empty"></section>
   <section class="templates_body">
     <div class="content">
       <svelte:component this={component[index]} />
     </div>
   </section>
+  <section class="empty"></section>
   <TemplatesFooter idx={index}/>
 </aside>
 
 <style>
   .content {
     margin: .5rem;
+  }
+  .empty {
+    height: 1rem;
+    width: 100%;
   }
 </style>
