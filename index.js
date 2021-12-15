@@ -36,6 +36,7 @@ const emitter = require('./routes/service')
 app.use(express.json({ extended: true }))
 app.use(cors())
 
+app.use('/upload', express.static(path.join(__dirname, 'upload' )))
 app.use('/img', express.static(path.join(__dirname, 'img' )))
 app.use('/fonts', express.static(path.join(__dirname, 'fonts' )))
 app.use('/css', express.static(path.join(__dirname, 'css' )))

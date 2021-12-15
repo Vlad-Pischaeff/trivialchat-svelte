@@ -4,6 +4,7 @@ import { randomInteger } from '../helpers/functions';
 import ModalCropImage from '../components/ModalCropImage.svelte';
 import ModalSetWebAddr from '../components/ModalSetWebAddr.svelte';
 import ModalSetOptions from '../components/ModalSetOptions.svelte';
+import ModalHelp from '../components/ModalHelp.svelte';
 
 export const switchToLogin = writable(true);
 export const isAuthorized = writable(false);
@@ -17,6 +18,7 @@ export const modalDialogs = writable({
   cropImage: ModalCropImage,
   setWebAddr: ModalSetWebAddr,
   setOptions: ModalSetOptions,
+  showHelp: ModalHelp,
 });
 
 const createOperator = () => {
