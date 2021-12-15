@@ -8,7 +8,7 @@
   function noteObject(text) {
     this.id = {};
     this.text = text;
-  }l
+  };
 
   const updateNotes = async () => {
     await tick();
