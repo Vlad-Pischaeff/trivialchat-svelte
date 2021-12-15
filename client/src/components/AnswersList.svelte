@@ -5,9 +5,14 @@
 
   let answers, answersRef, timerId;
   
+  function answerObject(text) {
+    this.id = {};
+    this.text = text;
+  };
+
   const updateAnswers = async () => {
     await tick();
-    answers = $operator.answer;
+    answers = $operator.answer.map(n => new answerObject(n));
   };
 
   $: if ($operator.answer) updateAnswers();
@@ -17,15 +22,15 @@
   $: if (answersRef && $scrollList) {
       answersRef.scrollIntoView({ behavior: 'smooth'});
       timerId = setTimeout(() => $scrollList = false, 500);
-    }
-  // $: answers = $operator.answer;
+    };
+
 </script>
 
 {#if (answers && answers.length !== 0) }
 
-  {#each answers as answer, idx }
+  {#each answers as answer, idx (answer.id)}
     <div class="templates_body-item" bind:this={answersRef}>
-      <AnswerElement item={answer} index={idx} />
+      <AnswerElement item={answer.text} index={idx} />
     </div>
   {/each}
 

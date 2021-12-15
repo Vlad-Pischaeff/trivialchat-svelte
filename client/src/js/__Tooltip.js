@@ -44,7 +44,8 @@ export function tooltip(element) {
 	}
 
 	function mouseLeave() {
-		document.body.removeChild(div);
+		// document.body.removeChild(div);
+		div.remove();
 		// NOTE: restore the `title` attribute
 		element.setAttribute('title', title);
 	}

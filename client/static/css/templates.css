@@ -51,7 +51,7 @@
 .templates_body-item:hover .templates_body-itemtext{
   background: #777;
 }
-.templates_body-item:hover .templates_body-itemtext p{
+.templates_body-item:hover .templates_body-itemtext p[contenteditable='false']{
   color: aqua;
   text-shadow: 0 0 7px aqua;
 }
@@ -79,20 +79,19 @@
 .templates_body-itemicon:hover {
   filter: invert(100%);
 }
-
 .templates_body-itemtext {
   flex: 1 1 auto;
   padding-right: .5rem;
   background: #828282;
 }
-.templates_body-itemtext p[contenteditable='true'] {
-  background: #eee;
-  color: black;
-}
 .templates_body-itemtext p {
   font-family: Esqadero;
   font-size: .9rem;
   padding: .5rem;
+}
+.templates_body-itemtext p[contenteditable='true'] {
+  background: #eee;
+  color: black;
 }
 
 .tab {
