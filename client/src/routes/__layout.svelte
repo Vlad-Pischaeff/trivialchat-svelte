@@ -5,9 +5,13 @@
 	import Footer from "../components/Footer.svelte";
 	import Logo from "../components/Logo.svelte";
 	import { isAuthorized, modalAction, modalDialogs } from "../store/store";
+	// import { wstore } from "../store/wstore";
 	let leftWidth;
 
-	$: leftWidth = $isAuthorized ? '8rem' : '10rem' ;
+	$: {
+		leftWidth = $isAuthorized ? '8rem' : '10rem' ;
+		// console.log('layout...', $wstore, $isAuthorized);
+		}
 </script>
 
 <main>

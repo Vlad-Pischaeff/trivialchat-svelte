@@ -1,28 +1,35 @@
-import { writable, get } from 'svelte/store';
-import { operator, clients, selectedUserIdx } from './store';
+import { writable, get, derived } from 'svelte/store';
+import { operator, clients, selectedUserIdx, isAuthorized } from './store';
 
 let { hostname, protocol : httpPrefix } = window.location;
 let wsPrefix = httpPrefix === 'http:' ? 'ws:' : 'wss:';
 let ws_url = `${wsPrefix}//${hostname}:5001/ws`;
-
 export const url = writable(`${httpPrefix}//${hostname}:5001`);
 
+let socket, manager;
+operator.subscribe(n => manager = n);
+
 const messageStore = writable('');
-const manager = get(operator);
 
-const socket = new WebSocket(ws_url + '?userName=' + manager.email);
+export const wsInitialized = derived(isAuthorized, $isAuthorized => {
+	if ($isAuthorized) {
+		const { email } = manager;
+		socket = new WebSocket(ws_url + '?userName=' + email);
 
-// Connection opened
-socket.addEventListener('open', function (event) {
-	let email = manager.email;
-	socket.send(JSON.stringify({ 'newManagerConnection': email, 'msg': 'initial connection...', 'date': Date.now() }));
-});
+		socket.addEventListener('open', function (event) {
+			socket.send(JSON.stringify({ 'newManagerConnection': email, 'msg': 'initial connection...', 'date': Date.now() }));
+		});
+	
+		socket.addEventListener('message', function (event) {
+			clients.modify(JSON.parse(event.data));
+		});
 
-// Listen for messages
-socket.addEventListener('message', function (event) {
-	let data = JSON.parse(event.data);
-	console.log('received message from', event);
-	clients.modify(data);
+		console.log('init WS...', socket);
+		return true;
+	} else {
+		if (socket) socket.close();
+		return false;
+	}
 });
 
 const sendMessage = (msg) => {

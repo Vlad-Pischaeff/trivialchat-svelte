@@ -83,8 +83,9 @@ const start = async () => {
 
       ws.isAlive = true
       wsUsers[query.userName] = ws
-
+      // console.log('wsUsers...', Object.keys(wsUsers));
       ws.on('message', message => {
+        // console.log(' message...\t', message, ' destination...\t', countedSites[query.userHost], countedSites);
         try {
           let data = JSON.parse(message)
           // data.from = message from client to site manager

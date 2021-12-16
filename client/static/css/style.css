@@ -33,12 +33,13 @@ body {
   overflow: hidden;
 }
 main {
+  display: inline-block;
   width: 100vw;
   height: calc(100vh - var(--height-footer));
   background: black;
-  display: inline-block;
 }
 footer {
+  display: inline-block;
   height: var(--height-footer);
   width: 100vw;
   line-height: var(--height-footer);
@@ -47,13 +48,13 @@ footer {
   text-transform: uppercase;
   text-align: center;
 }
-hr {
-  margin: .5rem 0 .5rem 0;
-}
 footer p {
   color:gray;
   font-size: calc(var(--height-footer) / 4);
   letter-spacing: .4rem;
+}
+hr {
+  margin: .5rem 0 .5rem 0;
 }
 input::placeholder {
   color: gray;

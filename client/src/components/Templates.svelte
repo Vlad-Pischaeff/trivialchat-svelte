@@ -26,7 +26,7 @@
     margin: .5rem;
   }
   .empty {
-    height: 1rem;
+    flex: 0 0 1rem;
     width: 100%;
   }
 </style>

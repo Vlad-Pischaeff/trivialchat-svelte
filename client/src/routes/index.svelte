@@ -5,9 +5,9 @@
   import AuthErrors from '../components/AuthErrors.svelte';
   import { isAuthorized } from '../store/store';
 
-  let opacity = 1;
+  let opacity;
 
-  $: if ($isAuthorized) opacity = 0;
+  $: opacity = $isAuthorized ? 0 : 1;
 </script>
 
 <section class="auth" style="opacity: {opacity};">
