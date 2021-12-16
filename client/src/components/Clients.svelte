@@ -1,5 +1,5 @@
 <script>
-  import { clients, operator, mainStore, prevStore } from '../store/store';
+  import { clients, operator, mainStore} from '../store/store';
   import Client from './Client.svelte';
   let currentClients;
   const { email } = $operator;
