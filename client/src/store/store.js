@@ -8,11 +8,13 @@ import ModalHelp from '../components/ModalHelp.svelte';
 
 export const switchToLogin = writable(true);
 export const isAuthorized = writable(false);
+export const setGreenIndicator = writable(false);
 export const selectedUserIdx = writable(null);
 export const avatarTemp = writable(null);
 export const modalAction = writable(null);
 export const scrollList = writable(false);
 export const authErrors = writable([]);
+
 
 export const modalDialogs = writable({
   cropImage: ModalCropImage,

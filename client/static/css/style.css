@@ -39,7 +39,9 @@ main {
   background: black;
 }
 footer {
-  display: inline-block;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   height: var(--height-footer);
   width: 100vw;
   line-height: var(--height-footer);
@@ -49,6 +51,7 @@ footer {
   text-align: center;
 }
 footer p {
+  flex: 1 1 auto;
   color:gray;
   font-size: calc(var(--height-footer) / 4);
   letter-spacing: .4rem;
