@@ -1,4 +1,4 @@
-import { writable, get } from 'svelte/store';
+import { writable, get, derived } from 'svelte/store';
 import { httpRequest } from '../js/__HttpRequest';
 import { randomInteger } from '../helpers/functions';
 import ModalCropImage from '../components/ModalCropImage.svelte';
@@ -14,7 +14,7 @@ export const avatarTemp = writable(null);
 export const modalAction = writable(null);
 export const scrollList = writable(false);
 export const authErrors = writable([]);
-
+let obj = {};
 
 export const modalDialogs = writable({
   cropImage: ModalCropImage,
@@ -133,3 +133,9 @@ const createClients = () => {
 }
 
 export const clients = createClients();
+
+// export const mainStore = derived([clients, operator], 
+//       ([$clients, $operator]) => {
+//         obj = { ...obj, [$operator.email]: $clients};
+//         return  obj;
+//       });

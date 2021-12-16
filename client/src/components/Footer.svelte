@@ -38,14 +38,14 @@
 	}
 	@keyframes signal {
   0% {
-    background: rgb(205, 255, 154);
+    background: rgb(115, 128, 123);
   }
   50% {
-    background: chartreuse;
-		box-shadow: 0 0 4px chartreuse;
+    background: aquamarine;
+		box-shadow: 0 0 4px aquamarine;
   }
 	100% {
-		background: rgb(205, 255, 154);
+		background: rgb(115, 128, 123);
 	}
 }
 </style>

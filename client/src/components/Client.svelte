@@ -7,12 +7,10 @@
   export let item;
 
   let user_msgs, arr_last;
-  let newMsgTrigger = true;
 
   const deleteUser = () => clients.delete(index);
 
   const handlerClick = () => {
-    newMsgTrigger = false;
     $selectedUserIdx = index;
     clients.resetCounter(index);
   }
@@ -20,13 +18,13 @@
   $: {
       user_msgs = item.msgarr.filter(n => n.msg1);
       arr_last = user_msgs.length - 1;
-      if (item.cnt) newMsgTrigger = true;
     }
+
 </script>
 
 <div class={"clients_item " + ($selectedUserIdx === index ? "client-selected" : "")} on:click={handlerClick}>
   <div class="clients_item-img">
-    <div class={"clients_item-img-pulse " + (newMsgTrigger && $selectedUserIdx !== index ? 'pulse' : '')}></div>
+    <div class={"clients_item-img-pulse " + (item.cnt !== 0 && $selectedUserIdx !== index ? 'pulse' : '')}></div>
     <img class="clients_item-img-img" src={`${$url}/img/users/user${item.pict}.png`} alt=''/>
   </div>
   <div class="clients_item-status">
