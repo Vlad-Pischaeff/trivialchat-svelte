@@ -45,6 +45,7 @@ const createOperator = () => {
         if (data) {
           set(data);
           isAuthorized.set(true);
+          restoreSession(data);
         }
       } catch(err) {
         handlingErrors(err);
@@ -129,10 +130,7 @@ const createClients = () => {
       return n;
     }),
 		reset: () => set([]),
-    restore: (n) => {
-      console.log('restore...', n)
-      if (n) set(n)
-    }
+    restore: (n) => { if (n) set(n) }
 	};
 }
 
@@ -144,12 +142,21 @@ export const mainStore = derived([clients, operator],
         return  obj;
       });
 
-export const prevStore = derived(operator, 
-        ($operator) => {
-          if (obj[$operator.email]) {
-            clients.restore(obj[$operator.email]);
-          } else {
-            clients.restore([]);
-          }
-          console.log('prevStore operator...', $operator.email, get(clients));
-        });
+// export const prevStore = derived(operator, 
+//         ($operator) => {
+//           if (obj[$operator.email]) {
+//             clients.restore(obj[$operator.email]);
+//           } else {
+//             clients.restore([]);
+//           }
+//           console.log('prevStore operator...', $operator.email, get(clients));
+//         });
+
+const restoreSession = (operator) => { 
+  let { email } = operator;
+  obj[email]
+    ? clients.restore(obj[email])
+    : clients.restore([]);
+
+    console.log('restoreSession...', email, get(clients));
+}

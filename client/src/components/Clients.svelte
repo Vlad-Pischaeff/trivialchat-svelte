@@ -10,10 +10,8 @@
   }
 
   // $: currentClients = $clients.map(n => new clientObject(n));
-  $: {
-    currentClients = $mainStore[email].map(n => new clientObject(n));
-    console.log('currentClients...', $mainStore, $mainStore[email], currentClients, $prevStore);
-    }
+  $: currentClients = $mainStore[email].map(n => new clientObject(n));
+
 </script>
 
 <div class="clients">
