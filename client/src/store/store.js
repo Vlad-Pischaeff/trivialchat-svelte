@@ -136,22 +136,14 @@ const createClients = () => {
 
 export const clients = createClients();
 
+// set store with diferent operator's chats
 export const mainStore = derived([clients, operator], 
       ([$clients, $operator]) => {
         obj = { ...obj, [$operator.email]: $clients};
         return  obj;
       });
 
-// export const prevStore = derived(operator, 
-//         ($operator) => {
-//           if (obj[$operator.email]) {
-//             clients.restore(obj[$operator.email]);
-//           } else {
-//             clients.restore([]);
-//           }
-//           console.log('prevStore operator...', $operator.email, get(clients));
-//         });
-
+// restore operator chat after login
 const restoreSession = (operator) => { 
   let { email } = operator;
   obj[email]
