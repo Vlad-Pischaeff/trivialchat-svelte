@@ -5,9 +5,11 @@
   let messages = [], msgRef;
 
   $: if (msgRef && messages) msgRef.scrollIntoView({ behavior: 'smooth' }); 
+  
   $: ($selectedUserIdx === null) 
         ? messages = []
         : messages = $clients[$selectedUserIdx]?.msgarr;
+
 </script>
 
 <div class="chat_field">

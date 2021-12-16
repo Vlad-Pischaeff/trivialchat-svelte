@@ -1,19 +1,19 @@
 <script>
-  import { clients, operator } from '../store/store';
+  import { clients, operator, mainStore, prevStore } from '../store/store';
   import Client from './Client.svelte';
   let currentClients;
-  // const { email } = $operator;
+  const { email } = $operator;
 
   function clientObject(item) {
     this.id = {};
     this.item = item;
   }
 
-  $: currentClients = $clients.map(n => new clientObject(n));
-  // $: {
-  //   currentClients = $mainStore[email].map(n => new clientObject(n));
-  //   console.log('currentClients...', $mainStore, $mainStore[email], currentClients);
-  //   }
+  // $: currentClients = $clients.map(n => new clientObject(n));
+  $: {
+    currentClients = $mainStore[email].map(n => new clientObject(n));
+    console.log('currentClients...', $mainStore, $mainStore[email], currentClients, $prevStore);
+    }
 </script>
 
 <div class="clients">

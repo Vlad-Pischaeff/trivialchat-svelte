@@ -128,14 +128,28 @@ const createClients = () => {
       selectedUserIdx.set(null);
       return n;
     }),
-		reset: () => set([])
+		reset: () => set([]),
+    restore: (n) => {
+      console.log('restore...', n)
+      if (n) set(n)
+    }
 	};
 }
 
 export const clients = createClients();
 
-// export const mainStore = derived([clients, operator], 
-//       ([$clients, $operator]) => {
-//         obj = { ...obj, [$operator.email]: $clients};
-//         return  obj;
-//       });
+export const mainStore = derived([clients, operator], 
+      ([$clients, $operator]) => {
+        obj = { ...obj, [$operator.email]: $clients};
+        return  obj;
+      });
+
+export const prevStore = derived(operator, 
+        ($operator) => {
+          if (obj[$operator.email]) {
+            clients.restore(obj[$operator.email]);
+          } else {
+            clients.restore([]);
+          }
+          console.log('prevStore operator...', $operator.email, get(clients));
+        });

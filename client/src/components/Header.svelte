@@ -1,10 +1,13 @@
 <script>
   import { tooltip } from '../js/__Tooltip';
-  import { isAuthorized } from "../store/store";
+  import { isAuthorized, selectedUserIdx } from "../store/store";
 
   const handlerClick = () => logout();
 
-  const logout = () => $isAuthorized = false;
+  const logout = () =>  {
+    $isAuthorized = false;
+    $selectedUserIdx = null;
+  }
 
 </script>
 
