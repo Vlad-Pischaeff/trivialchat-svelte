@@ -1,5 +1,6 @@
 <script>
   import { modalAction } from "../store/store";
+  import { url } from '../store/wstore';
   import ButtonClose from './ButtonClose.svelte';
 
   const closeModal = () => $modalAction = null;
@@ -23,7 +24,7 @@
             &lt;!-- online manager --&gt;
       &lt;section class="tchat"&gt;
           &lt;div class="tchat_wrap none" id="tchat_wrap"&gt; 
-                &lt;iframe src="https://tchat.scope.cf:5001/tchat" frameborder="0" scrolling="no"&gt; &lt;/iframe&gt;
+                &lt;iframe src="{url}/tchat" frameborder="0" scrolling="no"&gt; &lt;/iframe&gt;
                 &lt;div class="tchat_wrap-close" id="tchat_close"&gt;&lt;/div&gt;
           &lt;/div&gt;
           &lt;div class="tchat_icon" id="tchat_button"&gt;
@@ -35,7 +36,7 @@
           </pre>
         </article>
         <p>and insert it on your site, for example, in a footer...</p>
-        <p>Then connect <a href="https://tchat.scope.cf:5001/upload/style.css">styles</a> to Your site...</p>
+        <p>Then connect <a href="{url}/upload/style.css">styles</a> to Your site...</p>
         <p>Make sure that the site name in the profile is correct...</p>
         <p>That's all...</p>
       </div>

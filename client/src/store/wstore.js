@@ -21,12 +21,22 @@ export const wsInitialized = derived(isAuthorized, $isAuthorized => {
 		const { email } = manager;
 		socket = new WebSocket(ws_url + '?userName=' + email);
 
-		socket.addEventListener('open', function (event) {
+		socket.addEventListener('open', () => {
 			socket.send(JSON.stringify({ 'newManagerConnection': email, 'msg': 'initial connection...', 'date': Date.now() }));
 		});
 	
-		socket.addEventListener('message', function (event) {
+		socket.addEventListener('message', event => {
 			clients.modify(JSON.parse(event.data));
+		});
+
+		socket.addEventListener('close', () => {
+			$isAuthorized = false;
+			$selectedUserIdx = null;
+		});
+
+		socket.addEventListener('error', () => {
+			$isAuthorized = false;
+			$selectedUserIdx = null;
 		});
 
 		return true;
