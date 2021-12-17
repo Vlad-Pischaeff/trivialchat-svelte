@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
-  import __AsideSlider from '../js/__AsideSlider'
+  import __AsideSlider from '../js/__AsideSlider';
+  import { url } from '../store/wstore';
   
   let imgRef;
 
@@ -16,5 +17,5 @@
 </script>
 
 <aside bind:this={imgRef} class="left_aside">
-  <div class="aside_img" style="background-image: url('./img/img36.jpg'); opacity: .85"></div>
+  <div class="aside_img" style="background-image: url({url}/img/img36.jpg); opacity: .85"></div>
 </aside>
