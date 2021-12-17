@@ -32,6 +32,12 @@ export const wsInitialized = derived(isAuthorized, $isAuthorized => {
 	}
 });
 
+export const enabledGreenLight = derived(wsInitialized, $wsInitialized => {
+	return $wsInitialized === undefined 
+		? false 
+		: $wsInitialized;
+});
+
 const sendMessage = (msg) => {
 	if (socket.readyState <= 1) {
 		let client = get(clients);

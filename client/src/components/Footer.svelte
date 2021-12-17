@@ -1,12 +1,12 @@
 <script>
-  import { setGreenIndicator } from '../store/store';
+	import { enabledGreenLight } from '../store/wstore';
 </script>
 
 <footer>
-	<div class={$setGreenIndicator ? "indicator_desc-on" : "indicator_desc-off"}>
-		WS
+	<div class={$enabledGreenLight ? "indicator_desc-on" : "indicator_desc-off"}>
+		ws
 	</div>
-	<div class={$setGreenIndicator ? "indicator-on" : "indicator-off"}>
+	<div class={$enabledGreenLight ? "indicator-on" : "indicator-off"}>
 	</div>
 	<p>Trivial Chat 2021 &copy;</p>
 </footer>

@@ -3,10 +3,6 @@
   import Messages from '../components/Messages.svelte';
   import Templates from '../components/Templates.svelte';
   import MessageInput from '../components/MessageInput.svelte';
-  import { wsInitialized } from '../store/wstore';
-  import { setGreenIndicator } from '../store/store';
-
-  $: $setGreenIndicator = $wsInitialized;
 </script>
 
   <Clients/>
