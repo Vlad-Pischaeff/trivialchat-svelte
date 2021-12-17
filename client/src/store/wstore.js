@@ -29,14 +29,9 @@ export const wsInitialized = derived(isAuthorized, $isAuthorized => {
 			clients.modify(JSON.parse(event.data));
 		});
 
-		socket.addEventListener('close', () => {
-			$isAuthorized = false;
-			$selectedUserIdx = null;
-		});
-
 		socket.addEventListener('error', () => {
-			$isAuthorized = false;
-			$selectedUserIdx = null;
+			if ($isAuthorized) $isAuthorized = false;
+			if ($selectedUserIdx) $selectedUserIdx = null;
 		});
 
 		return true;
