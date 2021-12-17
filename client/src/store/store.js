@@ -136,7 +136,7 @@ const createClients = () => {
 export const clients = createClients();
 
 // set store with diferent operator's chats
-export const mainStore = derived([clients, operator], 
+export const sessionStore = derived([clients, operator], 
       ([$clients, $operator]) => {
         obj = { ...obj, [$operator.email]: $clients};
         return  obj;
@@ -148,6 +148,4 @@ const restoreSession = (operator) => {
   obj[email]
     ? clients.restore(obj[email])
     : clients.restore([]);
-
-    console.log('restoreSession...', email, get(clients));
 }

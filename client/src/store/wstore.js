@@ -24,7 +24,7 @@ export const wsInitialized = derived(isAuthorized, $isAuthorized => {
 			clients.modify(JSON.parse(event.data));
 		});
 
-		console.log('init WS...', socket, $isAuthorized);
+		console.log('wstore, wsInitialized...', socket, $isAuthorized);
 		return true;
 	} else {
 		if (socket) socket.close();

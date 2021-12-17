@@ -1,5 +1,5 @@
 <script>
-  import { clients, operator, mainStore} from '../store/store';
+  import { operator, sessionStore } from '../store/store';
   import Client from './Client.svelte';
   let currentClients;
   const { email } = $operator;
@@ -10,7 +10,7 @@
   }
 
   // $: currentClients = $clients.map(n => new clientObject(n));
-  $: currentClients = $mainStore[email].map(n => new clientObject(n));
+  $: currentClients = $sessionStore[email].map(n => new clientObject(n));
 
 </script>
 
