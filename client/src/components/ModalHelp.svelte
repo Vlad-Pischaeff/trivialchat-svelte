@@ -56,7 +56,7 @@
     overflow: auto;
     margin: 1rem;
     padding: .5rem;
-    background: lightblue;
+    background: #add8e675;
   }
   pre {
     color: black;
