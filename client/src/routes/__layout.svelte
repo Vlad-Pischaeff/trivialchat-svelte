@@ -9,6 +9,7 @@
 	let leftWidth;
 
 	$: leftWidth = $isAuthorized ? '8rem' : '10rem';
+
 </script>
 
 <main>

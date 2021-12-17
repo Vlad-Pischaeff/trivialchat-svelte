@@ -2,6 +2,7 @@
 const config = {
 	kit: {
 		// hydrate the <div id="svelte"> element in src/app.html
+    host: 'localhost',
 		target: '#svelte',
     vite: () => ({
       server: {

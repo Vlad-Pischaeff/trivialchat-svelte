@@ -8,6 +8,7 @@
   let opacity;
 
   $: opacity = $isAuthorized ? 0 : 1;
+
 </script>
 
 <section class="auth" style="opacity: {opacity};">

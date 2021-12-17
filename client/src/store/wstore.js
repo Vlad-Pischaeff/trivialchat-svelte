@@ -1,12 +1,22 @@
 import { writable, get, derived } from 'svelte/store';
 import { operator, clients, selectedUserIdx, isAuthorized } from './store';
 
-let { hostname, protocol : httpPrefix } = window.location;
-let wsPrefix = httpPrefix === 'http:' ? 'ws:' : 'wss:';
-let ws_url = `${wsPrefix}//${hostname}:5001/ws`;
-export const url = writable(`${httpPrefix}//${hostname}:5001`);
+let socket, manager, hostname, port, httpPrefix;
+let { DEV } = import.meta.env;
 
-let socket, manager;
+DEV
+	? ({ 	VITE_DEV_NAME : hostname, 
+				VITE_DEV_PORT : port, 
+				VITE_DEV_PREFIX : httpPrefix } = import.meta.env)
+	:	({ 	VITE_NAME : hostname, 
+				VITE_PORT : port, 
+				VITE_PREFIX : httpPrefix } = import.meta.env);
+
+let wsPrefix = httpPrefix === 'http' ? 'ws' : 'wss';
+let ws_url = `${wsPrefix}://${hostname}:${port}/ws`;
+export const url = `${httpPrefix}://${hostname}:${port}`;
+// console.log('wstore..., env', import.meta.env)
+
 operator.subscribe(n => manager = n);
 
 const messageStore = writable('');

@@ -6,5 +6,5 @@
 			"$lib/*": ["src/lib/*"]
 		}
 	},
-	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.svelte", "static/croppr.js"]
+	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.svelte", "static/js/cropper.js", "rollup.config.js"]
 }
