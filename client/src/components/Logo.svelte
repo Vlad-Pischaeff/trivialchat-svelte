@@ -4,9 +4,9 @@
   
   const routeToPage = (route, replaceState = true) => goto(`/${route}`, { replaceState });
 
-	const goToChatPage = () => $isAuthorized && routeToPage('about');
+	const goToChatPage = (page) => $isAuthorized && routeToPage(page);
 
-	const handleAnimEnd = () =>	goToChatPage();
+	const handleAnimEnd = () =>	goToChatPage('about');
 </script>
 
 <div class="logo {$isAuthorized ? 'logo_notauth' : 'logo_auth'}" on:transitionend={handleAnimEnd}>

@@ -25,7 +25,7 @@
 <div class={"clients_item " + ($selectedUserIdx === index ? "client-selected" : "")} on:click={handlerClick}>
   <div class="clients_item-img">
     <div class={"clients_item-img-pulse " + (item.cnt !== 0 && $selectedUserIdx !== index ? 'pulse' : '')}></div>
-    <img class="clients_item-img-img" src={`${$url}/img/users/user${item.pict}.png`} alt=''/>
+    <img class="clients_item-img-img" src={`${url}/img/users/user${item.pict}.png`} alt=''/>
   </div>
   <div class="clients_item-status">
     <div class="clients_item-status-title">Banjo {index}</div>

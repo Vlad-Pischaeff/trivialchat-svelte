@@ -62,7 +62,8 @@
     color: black;
   }
   p, a {
-    /* font-family: Esqadero; */
+    font-family: Esqadero;
+    /* font-size: .9rem; */
     color: #333;
     padding: .2rem 0;
   }

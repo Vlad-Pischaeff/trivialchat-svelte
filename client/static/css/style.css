@@ -156,8 +156,8 @@ input::placeholder {
   background: oldlace;
 }
 .card_form-input {
-  /* font-family: Esqadero; */
-  font-size: 1.2rem;
+  font-family: Esqadero;
+  font-size: 1.1rem;
   letter-spacing: .1rem;
   color: black;
   background: transparent;
@@ -177,8 +177,8 @@ input::placeholder {
   outline: none;
 }
 .card_form-textarea {
-  /* font-family: Esqadero; */
-  font-size: 1.2rem;
+  font-family: Esqadero;
+  font-size: 1rem;
   letter-spacing: .1rem;
   color: black;
   background: #add8e675;
