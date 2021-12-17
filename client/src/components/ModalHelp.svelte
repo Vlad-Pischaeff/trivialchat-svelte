@@ -34,9 +34,10 @@
 &lt;!-- online manager --&gt;
           </pre>
         </article>
-        <p>and insert it on your site, for example, in a footer</p>
+        <p>and insert it on your site, for example, in a footer...</p>
         <p>Then connect <a href="https://tchat.scope.cf:5001/upload/style.css">styles</a> to Your site...</p>
-          
+        <p>Make sure that the site name in the profile is correct...</p>
+        <p>That's all...</p>
       </div>
 
       <!-- <hr> -->
@@ -54,13 +55,14 @@
   article {
     overflow: auto;
     margin: 1rem;
+    padding: .5rem;
     background: lightblue;
   }
   pre {
     color: black;
   }
   p, a {
-    font-family: Esqadero;
+    /* font-family: Esqadero; */
     color: #333;
     padding: .2rem 0;
   }
