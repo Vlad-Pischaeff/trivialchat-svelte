@@ -22,7 +22,6 @@
           type="text" 
           placeholder="type your answer here ..." 
           required 
-          autoFocus 
           bind:value={message} on:keypress={onKeyPress}/>
 
     <img  class="w-icon" alt='Send message' on:click={sendMessage} use:tooltip title='Send message'
