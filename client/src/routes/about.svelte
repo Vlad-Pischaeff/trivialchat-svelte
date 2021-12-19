@@ -12,6 +12,12 @@
 
   onMount(() => {
     if (!$isAuthorized) routeToPage('');
+
+    if (Notification.permission !== 'granted') {
+      Notification.requestPermission().then(function(result) {
+        console.log('Notificztion permission...', result);
+      })
+    }
   })
 
 </script>

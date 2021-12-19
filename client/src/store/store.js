@@ -1,6 +1,6 @@
 import { writable, get, derived } from 'svelte/store';
 import { httpRequest } from '../js/__HttpRequest';
-import { randomInteger } from '../helpers/functions';
+import { randomInteger, notifyMe } from '../helpers/functions';
 import ModalCropImage from '../components/ModalCropImage.svelte';
 import ModalSetWebAddr from '../components/ModalSetWebAddr.svelte';
 import ModalSetOptions from '../components/ModalSetOptions.svelte';
@@ -113,6 +113,7 @@ const createClients = () => {
           }
         })
       }
+      notifyMe(data.msg);
       return users;
     }),
     resetCounter: (idx) => update(n => {
