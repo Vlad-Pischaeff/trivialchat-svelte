@@ -36,7 +36,7 @@
           </pre>
         </article>
         <p>and insert it on your site, for example, in a footer...</p>
-        <p>Then connect <a href="{url}/upload/style.css">styles</a> to Your site...</p>
+        <p>Then connect <a href="{url}/upload/style.css" target="_blank" rel="noopener noreferrer">styles</a> to Your site...</p>
         <p>Make sure that the site name in the profile is correct...</p>
         <p>That's all...</p>
       </div>
