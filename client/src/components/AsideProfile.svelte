@@ -1,13 +1,26 @@
 <script>
-  import Avatar from './Avatar.svelte';
+  import { onMount } from 'svelte';
   import { modalAction } from '../store/store';
   import { tooltip } from '../js/__Tooltip';
+  import { operator } from '../store/store';
+  import Avatar from './Avatar.svelte';
 
   const setWebAddr = () => $modalAction = 'setWebAddr';
 
   const setOptions = () => $modalAction = 'setOptions';
 
   const showHelp = () => $modalAction = 'showHelp';
+
+  onMount(() => {
+    let timerID;
+    if (!$operator.site) {
+      timerID = setTimeout(() => {
+        $modalAction = 'setWebAddr';
+      }, 5000);
+    }
+
+    return () => { if (timerID) clearTimeout(timerID); }
+  });
 
 </script>
 

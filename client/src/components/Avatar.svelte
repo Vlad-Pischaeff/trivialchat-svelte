@@ -15,18 +15,14 @@
     reader.onload = async e => $avatarTemp = await __ResizeImage(e.target.result);
   }
 
-  const handlerClick = () => {
-    inputRef.click();
-  }
+  const handlerClick = () => inputRef.click();
 
   onMount(() => {
     const interval = setInterval(() => {
       __AvatarEffect(refAvatar, refBg);
     }, 2000);
 
-    return () => {
-      clearInterval(interval);
-    };
+    return () => clearInterval(interval);
   });
 
   $: if ($avatarTemp) $modalAction = 'cropImage';
