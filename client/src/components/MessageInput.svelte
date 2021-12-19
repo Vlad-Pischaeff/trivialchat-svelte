@@ -1,8 +1,10 @@
 <script>
+  import { onMount } from 'svelte';
   import { selectedUserIdx, clients } from '../store/store';
   import { wstore } from '../store/wstore';
   import { tooltip } from '../js/__Tooltip';
-  let message;
+
+  let message, messageInput;
 
   const sendMessage = () => {
     if (message && $selectedUserIdx !== undefined) {
@@ -14,6 +16,8 @@
 
   const onKeyPress = e => { if (e.charCode === 13) sendMessage(); };
 
+  onMount(() => messageInput.focus());
+  
 </script>
 
 <div class="chat_input">
@@ -22,6 +26,7 @@
           type="text" 
           placeholder="type your answer here ..." 
           required 
+          bind:this={messageInput}
           bind:value={message} on:keypress={onKeyPress}/>
 
     <img  class="w-icon" alt='Send message' on:click={sendMessage} use:tooltip title='Send message'
