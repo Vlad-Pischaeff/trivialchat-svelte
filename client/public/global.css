@@ -1,0 +1,244 @@
+/**
+ * *************************************** General variables
+ * */
+ @font-face {
+  font-family: Esqadero;
+  src: url("./fonts/Esqadero FF CY 4F-Regular.woff2") format("woff2");
+  src: url("./fonts/Esqadero FF CY 4F-Regular.woff") format("woff");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: Jura;
+  src: url("./fonts/Jura.woff2") format("woff2");
+  src: url("./fonts/Jura.woff") format("woff");
+  font-style: normal;
+  font-weight: normal;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+}
+
+body {
+  font-family: "Esqadero", sans-serif;
+  font-size: 1rem;
+  line-height: 1em;
+  overflow: hidden;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+.cp_header, .cp_footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.cp_header {
+  height: 6rem;
+  background: darkred;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+.cp_header-avatar {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 5rem;
+          flex: 0 0 5rem;
+  position: relative;
+  padding: 0.5rem 0 0 0.5rem;
+}
+.cp_header-avatarimg {
+  position: absolute;
+  width: 3.8rem;
+  height: 3.8rem;
+  border-radius: 50%;
+  top: 0.6rem;
+  left: 0.6rem;
+}
+.cp_header-avatarbg {
+  position: absolute;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-color: #888888;
+  background: -o-radial-gradient(center, ellipse, #8b000000 40%, darkred 69%);
+  background: radial-gradient(ellipse at center, #8b000000 40%, darkred 69%);
+  background-size: cover;
+}
+.cp_header-card {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  margin: 0.5rem 2rem 0.5rem 0.5rem;
+  width: 50%;
+}
+.cp_header-card-1 {
+  color: #000;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+  padding: 0.2rem;
+}
+.cp_header-card-2 {
+  font-family: "Jura", sans-serif;
+  white-space: break-spaces;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+  height: 3.4rem;
+  padding: 0.2rem;
+}
+.cp_footer {
+  height: 3rem;
+}
+.cp_body {
+  height: calc(100vh - 9rem);
+  background: honeydew;
+  overflow: auto;
+  min-width: 12rem;
+}
+
+.chat_field {
+  padding: 1rem;
+  overflow: auto;
+}
+.chat_field-message {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.chat_field-message[data-align=to] {
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+.chat_field-message[data-align=from] {
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+.chat_field-messageto, .chat_field-messagefrom {
+  position: relative;
+  max-width: 70%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  -webkit-box-shadow: 0 0 0.7rem #4445;
+          box-shadow: 0 0 0.7rem #4445;
+  opacity: 1;
+  -webkit-animation: show 0.5s ease-in-out;
+          animation: show 0.5s ease-in-out;
+}
+.chat_field-messageto {
+  border-radius: 1rem 1rem 1rem 0/1rem 1rem 1rem 0;
+  background: lightcyan;
+}
+.chat_field-messageto p {
+  font-family: "Jura", sans-serif;
+}
+.chat_field-messagefrom {
+  border-radius: 1rem 1rem 0 1rem/1rem 1rem 0 1rem;
+  background: darkturquoise;
+}
+.chat_field-messagefrom p {
+  font-family: "Jura", sans-serif;
+  text-align: right;
+}
+
+.chat_input {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+  background: #454545;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+}
+.chat_input-text {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  height: 3rem;
+  border: none;
+  color: #000;
+  font-family: "Esqadero", sans-serif;
+  line-height: 1.5rem;
+  font-weight: 300;
+  padding: 0 0.5rem 0 0.5rem;
+  background: #454545;
+  width: 80%;
+}
+.chat_input-text::-webkit-input-placeholder {
+  font-size: 0.9rem;
+}
+.chat_input-text::-moz-placeholder {
+  font-size: 0.9rem;
+}
+.chat_input-text:-ms-input-placeholder {
+  font-size: 0.9rem;
+}
+.chat_input-text::-ms-input-placeholder {
+  font-size: 0.9rem;
+}
+.chat_input-text::placeholder {
+  font-size: 0.9rem;
+	color: #ddd;
+}
+.chat_input-text:focus {
+  outline: none;
+  background: ivory;
+}
+.chat_input-icon {
+  height: 3rem;
+  width: 3rem;
+  padding: 0.5rem;
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
+}
+.chat_input-icon:hover {
+  -webkit-filter: grayscale(0);
+          filter: grayscale(0);
+  background: #000;
+  cursor: pointer;
+}
+
+.msg-data {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.msg-text {
+  color: #000;
+}
+
+/**/
+@-webkit-keyframes show {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+}
