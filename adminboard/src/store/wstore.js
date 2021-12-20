@@ -29,10 +29,10 @@ export const wsInitialized = derived(isAuthorized, $isAuthorized => {
 			clients.modify(JSON.parse(event.data));
 		});
 
-		socket.addEventListener('error', () => {
-			if ($isAuthorized) $isAuthorized = false;
-			if ($selectedUserIdx) $selectedUserIdx = null;
-		});
+		// socket.addEventListener('error', () => {
+		// 	if ($isAuthorized) $isAuthorized = false;
+		// 	if ($selectedUserIdx) $selectedUserIdx = null;
+		// });
 
 		return true;
 	} else {

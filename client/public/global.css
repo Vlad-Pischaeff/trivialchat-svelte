@@ -38,7 +38,7 @@ body {
 }
 .cp_header {
   height: 6rem;
-  background: darkred;
+  background: black;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -58,21 +58,10 @@ body {
 }
 .cp_header-avatarimg {
   position: absolute;
-  width: 3.8rem;
-  height: 3.8rem;
-  border-radius: 50%;
-  top: 0.6rem;
-  left: 0.6rem;
-}
-.cp_header-avatarbg {
-  position: absolute;
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
-  /* background-color: #888888; */
-  background: -o-radial-gradient(center, ellipse, #8b000000 40%, darkred 69%);
-  background: radial-gradient(ellipse at center, #8b000000 40%, darkred 69%);
-  background-size: cover;
+  box-shadow: 0 0 15px aqua;
 }
 .cp_header-card {
   -webkit-box-flex: 1;
@@ -82,7 +71,8 @@ body {
   width: 50%;
 }
 .cp_header-card-1 {
-  color: white;
+  color: aqua;
+  text-shadow: 0 0 6px aqua;
   white-space: nowrap;
   overflow: hidden;
   -o-text-overflow: ellipsis;
@@ -91,6 +81,8 @@ body {
 }
 .cp_header-card-2 {
   font-family: "Jura", sans-serif;
+  color: aqua;
+  text-shadow: 0 0 6px aqua;
   white-space: break-spaces;
   overflow: hidden;
   -o-text-overflow: ellipsis;
@@ -103,7 +95,7 @@ body {
 }
 .cp_body {
   height: calc(100vh - 9rem);
-  background: honeydew;
+  background: #777;
   overflow: auto;
   min-width: 12rem;
 }
@@ -132,25 +124,30 @@ body {
   max-width: 70%;
   padding: 0.5rem;
   margin-bottom: 0.5rem;
-  -webkit-box-shadow: 0 0 0.7rem #4445;
-          box-shadow: 0 0 0.7rem #4445;
+
   opacity: 1;
   -webkit-animation: show 0.5s ease-in-out;
           animation: show 0.5s ease-in-out;
 }
 .chat_field-messageto {
   border-radius: 1rem 1rem 1rem 0/1rem 1rem 1rem 0;
-  background: lightcyan;
+  background: #555;
+  -webkit-box-shadow: 0 0 1rem #6bffffc4;
+          box-shadow: 0 0 1rem #6bffffc4;
 }
-.chat_field-messageto p {
+.chat_field-messageto .msg-text {
   font-family: "Jura", sans-serif;
+  color: aqua;
 }
 .chat_field-messagefrom {
   border-radius: 1rem 1rem 0 1rem/1rem 1rem 0 1rem;
   background: darkturquoise;
+  -webkit-box-shadow:  0 0 .7rem #333;
+          box-shadow:  0 0 .7rem #333;
 }
-.chat_field-messagefrom p {
+.chat_field-messagefrom .msg-text {
   font-family: "Jura", sans-serif;
+  color: black;
   text-align: right;
 }
 
@@ -175,14 +172,15 @@ body {
       -ms-flex: 1 1 auto;
           flex: 1 1 auto;
   height: 3rem;
-  border: none;
-  color: #000;
-  font-family: "Esqadero", sans-serif;
-  line-height: 1.5rem;
-  font-weight: 300;
-  padding: 0 0.5rem 0 0.5rem;
-  background: #454545;
   width: 80%;
+  color: #000;
+  background: #454545;
+  border: none;
+  font-family: "Esqadero", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 300;
+  line-height: 1.5rem;
+  padding: 0 0.5rem 0 0.5rem;
 }
 .chat_input-text::-webkit-input-placeholder {
   font-size: 0.9rem;
@@ -218,13 +216,28 @@ body {
   cursor: pointer;
 }
 
+
 .msg-data {
   font-size: 0.8rem;
-  color: #666;
+  font-family: "Jura", sans-serif;
+}
+.chat_field-messagefrom .msg-data {
+  color: #555;
+}
+.chat_field-messageto .msg-data {
+  color: #aaa;
 }
 
-.msg-text {
+
+/* .msg-text {
   color: #000;
+} */
+
+.service {
+  font-family: Jura;
+  font-size: .9rem;
+  color: #333;
+  padding: .2rem;
 }
 
 /**/
