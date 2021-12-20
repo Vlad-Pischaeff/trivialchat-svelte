@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "client": "npm run dev --prefix client",
-    "client:install": "npm install --prefix client",
-    "client:build": "npm run build --prefix client",
+    "adminboard": "npm run dev --prefix adminboard",
+    "adminboard:install": "npm install --prefix adminboard",
+    "adminboard:build": "npm run build --prefix adminboard",
     "server": "node index",
     "dev-server": "nodemon index",
-    "dev": "cross-env NODE_ENV=development concurrently --kill-others-on-fail \"npm run dev-server\" \"npm run client\"",
+    "dev": "cross-env NODE_ENV=development concurrently --kill-others-on-fail \"npm run dev-server\" \"npm run adminboard\"",
     "start": "cross-env NODE_ENV=production node index.js"
   },
   "author": "Vlad Pischaeff",

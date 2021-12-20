@@ -49,9 +49,9 @@ app.get('/tchat', (req, res) => {
 app.use('/api/auth', require('./routes/auth.routes'))
 
 if (isProduction) {
-  app.use('/', express.static(path.join(__dirname, 'client', 'build', )))
+  app.use('/', express.static(path.join(__dirname, 'adminboard', 'build', )))
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    res.sendFile(path.resolve(__dirname, 'adminboard', 'build', 'index.html'))
   })
 }
 
