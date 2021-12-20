@@ -3,10 +3,17 @@
 	import { iconAvatar, iconOK } from './icons';
 	import { random_id } from './helper';
 
-	const { hostname, protocol : httpPrefix } = window.location  
-	const wsPrefix = httpPrefix === 'http:' ? 'ws:' : 'wss:'
-	const URL = `${httpPrefix}//${hostname}:5001`
-	const WS_URL = `${wsPrefix}//${hostname}:5001/ws`
+	let WS_URL, URL;
+
+	const {	API_HOST_DEV,	API_PORT_DEV,	API_HOST,	API_PORT, isProd } = __app['env'];
+
+	if (isProd) {
+		URL = `https://${API_HOST}:${API_PORT}`;
+		WS_URL = `wss://${API_HOST}:${API_PORT}/ws`;
+	} else {
+		URL = `http://${API_HOST_DEV}:${API_PORT_DEV}`;
+		WS_URL = `ws://${API_HOST_DEV}:${API_PORT_DEV}/ws`;
+	}
 
 	let placeholderStr = 'type your question ...',
       title = 'FAKE CORP.', 
@@ -15,7 +22,7 @@
       messages = [],
       ws = null,
       inputVal = '',
-			msgRef,	Session;
+			msgRef,	Session, myWorker;
 	
 	const receiveMessage = (message) => {
 		messages = [ ...messages, message];
@@ -32,6 +39,7 @@
 			Session.userMSGS = messages;
 			sessionStorage.setItem('tchat', JSON.stringify(Session));
 		}
+		myWorker.postMessage('123...');
 	}
 
 	const onKeyPress = e => { if (e.charCode === 13) sendMessage()};
@@ -49,7 +57,7 @@
 
 	onMount(async () => {
 		Session = JSON.parse(sessionStorage.getItem('tchat')) || {};
-		
+
     if (Object.entries(Session).length === 0) {
 
       Session.userID = random_id();
@@ -62,8 +70,6 @@
       let response = await fetch(`${URL}/api/auth/usersite/${Session.userHOST}`)
                             .then(response => response.json())
 														.catch(e => e);
-			
-			console.log('response...', response);
 
       if (!response.message) {
         ({ 	avatar : Session.userAvatar, 
@@ -78,6 +84,13 @@
 			sessionStorage.setItem('tchat', JSON.stringify(Session));
     } else {
 			messages = Session.userMSGS;
+		}
+
+		if (window.Worker) {
+			myWorker = new Worker("wsWorker.js");
+			console.log('My worker...', myWorker);
+		} else {
+			console.log('Your browser doesn\'t support web workers.');
 		}
 
 		ws = new WebSocket(`${WS_URL}?userName=${Session.userID}&userHost=${Session.userHOST}`);

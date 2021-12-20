@@ -4,9 +4,11 @@ import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
+import { config } from 'dotenv';
+import replace from '@rollup/plugin-replace';
 
 const production = !process.env.ROLLUP_WATCH;
-
+console.log('production...', production)
 function serve() {
 	let server;
 
@@ -43,6 +45,17 @@ export default {
 				dev: !production
 			}
 		}),
+		// set environment variables
+		replace({
+			preventAssignment: true,
+      // stringify the object       
+      __app: JSON.stringify({
+        env: {
+					'isProd': production,
+          ...config().parsed // attached the .env config
+        }
+      }),
+    }),
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
 		css({ output: 'bundle.css' }),
