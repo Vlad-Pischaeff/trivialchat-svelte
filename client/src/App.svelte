@@ -60,8 +60,9 @@
       Session.userHOST = url.split(':')[1].split('/')[2];
 
       let response = await fetch(`${URL}/api/auth/usersite/${Session.userHOST}`)
-                            .then(response => response.json());
-
+                            .then(response => response.json())
+														.catch(e => console.log('response...', e));
+			
       if (!response.message) {
         ({ 	avatar : Session.userAvatar, 
 						greeting: Session.userGreeting, 
