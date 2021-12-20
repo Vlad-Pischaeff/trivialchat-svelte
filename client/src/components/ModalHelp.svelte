@@ -17,28 +17,13 @@
       </section>
 
       <div class="card_form-fieldset">  
-        <p>to plug the Helper button into the site, 
-          copy the code ... </p>
-        <article>
-          <pre>
-            &lt;!-- online manager --&gt;
-      &lt;section class="tchat"&gt;
-          &lt;div class="tchat_wrap none" id="tchat_wrap"&gt; 
-                &lt;iframe src="{url}/tchat" frameborder="0" scrolling="no"&gt; &lt;/iframe&gt;
-                &lt;div class="tchat_wrap-close" id="tchat_close"&gt;&lt;/div&gt;
-          &lt;/div&gt;
-          &lt;div class="tchat_icon" id="tchat_button"&gt;
-                &lt;div class="tchat_icon-ring"&gt; &lt;/div&gt;
-                &lt;div class="tchat_icon-button"&gt;&lt;/div&gt;
-          &lt;/div&gt;
-      &lt;/section&gt;
-&lt;!-- online manager --&gt;
-          </pre>
-        </article>
-        <p>and insert it on your site, for example, in a footer...</p>
-        <p>Then connect <a href="{url}/upload/style.css" target="_blank" rel="noopener noreferrer">styles</a> to Your site...</p>
-        <p>Make sure that the site name in the profile is correct...</p>
+        <p>To use an online helper, you need to set a call button on your site, 
+            placing the <a href="{url}/upload/code.txt" target="_blank" rel="noopener noreferrer">HTML code</a> anywhere (for example in the FOOTER)... </p>
+        <p>Then plug in the <a href="{url}/upload/style.css" target="_blank" rel="noopener noreferrer">CSS styles</a>...</p>
+        <p>Finally plug in a little <a href="{url}/upload/tchat.js" target="_blank" rel="noopener noreferrer">Javascript code</a>...</p>
+        <p>Ensure that Your site address in Your profile is correct...</p>
         <p>That's all...</p>
+        <p class="note">To prevent this message from appearing again, set your site address...</p>
       </div>
 
       <!-- <hr> -->
@@ -51,21 +36,33 @@
 
 <style>
   a {
+    color: deeppink;
     font-weight: 700;
-  }
-  article {
-    overflow: auto;
-    margin: 1rem;
-    padding: .5rem;
-    background: #add8e675;
-  }
-  pre {
-    color: black;
   }
   p, a {
     font-family: Esqadero;
-    /* font-size: .9rem; */
+    padding: .2rem;
+  }
+  p {
     color: #333;
-    padding: .2rem 0;
+    margin: .3rem 0;
+  }
+  .note {
+    font-size: .9rem;
+    background: deeppink;
+    color: white;
+    opacity: 0.4;
+    animation: signal 1s infinite ease-in-out;
+  }
+  @keyframes signal {
+    0% {
+      opacity: 0.4;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.4;
+    }
   }
 </style>

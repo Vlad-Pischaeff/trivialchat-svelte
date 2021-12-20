@@ -7,6 +7,10 @@
   const closeModal = () => $modalAction = null;
 
   const updateProfile = async () => {
+    if (site) {
+      site = site.replace('https://', '');
+      site = site.replace('http://', '');
+    }
     operator.modify({ title, desc, site, greeting });
     closeModal();
   }

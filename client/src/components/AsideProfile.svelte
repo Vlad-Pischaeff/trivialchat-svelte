@@ -15,7 +15,7 @@
     let timerID;
     if (!$operator.site) {
       timerID = setTimeout(() => {
-        $modalAction = 'setWebAddr';
+        $modalAction = 'showHelp';
       }, 5000);
     }
 
