@@ -7,3 +7,4 @@ node_modules
 /keys/*
 .env
 /config/default.json
+/client/public/build/*

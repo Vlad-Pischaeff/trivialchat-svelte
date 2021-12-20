@@ -88,6 +88,7 @@ const start = async () => {
     /* end parse url ********************************************************** */
 
       ws.isAlive = true
+      console.log(' client...\t \t', query.userName);
       wsUsers[query.userName] = ws
       // console.log('wsUsers...', Object.keys(wsUsers));
       ws.on('message', message => {
@@ -108,6 +109,7 @@ const start = async () => {
             wsUsers[data.to].send(JSON.stringify(data))
           }
           if (data.newClientConnection) {
+
             let managerEmail = countedSites[query.userHost]
             if (wsUsers[managerEmail]) {
               wsUsers[query.userName].send(JSON.stringify({'to': query.userName, 'msg': 'manager is ONLINE...', 'date': Date.now()}))

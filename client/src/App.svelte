@@ -61,8 +61,10 @@
 
       let response = await fetch(`${URL}/api/auth/usersite/${Session.userHOST}`)
                             .then(response => response.json())
-														.catch(e => console.log('response...', e));
+														.catch(e => e);
 			
+			console.log('response...', response);
+
       if (!response.message) {
         ({ 	avatar : Session.userAvatar, 
 						greeting: Session.userGreeting, 
@@ -90,6 +92,9 @@
 															'date': Date.now()}));
     }
 
+		ws.onerror = () => {
+			console.log('ws response');
+		}
 	});
 
 </script>
