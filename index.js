@@ -46,6 +46,12 @@ app.get('/tchat', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'tchat', 'main.html'))
   }
 )
+//for Svelte client
+app.use('/client', express.static(path.join(__dirname, 'client', 'public' )))
+app.get('/client', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'client', 'public', 'index.html'))
+})
+
 app.use('/api/auth', require('./routes/auth.routes'))
 
 if (isProduction) {
