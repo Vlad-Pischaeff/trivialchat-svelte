@@ -86,10 +86,14 @@ const start = async () => {
       let { hostname, query } = params
       // console.log('params...', hostname, query)
     /* end parse url ********************************************************** */
-
+      let isFirstConnection = false;
+      
       ws.isAlive = true
-      console.log(' client...\t \t', query.userName);
+      // проверяем, клиент подключился первый раз, или нет
+      if (!wsUsers[query.userName]) isFirstConnection = true;
+      
       wsUsers[query.userName] = ws
+
       // console.log('wsUsers...', Object.keys(wsUsers));
       ws.on('message', message => {
         // console.log(' message...\t', message, ' destination...\t', countedSites[query.userHost], countedSites);
@@ -108,7 +112,9 @@ const start = async () => {
           if (data.to) {
             wsUsers[data.to].send(JSON.stringify(data))
           }
-          if (data.newClientConnection) {
+          //.. если клиент подключается первый раз, то передаем ему текущее состояние
+          //   оператора (online/ offline)
+          if (isFirstConnection && data.newClientConnection) {
 
             let managerEmail = countedSites[query.userHost]
             if (wsUsers[managerEmail]) {
@@ -119,6 +125,7 @@ const start = async () => {
             emitter.emit('add websocket clients', { ws, query })
             // console.log('newClientConnection...', managedClients, wsUsers)
           }
+
           if (data.oldClientConnection) {
             emitter.emit('add websocket clients', { ws, query })
             // console.log('oldClientConnection...', managedClients)
