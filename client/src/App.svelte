@@ -3,7 +3,7 @@
 	import { iconAvatar, iconOK } from './icons';
 	import { random_id } from './helper';
 
-	let WS_URL, URL;
+	let WS_URL, URL, HOST, USER;
 
 	const {	API_HOST_DEV,	API_PORT_DEV,	API_HOST,	API_PORT, isProd } = __app['env'];
 
@@ -15,29 +15,27 @@
 		WS_URL = `ws://${API_HOST_DEV}:${API_PORT_DEV}/ws`;
 	}
 
-	let placeholderStr = 'type your question ...',
-      title = 'FAKE CORP.', 
-      desc = 'Manager',
-      avatar = iconAvatar,
-      messages = [],
-      ws = null,
-      inputVal = '',
-			msgRef,	Session, myWorker;
+	let placeholderStr = 'type your question ...', title = 'FAKE CORP.', 
+      desc = 'Manager', avatar = iconAvatar,
+      messages = [], inputVal = '',
+			msgRef,	Session, myWorker, swState, isAlreadyInstalledServiceWorker = false;
 	
-	const receiveMessage = (message) => {
+	const swListener = new BroadcastChannel('swListener');
+
+	swListener.onmessage = function(e) {
+		console.log('swListener Received', e.data);
+		let message = JSON.parse(e.data);
 		messages = [ ...messages, message];
-    Session.userMSGS = messages;
-		sessionStorage.setItem('tchat', JSON.stringify(Session));
 	};
 
 	const sendMessage = () => {
 		if (inputVal !== '') {
 			let message = new MessageObj(inputVal)
-			ws.send(JSON.stringify(message));
-			inputVal  = '';
 			messages = [ ...messages, message];
-			Session.userMSGS = messages;
-			sessionStorage.setItem('tchat', JSON.stringify(Session));
+			inputVal  = '';
+			let swMessage = new innerMessageObj('post', message);
+			myWorker.postMessage(JSON.stringify(swMessage));
+			console.log('send message...', swMessage);
 		}
 	}
 
@@ -49,10 +47,32 @@
 		this.date = Date.now();
 	}
 
+	function innerMessageObj(type, msg) {
+		this.type = type;
+		this.msg = msg;
+	}
+
+	$: if (Session) { 
+		Session.userMSGS = messages;
+		sessionStorage.setItem('tchat', JSON.stringify(Session));
+	}
 	$: if (msgRef) msgRef.scrollIntoView({ behavior: 'smooth' });
+	$: if (Session?.userID) USER = Session.userID;
+	$: if (Session?.userHOST) HOST = Session.userHOST;
 	$: if (Session?.userAvatar) avatar=Session.userAvatar;
 	$: if (Session?.userTitle) title=Session.userTitle;
 	$: if (Session?.userDesc) desc=Session.userDesc;
+	$: if (swState === 'activated') {
+			let innerMsg = new innerMessageObj('init', `${WS_URL}?userName=${USER}&userHost=${HOST}`);
+			myWorker.postMessage(JSON.stringify(innerMsg));
+			console.log('activated...', WS_URL, USER, HOST, innerMsg);
+		}
+	$: if (isAlreadyInstalledServiceWorker) {
+			let innerMsg = new innerMessageObj('init', `${WS_URL}?userName=${USER}&userHost=${HOST}`);
+			myWorker.postMessage(JSON.stringify(innerMsg));
+			console.log('isAlreadyInstalledServiceWorker...');
+		}
+	$: console.log('swState change...', swState);
 
 	onMount(async () => {
 		Session = JSON.parse(sessionStorage.getItem('tchat')) || {};
@@ -82,34 +102,35 @@
 
 			sessionStorage.setItem('tchat', JSON.stringify(Session));
 
-			//..register Service Worker
-			if ('serviceWorker' in navigator) {
-				navigator.serviceWorker
-					.register('./sWorker.js')
-					.then(event => {
-						console.log('Service worker registered', event);
-					});
-			}
-
 		} else {
 			messages = Session.userMSGS;
 		}
 
-		ws = new WebSocket(`${WS_URL}?userName=${Session.userID}&userHost=${Session.userHOST}`);
+		if (navigator.serviceWorker.controller) {
+			myWorker = navigator.serviceWorker.controller;
+			console.log('if already has controller...', myWorker.state);
+			isAlreadyInstalledServiceWorker = true;
+		} else {
+			navigator.serviceWorker
+				.register('websocket-worker.js')
+				.then((registration) => {
+					if (registration.installing) {
+						myWorker = registration.installing;
+					} else if (registration.waiting) {
+						myWorker = registration.waiting;
+					} else if (registration.active) {
+						myWorker = registration.active;
+					}
 
-    ws.onmessage = (event) => {
-      receiveMessage(JSON.parse(event.data));
-    }
-
-		ws.onopen = () => {
-      ws.send(JSON.stringify({'newClientConnection': Session.userID, 
-															'msg': 'initial connection...', 
-															'date': Date.now()}));
-    }
-
-		ws.onerror = () => {
-			console.log('ws response');
+					if (myWorker) {
+						myWorker.addEventListener('statechange', e => {
+							console.log('else not yet has controller...', myWorker.state);
+							swState = e.target.state;
+						});
+					}
+				});
 		}
+		
 	});
 
 </script>
@@ -156,7 +177,3 @@
 		</div>
 	</footer>
 </main>
-
-<style>
-
-</style>
