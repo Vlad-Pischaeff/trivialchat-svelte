@@ -39,7 +39,6 @@
 			Session.userMSGS = messages;
 			sessionStorage.setItem('tchat', JSON.stringify(Session));
 		}
-		myWorker.postMessage('123...');
 	}
 
 	const onKeyPress = e => { if (e.charCode === 13) sendMessage()};
@@ -82,15 +81,18 @@
 			messages = Session.userMSGS;
 
 			sessionStorage.setItem('tchat', JSON.stringify(Session));
-    } else {
-			messages = Session.userMSGS;
-		}
 
-		if (window.Worker) {
-			myWorker = new Worker("wsWorker.js");
-			console.log('My worker...', myWorker);
+			//..register Service Worker
+			if ('serviceWorker' in navigator) {
+				navigator.serviceWorker
+					.register('./sWorker.js')
+					.then(event => {
+						console.log('Service worker registered', event);
+					});
+			}
+
 		} else {
-			console.log('Your browser doesn\'t support web workers.');
+			messages = Session.userMSGS;
 		}
 
 		ws = new WebSocket(`${WS_URL}?userName=${Session.userID}&userHost=${Session.userHOST}`);

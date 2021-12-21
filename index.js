@@ -56,12 +56,12 @@ app.get('/client', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'client', 'public', 'index.html'));
 })
 
-app.use('/api/auth', require('./routes/auth.routes'))
+app.use('/api/auth', require('./routes/auth.routes'));
 
 if (isProduction) {
-  app.use('/', express.static(path.join(__dirname, 'adminboard', 'build', )))
+  app.use('/', express.static(path.join(__dirname, 'adminboard', 'build', )));
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'adminboard', 'build', 'index.html'))
+    res.sendFile(path.resolve(__dirname, 'adminboard', 'build', 'index.html'));
   })
 }
 
