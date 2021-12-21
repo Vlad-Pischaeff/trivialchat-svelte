@@ -1,55 +1,59 @@
-const express = require('express')
-const app = express()
-const cors = require('cors')
-const fs = require('fs')
-const config = require('config')
-const http = require('http')
-const https = require('https')
-const WebSocket = require('ws')
-const path = require('path')
-const mongoose = require('mongoose')
-const parser = require('url-parse')
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const fs = require('fs');
+const config = require('config');
+const http = require('http');
+const https = require('https');
+const WebSocket = require('ws');
+const path = require('path');
+const mongoose = require('mongoose');
+const parser = require('url-parse');
 
-const privateKey  = fs.readFileSync('./keys/privkey.pem', 'utf8')
-const certificate = fs.readFileSync('./keys/cert.pem', 'utf8')
-const credentials = {key: privateKey, cert: certificate}
+const privateKey  = fs.readFileSync('./keys/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('./keys/cert.pem', 'utf8');
+const credentials = {key: privateKey, cert: certificate};
 
-const PORT = config.get('port') || 5001
-const MONGO_URL = config.get('mongoUrl')
-const User = require('./models/User')
+const PORT = config.get('port') || 5001;
+const MONGO_URL = config.get('mongoUrl');
+const User = require('./models/User');
 
 const isProduction = process.env.NODE_ENV === 'production'
                       ? true
-                      : false
+                      : false;
 const Server = isProduction
                 ? https.createServer(credentials, app)
-                : http.createServer(app)
+                : http.createServer(app);
 
-const wsUsers = {}              //  { user1: ws1, user2: ws2 ... }
-let wsClients = new WeakMap()   //  { ws1: client1, ws2: client2 ... }
-let wsManagers = new WeakMap()  //  { ws1: manager1, ws2: manager2 ... }
-let managedClients = {}         //  { manager1: [client1, client2, ...], manager2: [client3, client4, ...], ... }
-let countedSites = {}           //  { site1: manager1, site2: manager2 ... }
-let countedEmails = {}          //  { manager1: site1, manager2: site2 ... }
-const emitter = require('./routes/service')
+const wsUsers = {};              //  { user1: ws1, user2: ws2 ... }
+let wsClients = new WeakMap();   //  { ws1: client1, ws2: client2 ... }
+let wsManagers = new WeakMap();  //  { ws1: manager1, ws2: manager2 ... }
+let managedClients = {};         //  { manager1: [client1, client2, ...], manager2: [client3, client4, ...], ... }
+let countedSites = {};           //  { site1: manager1, site2: manager2 ... }
+let countedEmails = {};          //  { manager1: site1, manager2: site2 ... }
+const emitter = require('./routes/service');
 
-app.use(express.json({ extended: true }))
-app.use(cors())
+app.use(express.json({ extended: true }));
+app.use(cors());
 
-app.use('/upload', express.static(path.join(__dirname, 'upload' )))
-app.use('/img', express.static(path.join(__dirname, 'img' )))
-app.use('/fonts', express.static(path.join(__dirname, 'fonts' )))
-app.use('/css', express.static(path.join(__dirname, 'css' )))
-app.use('/js', express.static(path.join(__dirname, 'js' )))
+app.use('/upload', express.static(path.join(__dirname, 'upload' )));
+app.use('/img', express.static(path.join(__dirname, 'img' )));
+app.use('/fonts', express.static(path.join(__dirname, 'fonts' )));
+app.use('/css', express.static(path.join(__dirname, 'css' )));
+app.use('/js', express.static(path.join(__dirname, 'js' )));
+// for Vue client
 app.get('/tchat', (req, res) => {
-    console.log('tchat req...', 'to ...', req.headers.host, 'from ...', req.headers.referer, req.url, req.originalUrl)
-    res.sendFile(path.resolve(__dirname, 'tchat', 'main.html'))
+    // console.log('tchat req...', 'to ...', req.headers.host, 'from ...', req.headers.referer, req.url, req.originalUrl)
+    res.sendFile(path.resolve(__dirname, 'tchat', 'main.html'));
   }
 )
-//for Svelte client
-app.use('/client', express.static(path.join(__dirname, 'client', 'public' )))
+// for Svelte client
+app.use('/client', express.static(path.join(__dirname, 'client', 'public' )));
 app.get('/client', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'public', 'index.html'))
+  console.log('Svelte client req...\n', 
+                '\tto ...\t', req.headers.host, 
+                '\n\tfrom ...\t', req.headers.referer, req.url, req.originalUrl);
+  res.sendFile(path.resolve(__dirname, 'client', 'public', 'index.html'));
 })
 
 app.use('/api/auth', require('./routes/auth.routes'))
