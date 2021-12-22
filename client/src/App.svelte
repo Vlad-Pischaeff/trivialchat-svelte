@@ -3,9 +3,8 @@
 	import { iconAvatar, iconOK } from './icons';
 	import { random_id } from './helper';
 
-	let WS_URL, URL, HOST, USER;
-
 	const {	API_HOST_DEV,	API_PORT_DEV,	API_HOST,	API_PORT, isProd } = __app['env'];
+	let WS_URL, URL, HOST, USER;
 
 	if (isProd) {
 		URL = `https://${API_HOST}:${API_PORT}`;
@@ -15,17 +14,22 @@
 		WS_URL = `ws://${API_HOST_DEV}:${API_PORT_DEV}/ws`;
 	}
 
-	let placeholderStr = 'type your question ...', title = 'FAKE CORP.', 
-      desc = 'Manager', avatar = iconAvatar,
+	let title = 'FAKE CORP.', desc = 'Manager', avatar = iconAvatar,
       messages = [], inputVal = '',
-			msgRef,	Session, myWorker, swState, isAlreadyInstalledServiceWorker = false;
+			msgRef,	Session, myWorker, isReadyServiceWorker = false;
 	
 	const swListener = new BroadcastChannel('swListener');
 
 	swListener.onmessage = function(e) {
 		console.log('swListener Received', e.data);
 		let message = JSON.parse(e.data);
-		messages = [ ...messages, message];
+		if (message.wsState) {
+			//...webSocket state messages
+			console.log('webSocket state...', message.wsState);
+		} else {
+			//...WebSocket clients messages
+			messages = [ ...messages, message];
+		}
 	};
 
 	const sendMessage = () => {
@@ -59,33 +63,30 @@
 	$: if (msgRef) msgRef.scrollIntoView({ behavior: 'smooth' });
 	$: if (Session?.userID) USER = Session.userID;
 	$: if (Session?.userHOST) HOST = Session.userHOST;
-	$: if (Session?.userAvatar) avatar=Session.userAvatar;
-	$: if (Session?.userTitle) title=Session.userTitle;
-	$: if (Session?.userDesc) desc=Session.userDesc;
-	$: if (swState === 'activated') {
+	$: if (Session?.userAvatar) avatar = Session.userAvatar;
+	$: if (Session?.userTitle) title = Session.userTitle;
+	$: if (Session?.userDesc) desc = Session.userDesc;
+	$: if (isReadyServiceWorker) {
 			let innerMsg = new innerMessageObj('init', `${WS_URL}?userName=${USER}&userHost=${HOST}`);
 			myWorker.postMessage(JSON.stringify(innerMsg));
-			console.log('activated...', WS_URL, USER, HOST, innerMsg);
+			console.log('swState activated...', 'init message...', innerMsg);
 		}
-	$: if (isAlreadyInstalledServiceWorker) {
-			let innerMsg = new innerMessageObj('init', `${WS_URL}?userName=${USER}&userHost=${HOST}`);
-			myWorker.postMessage(JSON.stringify(innerMsg));
-			console.log('isAlreadyInstalledServiceWorker...');
-		}
-	$: console.log('swState change...', swState);
 
 	onMount(async () => {
 		Session = JSON.parse(sessionStorage.getItem('tchat')) || {};
-
+		/**
+		 * restore the user's session from localStorage, 
+		 * if there is nothing there, we get the data from the server
+		 */
     if (Object.entries(Session).length === 0) {
 
       Session.userID = random_id();
 
       let url = (window.location != window.parent.location)
         ? document.referrer         									// ---- https://tele.scope.cf
-        : document.location.href;   									// ---- https://tchat.scope.cf:5001/tchat
+        : document.location.href;   									// ---- https://tchat.scope.cf:5001/client
       Session.userHOST = url.split(':')[1].split('/')[2];
-
+			
       let response = await fetch(`${URL}/api/auth/usersite/${Session.userHOST}`)
                             .then(response => response.json())
 														.catch(e => e);
@@ -97,7 +98,7 @@
 						desc: Session.userDesc } = response);
       }
 
-      Session.userMSGS = [{ to: 'me', msg: Session.userGreeting, date: Date.now()}];
+      Session.userMSGS = [{ to: 'me', msg: Session.userGreeting, date: Date.now() }];
 			messages = Session.userMSGS;
 
 			sessionStorage.setItem('tchat', JSON.stringify(Session));
@@ -105,11 +106,13 @@
 		} else {
 			messages = Session.userMSGS;
 		}
-
+		/**
+		 * set serviceWorker if it does not exist or activate it if it does
+		 */
 		if (navigator.serviceWorker.controller) {
 			myWorker = navigator.serviceWorker.controller;
 			console.log('if already has controller...', myWorker.state);
-			isAlreadyInstalledServiceWorker = true;
+			isReadyServiceWorker = true;
 		} else {
 			navigator.serviceWorker
 				.register('websocket-worker.js')
@@ -125,12 +128,19 @@
 					if (myWorker) {
 						myWorker.addEventListener('statechange', e => {
 							console.log('else not yet has controller...', myWorker.state);
-							swState = e.target.state;
+							if (e.target.state === 'activated') {
+								isReadyServiceWorker = true;
+							}
 						});
 					}
 				});
 		}
-		
+		/**
+		 * make queries for the cached empty file so that the sarviceWorker is always active
+		 */
+		let timerId = setInterval(() => { fetch('/ping.txt')}, 20000);
+		return () => clearInterval(timerId);
+
 	});
 
 </script>
@@ -170,7 +180,7 @@
 		<div class="chat_input">
 			<input 	class="chat_input-text" name="question" bind:value={inputVal} 
 							type="text" 
-							placeholder={placeholderStr}
+							placeholder="type your question ..."
 							on:keypress={onKeyPress}>
 			<img 	class="chat_input-icon" src={iconOK} alt="OK" 
 						on:click={sendMessage}>
