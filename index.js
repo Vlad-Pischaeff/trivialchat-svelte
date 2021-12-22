@@ -97,7 +97,7 @@ const start = async () => {
      */ 
       wsUsers[userName] = ws;
       let managerEmail = countedSites[userHost];
-      console.log('users...', userName, managerEmail);
+
       wsUsers[managerEmail]
         ? wsUsers[userName].send(JSON.stringify({'svc': 'manager is ONLINE...', 'date': Date.now()}))
         : wsUsers[userName].send(JSON.stringify({'svc': 'manager is OFFLINE...', 'date': Date.now()}));
