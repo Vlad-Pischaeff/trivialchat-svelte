@@ -61,7 +61,7 @@ body {
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
-  box-shadow: 0 0 15px aqua;
+  box-shadow: 0 0 10px #00ffff7a;
 }
 .cp_header-card {
   -webkit-box-flex: 1;
