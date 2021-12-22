@@ -38,7 +38,7 @@ body {
 }
 .cp_header {
   height: 6rem;
-  background: black;
+  background: #2e3842;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
