@@ -15,7 +15,7 @@
 
     if (Notification.permission !== 'granted') {
       Notification.requestPermission().then(function(result) {
-        console.log('Notificztion permission...', result);
+        console.log('Notification permission...', result);
       });
     }
   });

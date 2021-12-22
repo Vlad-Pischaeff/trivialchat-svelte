@@ -83,62 +83,42 @@ const start = async () => {
     
     wss.on('connection', (ws, req) => {
 
-    /* start parse url ******************************************************** */
-    /* url = 'ws:/localhost:5001/ws?userName=vlad&userHost=localhost'           */
-      let params = parser(`${req.headers.origin}${req.url}`, true)
+    /** 
+     *  start parse url
+     *  url = 'ws:/localhost:5001/ws?userName=vlad&userHost=localhost'           
+     * */
+      let params = parser(`${req.headers.origin}${req.url}`, true);
       // console.log('websocket app started...', params.query.userName, req.url, req.headers['sec-websocket-key'], req.headers.origin)
-      let { hostname, query } = params
-      // console.log('params...', hostname, query)
-    /* end parse url ********************************************************** */
-      let isFirstConnection = false;
-      
-      ws.isAlive = true
-      // проверяем, клиент подключился первый раз, или нет
-      if (!wsUsers[query.userName]) isFirstConnection = true;
-      
-      wsUsers[query.userName] = ws
+      let { hostname, query } = params;
+      let { userName, userHost } = query;
+      ws.isAlive = true;
+    /**
+     * проверяем, клиент подключился первый раз, или нет
+     */ 
+      wsUsers[userName] = ws;
+      let managerEmail = countedSites[userHost];
+      console.log('users...', userName, managerEmail);
+      wsUsers[managerEmail]
+        ? wsUsers[userName].send(JSON.stringify({'svc': 'manager is ONLINE...', 'date': Date.now()}))
+        : wsUsers[userName].send(JSON.stringify({'svc': 'manager is OFFLINE...', 'date': Date.now()}));
+      emitter.emit('add websocket clients', { ws, query });
 
-      // console.log('wsUsers...', Object.keys(wsUsers));
       ws.on('message', message => {
-        // console.log(' message...\t', message, ' destination...\t', countedSites[query.userHost], countedSites);
         try {
-          let data = JSON.parse(message)
-          // data.from = message from client to site manager
-          // data.to - message to client from site manager
-          // console.log(' received: \t \t', message, '\n clients size...\t', wss.clients.size, '\n to...\t \t', countedSites[query.userHost])
-          if (data.from && countedSites[query.userHost]) {
-            let destination = countedSites[query.userHost]    // equal to query.userName
-            // wss.clients.forEach(ws => console.log('wss clients...', wsClients.get(clients[destination])))
-            // console.log(' destination...\t', destination, '\n query.userHost... \t', query.userHost)
-            // console.log(' send...\t \t', wsClients.get(clients[destination]))
+          let data = JSON.parse(message);
+
+          if (data.from && countedSites[userHost]) {    // data.from = message from client to site manager
+            let destination = countedSites[userHost]    // operator email
             wsUsers[destination] && wsUsers[destination].send(JSON.stringify(data))
           }
-          if (data.to) {
+          if (data.to) {                                // data.to - message to client from site manager
             wsUsers[data.to].send(JSON.stringify(data))
           }
-          //.. если клиент подключается первый раз, то передаем ему текущее состояние
-          //   оператора (online/ offline)
-          if (isFirstConnection && data.newClientConnection) {
-
-            let managerEmail = countedSites[query.userHost]
-            if (wsUsers[managerEmail]) {
-              wsUsers[query.userName].send(JSON.stringify({'to': query.userName, 'msg': 'manager is ONLINE...', 'date': Date.now()}))
-            } else {
-              wsUsers[query.userName].send(JSON.stringify({'to': query.userName, 'msg': 'manager is OFFLINE...', 'date': Date.now()}))
-            }
-            emitter.emit('add websocket clients', { ws, query })
-            // console.log('newClientConnection...', managedClients, wsUsers)
-          }
-
-          if (data.oldClientConnection) {
-            emitter.emit('add websocket clients', { ws, query })
-            // console.log('oldClientConnection...', managedClients)
-          }
           if (data.newManagerConnection) {
-            console.log('newManagerConnection...', managedClients, query.userName)
+            console.log('newManagerConnection...', managedClients, userName)
             emitter.emit('add websocket managers', { ws, query })
-            if (managedClients[query.userName]) {
-              managedClients[query.userName].forEach(client => 
+            if (managedClients[userName]) {
+              managedClients[userName].forEach(client => 
                 wsUsers[client].send(JSON.stringify({'to': client, 'msg': 'manager is ONLINE...', 'date': Date.now()}))
               )
             }

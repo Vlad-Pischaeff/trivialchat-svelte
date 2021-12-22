@@ -159,9 +159,8 @@
 		<div class="chat_field">
 			{#if messages.length !== 0}
 				{#each messages as message }
-					{#if (message.msg === "manager is OFFLINE..." ||
-								message.msg === "manager is ONLINE...")}
-								<div class="service">{message.msg} {new Date(message.date).toLocaleString()}</div>
+					{#if (message.svc)}
+						<div class="service">{message.svc} {new Date(message.date).toLocaleString()}</div>
 					{:else}
 						<div 	class="chat_field-message" 
 									data-align="{message.from ? 'from' : 'to'}" 

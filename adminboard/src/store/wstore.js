@@ -10,8 +10,6 @@ let wsPrefix = httpPrefix === 'http' ? 'ws' : 'wss';
 let ws_url = `${wsPrefix}://${hostname}:${port}/ws`;
 export const url = `${httpPrefix}://${hostname}:${port}`;
 
-// console.log('wstore..., env', import.meta.env)
-
 operator.subscribe(n => manager = n);
 
 const messageStore = writable('');
@@ -20,19 +18,16 @@ export const wsInitialized = derived(isAuthorized, $isAuthorized => {
 	if ($isAuthorized) {
 		const { email } = manager;
 		socket = new WebSocket(ws_url + '?userName=' + email);
+		console.log('new WebSocket...', $isAuthorized)
 
 		socket.addEventListener('open', () => {
 			socket.send(JSON.stringify({ 'newManagerConnection': email, 'msg': 'initial connection...', 'date': Date.now() }));
 		});
 	
 		socket.addEventListener('message', event => {
-			clients.modify(JSON.parse(event.data));
+			let data = JSON.parse(event.data);
+			if (!data.svc) clients.modify(JSON.parse(event.data));
 		});
-
-		// socket.addEventListener('error', () => {
-		// 	if ($isAuthorized) $isAuthorized = false;
-		// 	if ($selectedUserIdx) $selectedUserIdx = null;
-		// });
 
 		return true;
 	} else {
