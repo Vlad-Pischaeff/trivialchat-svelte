@@ -1,5 +1,4 @@
-var EventEmitter = require('eventemitter4')
-var emitter = new EventEmitter()
+var EventEmitter = require('eventemitter4');
+var emitter = new EventEmitter();
 
-module.exports = emitter
-
+module.exports = emitter;

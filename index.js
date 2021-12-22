@@ -32,6 +32,7 @@ let managedClients = {};         //  { manager1: [client1, client2, ...], manage
 let countedSites = {};           //  { site1: manager1, site2: manager2 ... }
 let countedEmails = {};          //  { manager1: site1, manager2: site2 ... }
 const emitter = require('./routes/service');
+// const manager = require('./routes/helper');
 
 app.use(express.json({ extended: true }));
 app.use(cors());
@@ -76,28 +77,30 @@ const start = async () => {
 
     const server = await Server.listen(PORT, () => { console.log('http/https server started ...') })
 
-    emitter.on('get users', getUsers)
-    emitter.emit('get users')
-
-    wss = new WebSocket.Server({ server, path: '/ws' })
+    emitter.on('get users', getUsers);
+    emitter.emit('get users');
+    
+    wss = new WebSocket.Server({ server, path: '/ws' });
     
     wss.on('connection', (ws, req) => {
-
-    /** 
-     *  start parse url
-     *  url = 'ws:/localhost:5001/ws?userName=vlad&userHost=localhost'           
-     * */
+      /**
+       * start parse url
+       * url = 'ws:/localhost:5001/ws?userName=vlad&userHost=localhost'
+       */ 
       let params = parser(`${req.headers.origin}${req.url}`, true);
       // console.log('websocket app started...', params.query.userName, req.url, req.headers['sec-websocket-key'], req.headers.origin)
       let { hostname, query } = params;
       let { userName, userHost } = query;
       ws.isAlive = true;
-    /**
-     * проверяем, клиент подключился первый раз, или нет
-     * */
+      /**
+       * проверяем, клиент подключился первый раз, или нет
+       */
       wsUsers[userName] = ws;
       let managerEmail = countedSites[userHost];
-
+      /**
+       * если оператор подключился, то пользователям отправляем
+       * "manager is ONLINE" или "manager is OFFLINE" в противном случае
+       */
       wsUsers[managerEmail]
         ? wsUsers[userName].send(JSON.stringify({'svc': 'manager is ONLINE...', 'date': Date.now()}))
         : wsUsers[userName].send(JSON.stringify({'svc': 'manager is OFFLINE...', 'date': Date.now()}));

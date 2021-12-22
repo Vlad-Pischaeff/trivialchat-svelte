@@ -18,7 +18,7 @@
 
   onMount(() => messageInput.focus());
   
-  $: console.log('wsInitialized...', $wsInitialized);
+  $: if ($wsInitialized) console.log('ws ON...');
 </script>
 
 <div class="chat_input">
