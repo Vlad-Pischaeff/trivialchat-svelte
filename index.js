@@ -94,7 +94,7 @@ const start = async () => {
       ws.isAlive = true;
     /**
      * проверяем, клиент подключился первый раз, или нет
-     */ 
+     * */
       wsUsers[userName] = ws;
       let managerEmail = countedSites[userHost];
 
@@ -114,12 +114,12 @@ const start = async () => {
           if (data.to) {                                // data.to - message to client from site manager
             wsUsers[data.to].send(JSON.stringify(data))
           }
-          if (data.newManagerConnection) {
-            console.log('newManagerConnection...', managedClients, userName)
+          if (data.operatorOnline) {
+            console.log('operator...', userName, 'is online...', 'clients...', managedClients)
             emitter.emit('add websocket managers', { ws, query })
             if (managedClients[userName]) {
               managedClients[userName].forEach(client => 
-                wsUsers[client].send(JSON.stringify({'to': client, 'msg': 'manager is ONLINE...', 'date': Date.now()}))
+                wsUsers[client].send(JSON.stringify({'svc': 'manager is ONLINE...', 'date': Date.now()}))
               )
             }
           }
@@ -137,7 +137,7 @@ const start = async () => {
         let managerEmail = wsManagers.get(ws)         // send warning to all clients, "manager is OFFLINE..."
         if (managedClients[managerEmail]) {
           managedClients[managerEmail].forEach(client => 
-            wsUsers[client].send(JSON.stringify({'to': client, 'msg': 'manager is OFFLINE...', 'date': Date.now()}))
+            wsUsers[client].send(JSON.stringify({'svc': 'manager is OFFLINE...', 'date': Date.now()}))
           )
         }
         wsUsers[managerEmail] = null

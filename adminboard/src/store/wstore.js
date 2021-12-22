@@ -15,13 +15,14 @@ operator.subscribe(n => manager = n);
 const messageStore = writable('');
 
 export const wsInitialized = derived(isAuthorized, $isAuthorized => {
+	
 	if ($isAuthorized) {
 		const { email } = manager;
 		socket = new WebSocket(ws_url + '?userName=' + email);
-		console.log('new WebSocket...', $isAuthorized)
+		console.log('new WebSocket...', $isAuthorized, socket);
 
 		socket.addEventListener('open', () => {
-			socket.send(JSON.stringify({ 'newManagerConnection': email, 'msg': 'initial connection...', 'date': Date.now() }));
+			socket.send(JSON.stringify({ 'operatorOnline': email, 'msg': 'initial connection...', 'date': Date.now() }));
 		});
 	
 		socket.addEventListener('message', event => {
@@ -36,10 +37,11 @@ export const wsInitialized = derived(isAuthorized, $isAuthorized => {
 	}
 });
 
-export const enabledGreenLight = derived(wsInitialized, $wsInitialized => {
-	return $wsInitialized === undefined 
+export const enabledGreenLight = derived(isAuthorized, $isAuthorized => {
+	console.log('new enabledGreenLight...', $isAuthorized);
+	return $isAuthorized === undefined 
 		? false 
-		: $wsInitialized;
+		: $isAuthorized;
 });
 
 const sendMessage = (msg) => {

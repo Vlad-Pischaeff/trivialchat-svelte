@@ -22,6 +22,8 @@
 
 </script>
 
+{#if false}<slot/>{/if}
+
 {#if $isAuthorized}
   <Clients/>
   <div class="chat">

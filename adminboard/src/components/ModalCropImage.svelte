@@ -1,6 +1,4 @@
 <script>
-import { onMount, tick } from "svelte";
-
   import { operator, avatarTemp, modalAction } from "../store/store";
   import ButtonClose from './ButtonClose.svelte';
 

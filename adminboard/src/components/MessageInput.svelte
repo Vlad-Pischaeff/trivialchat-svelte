@@ -1,23 +1,24 @@
 <script>
   import { onMount } from 'svelte';
   import { selectedUserIdx, clients } from '../store/store';
-  import { wstore } from '../store/wstore';
+  import { wstore, wsInitialized } from '../store/wstore';
   import { tooltip } from '../js/__Tooltip';
 
   let message, messageInput;
 
   const sendMessage = () => {
-    if (message && $selectedUserIdx !== undefined) {
+    if (message && $selectedUserIdx) {
       clients.reply(message, $selectedUserIdx);
       wstore.sendMessage(message);
-      message = '';
     }
+    message = '';
   }
 
   const onKeyPress = e => { if (e.charCode === 13) sendMessage(); };
 
   onMount(() => messageInput.focus());
   
+  $: console.log('wsInitialized...', $wsInitialized);
 </script>
 
 <div class="chat_input">
