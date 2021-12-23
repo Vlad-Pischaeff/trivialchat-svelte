@@ -71,9 +71,9 @@ const start = async () => {
       useUnifiedTopology: true,
       useCreateIndex: true,
       useFindAndModify: false
-    })
+    });
 
-    const server = await Server.listen(PORT, () => { console.log('http/https server started ...') })
+    const server = await Server.listen(PORT, () => { console.log('http/https server started ...') });
 
     emitter.emit('get users');
     
@@ -96,7 +96,7 @@ const start = async () => {
        */
       if (userHost) {
         let sites = manager.Sites();
-        let email = sites[userHost]
+        let email = sites[userHost];
         onlineClients[userName] = { ws, email };
       } else {
         onlineOperators[userName] = { ws };
@@ -116,28 +116,28 @@ const start = async () => {
       ws.on('message', message => {
         try {
           let data = JSON.parse(message);
-
-          if (data.from) {              // data.from = message from client to site manager
+          // ...data.from = message from client to site manager
+          if (data.from) {
             let { email } = onlineClients[data.from];
             if (onlineOperators[email]) onlineOperators[email].ws.send(JSON.stringify(data));
           }
-
-          if (data.to) {                 // data.to - message to client from site manager
+          // ...data.to - message to client from site manager
+          if (data.to) {
             onlineClients[data.to].ws.send(JSON.stringify(data));
           }
 
         } catch(e) {
-          console.log('Error while received WebSocket message ... ', e, message)
+          console.log('Error while received WebSocket message ... ', e, message);
         }
-      })
+      });
     
       ws.on('pong', () => {
-        ws.isAlive = true
-      })
+        ws.isAlive = true;
+      });
 
       ws.on('close', () => {
-
-        let operatorEmail = wsManagers.get(ws)         // send warning to all clients, "manager is OFFLINE..."
+        // ...send warning to all clients, "manager is OFFLINE..."
+        let operatorEmail = wsManagers.get(ws);         
 
         for (const [key, value] of Object.entries(onlineClients)) {
           let { email, ws } = value;
