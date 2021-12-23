@@ -7,7 +7,7 @@
   let message, messageInput;
 
   const sendMessage = () => {
-    if (message && $selectedUserIdx) {
+    if (message && $selectedUserIdx !== null) {
       clients.reply(message, $selectedUserIdx);
       wstore.sendMessage(message);
     }
