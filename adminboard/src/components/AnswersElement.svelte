@@ -12,8 +12,10 @@
   let refAnswer;
 
   const sendMessage = ()  => {
-    clients.reply(item, $selectedUserIdx);
-    wstore.sendMessage(item);
+    if ($selectedUserIdx !== null) {
+      clients.reply(item, $selectedUserIdx);
+      wstore.sendMessage(item);
+    }
   };
   
   const saveAnswer = ()  => {
