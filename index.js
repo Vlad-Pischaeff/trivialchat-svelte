@@ -16,7 +16,6 @@ const credentials = {key: privateKey, cert: certificate};
 
 const PORT = config.get('port') || 5001;
 const MONGO_URL = config.get('mongoUrl');
-const User = require('./models/User');
 
 const isProduction = process.env.NODE_ENV === 'production'
                       ? true
@@ -27,9 +26,9 @@ const Server = isProduction
 
 const onlineClients = {};
 const onlineOperators = {};
-let wsManagers = new WeakMap();  //  { ws1: manager1, ws2: manager2 ... }
+let wsOperators = new WeakMap();  //  { ws1: manager1, ws2: manager2 ... }
+let wsClients = new WeakMap();  //  { ws1: client1, ws2: client2 ... }
 
-const emitter = require('./routes/service');
 const manager = require('./routes/helper');
 
 app.use(express.json({ extended: true }));
@@ -40,12 +39,7 @@ app.use('/img', express.static(path.join(__dirname, 'img' )));
 app.use('/fonts', express.static(path.join(__dirname, 'fonts' )));
 app.use('/css', express.static(path.join(__dirname, 'css' )));
 app.use('/js', express.static(path.join(__dirname, 'js' )));
-// for Vue client
-app.get('/tchat', (req, res) => {
-    // console.log('tchat req...', 'to ...', req.headers.host, 'from ...', req.headers.referer, req.url, req.originalUrl)
-    res.sendFile(path.resolve(__dirname, 'tchat', 'main.html'));
-  }
-)
+
 // for Svelte client
 app.use('/client', express.static(path.join(__dirname, 'client', 'public' )));
 app.get('/client', (req, res) => {
@@ -75,7 +69,7 @@ const start = async () => {
 
     const server = await Server.listen(PORT, () => { console.log('http/https server started ...') });
 
-    emitter.emit('get users');
+    manager.getUsers();
     
     wss = new WebSocket.Server({ server, path: '/ws' });
     
@@ -98,9 +92,10 @@ const start = async () => {
         let sites = manager.Sites();
         let email = sites[userHost];
         onlineClients[userName] = { ws, email };
+        wsClients.set(ws, userName);
       } else {
         onlineOperators[userName] = { ws };
-        wsManagers.set(ws, userName);
+        wsOperators.set(ws, userName);
       }
       /**
        * если оператор подключился, то пользователям отправляем
@@ -137,14 +132,22 @@ const start = async () => {
 
       ws.on('close', () => {
         // ...send warning to all clients, "manager is OFFLINE..."
-        let operatorEmail = wsManagers.get(ws);         
-
-        for (const [key, value] of Object.entries(onlineClients)) {
-          let { email, ws } = value;
-          if (operatorEmail === email) {
-            ws.send(JSON.stringify({'svc': 'manager is OFFLINE...', 'date': Date.now()}));
+        let operatorEmail = wsOperators.get(ws);
+        if (operatorEmail) {
+          delete onlineOperators[operatorEmail];
+          for (const [key, value] of Object.entries(onlineClients)) {
+            let { email, ws } = value;
+            if (operatorEmail === email) {
+              ws.send(JSON.stringify({'svc': 'manager is OFFLINE...', 'date': Date.now()}));
+            }
           }
         }
+        // ...delete client entry from 'onlineClients'
+        let clientEmail = wsClients.get(ws);
+        if (clientEmail) {
+          delete onlineClients[clientEmail];
+        }
+        console.log('<=== server close ws ===>', '\t\nOnline clients...\t', Object.keys(onlineClients), '\t\nOnline operators...\t', Object.keys(onlineOperators));
       })
     })
     

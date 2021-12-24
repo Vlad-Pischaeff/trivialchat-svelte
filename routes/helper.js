@@ -1,9 +1,9 @@
-const emitter = require('./service');
+// const emitter = require('./service');
 const User = require('../models/User');
 
 let countedSites = {}, countedEmails = {};
 
-const getUsers = async () => {
+exports.getUsers = async () => {
   try {
     const users = await User.find({});
     countedSites = users.reduce((allNames, name) => {     // CountedSites = { site: email }
@@ -14,13 +14,13 @@ const getUsers = async () => {
       allNames[name.email] = name.site;
       return allNames;
     }, {});
-    // console.log('emitter on GET USERS ...\n', 'countedSites...\t \n', countedSites, '\n countedEmails...\t', countedEmails);
+    console.log('emitter on GET USERS ...\n', 'countedSites...\t \n', countedSites, '\n countedEmails...\t', countedEmails);
   } catch(e) {
     console.log('getUsers error ...', e);
   }
 }
 
-emitter.on('get users', getUsers);
+// emitter.on('get users', getUsers);
 
 exports.Sites = function() {
   return countedSites;

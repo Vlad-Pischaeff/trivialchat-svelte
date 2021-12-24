@@ -9,7 +9,7 @@ const { check, validationResult } = require('express-validator')
 const auth = require('../middleware/auth.middleware')
 const User = require('../models/User')
 const SECRET = config.get("jwtSecret")
-const emitter = require('./service')
+const manager = require('./helper');
 
 // /api/auth/register
 router.post('/register', 
@@ -128,7 +128,9 @@ router.patch('/user/:id', auth, async (req, res) => {
     const user = await User.findByIdAndUpdate(id, req.body)
     const newUser = await User.findOne({ _id: id })
     res.status(201).json(newUser)
-    emitter.emit('get users')
+
+    manager.getUsers();
+
   } catch(e) {
     res.status(500).json({ message:`Something wrong ..., details ${e}` })
   }
