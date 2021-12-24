@@ -38,7 +38,6 @@ export const wsInitialized = derived(isAuthorized, $isAuthorized => {
 });
 
 export const enabledGreenLight = derived(isAuthorized, $isAuthorized => {
-	console.log('new enabledGreenLight...', $isAuthorized);
 	return $isAuthorized === undefined 
 		? false 
 		: $isAuthorized;
