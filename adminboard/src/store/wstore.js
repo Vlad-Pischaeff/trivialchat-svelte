@@ -19,7 +19,7 @@ export const wsInitialized = derived(isAuthorized, $isAuthorized => {
 	if ($isAuthorized) {
 		const { email } = manager;
 		socket = new WebSocket(ws_url + '?userName=' + email);
-		console.log('new WebSocket...', $isAuthorized, socket);
+		console.log('new WS...', $isAuthorized);
 
 		socket.addEventListener('open', () => {
 			socket.send(JSON.stringify({ 'operatorOnline': email, 'msg': 'initial connection...', 'date': Date.now() }));
