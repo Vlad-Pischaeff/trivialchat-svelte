@@ -1,5 +1,0 @@
-{
-  "port": 5001,
-  "mongoUrl": "mongodb://192.168.0.100:27017/trivial1",
-  "jwtSecret": "jrv0e7rf2oi43dfq0"
-}
