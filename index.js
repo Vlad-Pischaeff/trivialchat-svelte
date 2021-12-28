@@ -134,6 +134,7 @@ const start = async () => {
         // ...send warning to all clients, "manager is OFFLINE..."
         let operatorEmail = wsOperators.get(ws);
         if (operatorEmail) {
+          // ...delete operator entry from 'onlineOperators'
           delete onlineOperators[operatorEmail];
           for (const [key, value] of Object.entries(onlineClients)) {
             let { email, ws } = value;
