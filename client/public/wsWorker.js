@@ -4,12 +4,27 @@ self.addEventListener('message', function(e) {
   if (data.init) {
     let socket = new WebSocket(data.init);
 
-    socket.onmessage = function(event) {
-        self.postMessage('Websocket : ' + event.data);
-    };
+    socket.onmessage = (event) => {
+      self.postMessage(event.data);
+    }
+
+    socket.onopen = () => {
+      self.postMessage(JSON.stringify({ 'wsState': 'open' }));
+      socket.send(JSON.stringify({'newClientConnection': 'Session.userID', 
+                              'msg': 'initial connection...', 
+                              'date': Date.now()}));
+      console.log('ws открыт...');
+    }
   
-    socket.onclose = function(event) {
-    };
+    socket.onerror = () => {
+      self.postMessage(JSON.stringify({ 'wsState': 'error' }));
+      console.log('ws response ошибка...');
+    }
+
+    socket.onclose = () => {
+      self.postMessage(JSON.stringify({ 'wsState': 'close' }));
+      console.log('ws закрыт...');
+    }
   }
 }, false);
 

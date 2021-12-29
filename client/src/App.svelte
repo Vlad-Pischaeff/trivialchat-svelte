@@ -33,18 +33,22 @@
 		}
 	};
 
-	const sendMessage = () => {
-		if (inputVal !== '') {
-			let message = new MessageObj(inputVal)
-			messages = [ ...messages, message];
+	const sendMessage = (val) => {
+		let message = new MessageObj(val)
+		messages = [ ...messages, message];
+		let swMessage = new innerMessageObj('post', message);
+		myWorker.postMessage(JSON.stringify(swMessage));
+		console.log('send message...', swMessage);
+	}
+
+	const onClick = () => {
+		if (inputVal !== '') { 
+			sendMessage(inputVal);
 			inputVal  = '';
-			let swMessage = new innerMessageObj('post', message);
-			myWorker.postMessage(JSON.stringify(swMessage));
-			console.log('send message...', swMessage);
 		}
 	}
 
-	const onKeyPress = e => { if (e.charCode === 13) sendMessage()};
+	const onKeyPress = e => { if (e.charCode === 13) onClick() };
 
 	function MessageObj(msg) {
 		this.from = Session.userID;
@@ -57,25 +61,28 @@
 		this.msg = msg;
 	}
 
-	$: if (Session) { 
-		Session.userMSGS = messages;
-		sessionStorage.setItem('tchat', JSON.stringify(Session));
+	const saveMessages = () => {
+		if (Session) { 
+			Session.userMSGS = messages;
+			sessionStorage.setItem('tchat', JSON.stringify(Session));
+		}
 	}
+
+	const restoreSessionData = () => {
+		USER = Session.userID;
+		HOST = Session.userHOST;
+		avatar = Session.userAvatar;
+		title = Session.userTitle;
+		desc = Session.userDesc;
+	}
+
+	$: if (messages) saveMessages();
 	$: if (msgRef) msgRef.scrollIntoView({ behavior: 'smooth' });
-	$: if (Session?.userID) USER = Session.userID;
-	$: if (Session?.userHOST) HOST = Session.userHOST;
-	$: if (Session?.userAvatar) avatar = Session.userAvatar;
-	$: if (Session?.userTitle) title = Session.userTitle;
-	$: if (Session?.userDesc) desc = Session.userDesc;
+	$: if (Session) restoreSessionData();
 	$: if (isReadyServiceWorker && isNewSession) {
 			let innerMsg = new innerMessageObj('init', `${WS_URL}?userName=${USER}&userHost=${HOST}`);
 			myWorker.postMessage(JSON.stringify(innerMsg));
 			console.log('swState activated...', 'init message...', innerMsg);
-			if (window.Worker) {
-				webWorker = new Worker("wsWorker.js");
-				console.log('webWorker start...', webWorker);
-				webWorker.postMessage({'init': `${WS_URL}?userName=${USER}&userHost=${HOST}`});
-			}
 		}
 
 	onMount(async () => {
@@ -189,7 +196,7 @@
 							placeholder="type your question ..."
 							on:keypress={onKeyPress}>
 			<img 	class="chat_input-icon" src={iconOK} alt="OK" 
-						on:click={sendMessage}>
+						on:click={onClick}>
 		</div>
 	</footer>
 </main>
