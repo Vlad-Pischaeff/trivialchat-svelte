@@ -1,5 +1,5 @@
 <script>
-	import { enabledGreenLight } from '../store/wstore';
+	import { enabledGreenLight, clientsNumber } from '../store/wstore';
 </script>
 
 <footer>
@@ -7,6 +7,9 @@
 		ws
 	</div>
 	<div class={$enabledGreenLight ? "indicator-on" : "indicator-off"}>
+	</div>
+	<div class="clients_desc">
+		clients {$clientsNumber}
 	</div>
 	<p>Trivial Chat 2021 &copy;</p>
 </footer>
@@ -35,6 +38,10 @@
 	}
 	.indicator_desc-off {
 		color: gray;
+	}
+	.clients_desc {
+		color: #ddd;
+		margin-left: 1rem;
 	}
 	@keyframes signal {
   0% {

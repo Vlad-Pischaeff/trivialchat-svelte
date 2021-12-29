@@ -92,6 +92,7 @@ const start = async () => {
         let sites = manager.Sites();
         let email = sites[userHost];
         onlineClients[userName] = { ws, email };
+        console.log('onlineClients...', userName, onlineClients);
         wsClients.set(ws, userName);
       } else {
         onlineOperators[userName] = { ws };
@@ -113,6 +114,7 @@ const start = async () => {
           let data = JSON.parse(message);
           // ...data.from = message from client to site manager
           if (data.from) {
+            console.log('data.from...', data.from);
             let { email } = onlineClients[data.from];
             if (onlineOperators[email]) onlineOperators[email].ws.send(JSON.stringify(data));
           }
@@ -158,7 +160,25 @@ const start = async () => {
         ws.isAlive = false;
         ws.ping();
       })
-    }, 10000);
+      // ...считаем количество клиентов сайта
+      let onlineClientsNumber = {};
+      for (let key in onlineClients) {
+        let email = onlineClients[key].email;
+        
+        if (email in onlineClientsNumber) {
+          onlineClientsNumber[email] = onlineClientsNumber[email] + 1;
+        } else {
+          onlineClientsNumber[email] = 1;
+        }
+      }
+      // ...посылаем сообщение операторам о количестве клиентов
+      for (let key in onlineClientsNumber) {
+        let number = onlineClientsNumber[key];
+        onlineOperators[key]?.ws.send(JSON.stringify({'num': number }));
+      }
+      
+      // console.log('online clients...', onlineClientsNumber);
+    }, 20000);
 
   } catch (e) {
     console.log('Server error ...', e);

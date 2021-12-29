@@ -9,6 +9,7 @@ let { VITE_NAME : hostname,
 let wsPrefix = httpPrefix === 'http' ? 'ws' : 'wss';
 let ws_url = `${wsPrefix}://${hostname}:${port}/ws`;
 export const url = `${httpPrefix}://${hostname}:${port}`;
+export const clientsNumber = writable(0);
 
 operator.subscribe(n => manager = n);
 
@@ -27,7 +28,8 @@ export const wsInitialized = derived(isAuthorized, $isAuthorized => {
 	
 		socket.addEventListener('message', event => {
 			let data = JSON.parse(event.data);
-			if (!data.svc) clients.modify(JSON.parse(event.data));
+			if (!data.svc && !data.num) clients.modify(JSON.parse(event.data));
+			if (data.num) clientsNumber.set(data.num);
 		});
 
 		return true;

@@ -38,7 +38,7 @@ self.addEventListener('message', event => {
   console.log('Пришло сообщение на сервер...', event.type, event.data, event.source);
   let incomingMessage = JSON.parse(event.data);
 
-  if (incomingMessage.type === 'init' && isNewWebSocket) {
+  if (incomingMessage.type === 'init') {
 
     console.log('Открываем новый WebSocket...');
     ws = new WebSocket(incomingMessage.msg);

@@ -1,7 +1,7 @@
 <script>
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { iconAvatar, iconOK } from './icons';
-	import { random_id } from './helper';
+	import { random_id, isEmpty } from './helper';
 
 	const {	API_HOST_DEV,	API_PORT_DEV,	API_HOST,	API_PORT, isProd } = __app['env'];
 	let WS_URL, URL, HOST, USER;
@@ -16,8 +16,9 @@
 
 	let title = 'FAKE CORP.', desc = 'Manager', avatar = iconAvatar,
       messages = [], inputVal = '',
-			msgRef,	Session, myWorker, isReadyServiceWorker = false;
-	
+			msgRef,	Session, myWorker, webWorker, 
+			isReadyServiceWorker = false, isNewSession = false;
+
 	const swListener = new BroadcastChannel('swListener');
 
 	swListener.onmessage = function(e) {
@@ -66,16 +67,22 @@
 	$: if (Session?.userAvatar) avatar = Session.userAvatar;
 	$: if (Session?.userTitle) title = Session.userTitle;
 	$: if (Session?.userDesc) desc = Session.userDesc;
-	$: if (isReadyServiceWorker) {
+	$: if (isReadyServiceWorker && isNewSession) {
 			let innerMsg = new innerMessageObj('init', `${WS_URL}?userName=${USER}&userHost=${HOST}`);
 			myWorker.postMessage(JSON.stringify(innerMsg));
 			console.log('swState activated...', 'init message...', innerMsg);
+			if (window.Worker) {
+				webWorker = new Worker("wsWorker.js");
+				console.log('webWorker start...', webWorker);
+				webWorker.postMessage({'init': `${WS_URL}?userName=${USER}&userHost=${HOST}`});
+			}
 		}
 
 	onMount(async () => {
 		Session = JSON.parse(sessionStorage.getItem('tchat')) || {};
+		isNewSession = isEmpty(Session) ? true : false;
 		/**
-		 * restore the user's session from localStorage, 
+		 * restore the user's session from sessionStorage, 
 		 * if there is nothing there, we get the data from the server
 		 */
     if (Object.entries(Session).length === 0) {
@@ -111,7 +118,7 @@
 		 */
 		if (navigator.serviceWorker.controller) {
 			myWorker = navigator.serviceWorker.controller;
-			console.log('if already has controller...', myWorker.state);
+			console.log('is already has controller...', myWorker.state);
 			isReadyServiceWorker = true;
 		} else {
 			navigator.serviceWorker
