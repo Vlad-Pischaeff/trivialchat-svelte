@@ -97,7 +97,7 @@
 		 * restore the user's session from sessionStorage, 
 		 * if there is nothing there, we get the data from the server
 		 */
-    if (Object.entries(Session).length === 0) {
+    if (isNewSession) {
 
       Session.userID = random_id();
 			Session.online = false;													// ...operator is OFFLINE by default
