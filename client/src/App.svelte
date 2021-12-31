@@ -16,18 +16,23 @@
 
 	let title = 'FAKE CORP.', desc = 'Manager', avatar = iconAvatar,
       messages = [], inputVal = '',
-			msgRef,	Session, myWorker, webWorker, 
+			msgRef,	Session, myWorker, online = false, 
 			isReadyServiceWorker = false, isNewSession = false;
 
 	const swListener = new BroadcastChannel('swListener');
 
-	swListener.onmessage = function(e) {
-		console.log('swListener Received', e.data);
-		let message = JSON.parse(e.data);
+	swListener.onmessage = function({data}) {
+		console.log('swListener Received', data);
+		let message = JSON.parse(data);
+
+		if (message.svc) online = /ONLINE/i.test(message.svc);
+
 		if (message.wsState) {
 			//...webSocket state messages
 			console.log('webSocket state...', message.wsState);
-		} else {
+		} 
+		
+		if (message.to) {
 			//...WebSocket clients messages
 			messages = [ ...messages, message];
 		}
@@ -163,6 +168,7 @@
 	<section class="cp_header">
 		<picture class="cp_header-avatar">
 			<img class="cp_header-avatarimg" src={avatar} alt="avatar">
+			<div class={online ? "online_status" : "online_status-off"}></div>
 		</picture>
 		<div class="cp_header-card">
 			<div class="cp_header-card-1">{title}</div>
@@ -173,9 +179,6 @@
 		<div class="chat_field">
 			{#if messages.length !== 0}
 				{#each messages as message }
-					{#if (message.svc)}
-						<div class="service">{message.svc} {new Date(message.date).toLocaleString()}</div>
-					{:else}
 						<div 	class="chat_field-message" 
 									data-align="{message.from ? 'from' : 'to'}" 
 									bind:this={msgRef}>
@@ -184,7 +187,6 @@
 								<p class="msg-text">{message.msg}</p>
 							</div>
 						</div>
-					{/if}
 				{/each}
 			{/if}
 		</div>

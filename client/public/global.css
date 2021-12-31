@@ -55,6 +55,7 @@ body {
           flex: 0 0 5rem;
   position: relative;
   padding: 0.5rem 0 0 0.5rem;
+  height: 5rem;
 }
 .cp_header-avatarimg {
   position: absolute;
@@ -228,10 +229,26 @@ body {
   color: #aaa;
 }
 
-
-/* .msg-text {
-  color: #000;
-} */
+.online_status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: rgb(205, 255, 154);
+  animation: signal 1s infinite ease-in-out;
+}
+.online_status-off {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: #444;
+  border: 1px solid #888;
+}
 
 .service {
   font-family: Jura;
@@ -251,3 +268,15 @@ body {
     opacity: 0;
   }
 }
+
+@keyframes signal {
+  0% {
+    background: rgb(115, 128, 123);
+  }
+  50% {
+    background: aquamarine;
+		box-shadow: 0 0 4px aquamarine;
+  }
+	100% {
+		background: rgb(115, 128, 123);
+	}
