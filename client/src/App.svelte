@@ -16,7 +16,7 @@
 
 	let title = 'FAKE CORP.', desc = 'Manager', avatar = iconAvatar,
       messages = [], inputVal = '',
-			msgRef,	Session, myWorker, online = false, 
+			msgRef,	Session, myWorker, 
 			isReadyServiceWorker = false, isNewSession = false;
 
 	const swListener = new BroadcastChannel('swListener');
@@ -25,7 +25,7 @@
 		console.log('swListener Received', data);
 		let message = JSON.parse(data);
 
-		if (message.svc) online = /ONLINE/i.test(message.svc);
+		if (message.svc) Session.online = /ONLINE/i.test(message.svc);
 
 		if (message.wsState) {
 			//...webSocket state messages
@@ -100,6 +100,7 @@
     if (Object.entries(Session).length === 0) {
 
       Session.userID = random_id();
+			Session.online = false;													// ...operator is OFFLINE by default
 
       let url = (window.location != window.parent.location)
         ? document.referrer         									// ---- https://tele.scope.cf
@@ -168,7 +169,7 @@
 	<section class="cp_header">
 		<picture class="cp_header-avatar">
 			<img class="cp_header-avatarimg" src={avatar} alt="avatar">
-			<div class={online ? "online_status" : "online_status-off"}></div>
+			<div class={Session?.online ? "online_status" : "online_status-off"}></div>
 		</picture>
 		<div class="cp_header-card">
 			<div class="cp_header-card-1">{title}</div>

@@ -41,7 +41,10 @@ self.addEventListener('message', event => {
   if (incomingMessage.type === 'init') {
 
     console.log('Открываем новый WebSocket...');
-    ws = new WebSocket(incomingMessage.msg);
+    (ws)
+      ? console.log('WebSocket уже открыт...', ws)
+      : ws = new WebSocket(incomingMessage.msg);
+
     isNewWebSocket = false;
 
     ws.onmessage = (event) => {
