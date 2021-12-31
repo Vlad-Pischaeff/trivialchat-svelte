@@ -2,6 +2,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { iconAvatar, iconOK } from './icons';
 	import { random_id, isEmpty } from './helper';
+	import Message from './Message.svelte';
 
 	const {	API_HOST_DEV,	API_PORT_DEV,	API_HOST,	API_PORT, isProd } = __app['env'];
 	let WS_URL, URL, HOST, USER;
@@ -16,7 +17,7 @@
 
 	let title = 'FAKE CORP.', desc = 'Manager', avatar = iconAvatar,
       messages = [], inputVal = '',
-			msgRef,	Session, myWorker, 
+			Session, myWorker, 
 			isReadyServiceWorker = false, isNewSession = false;
 
 	const swListener = new BroadcastChannel('swListener');
@@ -25,7 +26,10 @@
 		console.log('swListener Received', data);
 		let message = JSON.parse(data);
 
-		if (message.svc) Session.online = /ONLINE/i.test(message.svc);
+		if (message.svc) {
+			Session.online = /ONLINE/i.test(message.svc);
+			saveSession();
+		}
 
 		if (message.wsState) {
 			//...webSocket state messages
@@ -69,11 +73,11 @@
 	const saveMessages = () => {
 		if (Session) { 
 			Session.userMSGS = messages;
-			sessionStorage.setItem('tchat', JSON.stringify(Session));
+			saveSession();
 		}
 	}
 
-	const restoreSessionData = () => {
+	const restoreSession = () => {
 		USER = Session.userID;
 		HOST = Session.userHOST;
 		avatar = Session.userAvatar;
@@ -81,9 +85,12 @@
 		desc = Session.userDesc;
 	}
 
+	const saveSession = () => {
+		sessionStorage.setItem('tchat', JSON.stringify(Session));
+	}
+
 	$: if (messages) saveMessages();
-	$: if (msgRef) msgRef.scrollIntoView({ behavior: 'smooth' });
-	$: if (Session) restoreSessionData();
+	$: if (Session) restoreSession();
 	$: if (isReadyServiceWorker && isNewSession) {
 			let innerMsg = new innerMessageObj('init', `${WS_URL}?userName=${USER}&userHost=${HOST}`);
 			myWorker.postMessage(JSON.stringify(innerMsg));
@@ -121,7 +128,7 @@
       Session.userMSGS = [{ to: 'me', msg: Session.userGreeting, date: Date.now() }];
 			messages = Session.userMSGS;
 
-			sessionStorage.setItem('tchat', JSON.stringify(Session));
+			saveSession();
 
 		} else {
 			messages = Session.userMSGS;
@@ -180,14 +187,7 @@
 		<div class="chat_field">
 			{#if messages.length !== 0}
 				{#each messages as message }
-						<div 	class="chat_field-message" 
-									data-align="{message.from ? 'from' : 'to'}" 
-									bind:this={msgRef}>
-							<div class="{message.from ? 'chat_field-messagefrom' : 'chat_field-messageto'}">
-								<p class="msg-data">{ new Date(message.date).toLocaleString()}</p>
-								<p class="msg-text">{message.msg}</p>
-							</div>
-						</div>
+					<Message message={message} />
 				{/each}
 			{/if}
 		</div>
