@@ -1,4 +1,4 @@
-let ws, isNewWebSocket = true, isActivated = false;
+let ws, userId, isActivated = false;
 const CACHE = 'v1';
 const swListener = new BroadcastChannel('swListener');
 
@@ -25,6 +25,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   console.log('Происходит запрос на сервер...', event);
   if (isActivated) event.respondWith(fromCache(event.request));
+  swListener.postMessage(JSON.stringify({ 'wsUser': userId }));
 });
 
 function fromCache(request) {
@@ -40,33 +41,32 @@ self.addEventListener('message', event => {
 
   if (incomingMessage.type === 'init') {
 
-    console.log('Открываем новый WebSocket...');
-    (ws)
-      ? console.log('WebSocket уже открыт...', ws)
-      : ws = new WebSocket(incomingMessage.msg);
+    if (!userId) {
+      userId = incomingMessage.userId;
+      ws = new WebSocket(incomingMessage.msg);
+      console.log('Открываем новый WebSocket...');
 
-    isNewWebSocket = false;
+      ws.onmessage = (event) => {
+        swListener.postMessage(event.data);
+      }
+    
+      ws.onopen = () => {
+        swListener.postMessage(JSON.stringify({ 'wsState': 'open' }));
+        ws.send(JSON.stringify({'newClientConnection': 'Session.userID', 
+                                'msg': 'initial connection...', 
+                                'date': Date.now()}));
+        console.log('ws открыт...');
+      }
+    
+      ws.onerror = () => {
+        swListener.postMessage(JSON.stringify({ 'wsState': 'error' }));
+        console.log('ws response ошибка...');
+      }
 
-    ws.onmessage = (event) => {
-      swListener.postMessage(event.data);
-    }
-  
-    ws.onopen = () => {
-      swListener.postMessage(JSON.stringify({ 'wsState': 'open' }));
-      ws.send(JSON.stringify({'newClientConnection': 'Session.userID', 
-                              'msg': 'initial connection...', 
-                              'date': Date.now()}));
-      console.log('ws открыт...');
-    }
-  
-    ws.onerror = () => {
-      swListener.postMessage(JSON.stringify({ 'wsState': 'error' }));
-      console.log('ws response ошибка...');
-    }
-
-    ws.onclose = () => {
-      swListener.postMessage(JSON.stringify({ 'wsState': 'close' }));
-      console.log('ws закрыт...');
+      ws.onclose = () => {
+        swListener.postMessage(JSON.stringify({ 'wsState': 'close' }));
+        console.log('ws закрыт...');
+      }
     }
   }  
 

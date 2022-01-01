@@ -1,8 +1,9 @@
 <script>
-	import { onDestroy, onMount } from 'svelte';
-	import { iconAvatar, iconOK } from './icons';
+	import { onMount } from 'svelte';
+	import { iconAvatar } from './icons';
 	import { random_id, isEmpty } from './helper';
 	import Message from './Message.svelte';
+	import Footer from './Footer.svelte';
 
 	const {	API_HOST_DEV,	API_PORT_DEV,	API_HOST,	API_PORT, isProd } = __app['env'];
 	let WS_URL, URL, HOST, USER;
@@ -34,6 +35,12 @@
 		if (message.wsState) {
 			//...webSocket state messages
 			console.log('webSocket state...', message.wsState);
+		}
+
+		if (message.wsUser) {
+			//...webSocket state messages
+			console.log('webSocket user...', message.wsUser);
+			Session.userID = message.wsUser;
 		} 
 		
 		if (message.to) {
@@ -50,24 +57,16 @@
 		console.log('send message...', swMessage);
 	}
 
-	const onClick = () => {
-		if (inputVal !== '') { 
-			sendMessage(inputVal);
-			inputVal  = '';
-		}
-	}
-
-	const onKeyPress = e => { if (e.charCode === 13) onClick() };
-
 	function MessageObj(msg) {
 		this.from = Session.userID;
 		this.msg = msg;
 		this.date = Date.now();
 	}
 
-	function innerMessageObj(type, msg) {
+	function innerMessageObj(type, msg, userId) {
 		this.type = type;
 		this.msg = msg;
+		this.userId = userId;
 	}
 
 	const saveMessages = () => {
@@ -92,9 +91,9 @@
 	$: if (messages) saveMessages();
 	$: if (Session) restoreSession();
 	$: if (isReadyServiceWorker && isNewSession) {
-			let innerMsg = new innerMessageObj('init', `${WS_URL}?userName=${USER}&userHost=${HOST}`);
+			let innerMsg = new innerMessageObj('init', `${WS_URL}?userName=${USER}&userHost=${HOST}`, `${USER}`);
 			myWorker.postMessage(JSON.stringify(innerMsg));
-			console.log('swState activated...', 'init message...', innerMsg);
+			console.log('swState init...', innerMsg);
 		}
 
 	onMount(async () => {
@@ -106,7 +105,7 @@
 		 */
     if (isNewSession) {
 
-      Session.userID = random_id();
+      if (!Session.userID) Session.userID = random_id();
 			Session.online = false;													// ...operator is OFFLINE by default
 
       let url = (window.location != window.parent.location)
@@ -192,14 +191,5 @@
 			{/if}
 		</div>
 	</section>
-	<footer class="cp_footer">
-		<div class="chat_input">
-			<input 	class="chat_input-text" name="question" bind:value={inputVal} 
-							type="text" 
-							placeholder="type your question ..."
-							on:keypress={onKeyPress}>
-			<img 	class="chat_input-icon" src={iconOK} alt="OK" 
-						on:click={onClick}>
-		</div>
-	</footer>
+	<Footer sendMessage={sendMessage} inputVal={inputVal} />
 </main>
