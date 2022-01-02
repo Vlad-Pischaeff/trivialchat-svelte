@@ -98,16 +98,6 @@ const start = async () => {
         onlineOperators[userName] = { ws };
         wsOperators.set(ws, userName);
       }
-      /**
-       * если оператор подключился, то пользователям отправляем
-       * "manager is ONLINE" или "manager is OFFLINE" в противном случае
-       */
-      for (const [key, value] of Object.entries(onlineClients)) {
-        let { email, ws } = value;
-        onlineOperators[email]
-          ? ws.send(JSON.stringify({'svc': 'manager is ONLINE...', 'date': Date.now()}))
-          : ws.send(JSON.stringify({'svc': 'manager is OFFLINE...', 'date': Date.now()}));
-      }
 
       ws.on('message', message => {
         try {
@@ -133,23 +123,14 @@ const start = async () => {
       });
 
       ws.on('close', () => {
-        // ...send warning to all clients, "manager is OFFLINE..."
+        // ...delete operator entry from 'onlineOperators'
         let operatorEmail = wsOperators.get(ws);
-        if (operatorEmail) {
-          // ...delete operator entry from 'onlineOperators'
-          delete onlineOperators[operatorEmail];
-          for (const [key, value] of Object.entries(onlineClients)) {
-            let { email, ws } = value;
-            if (operatorEmail === email) {
-              ws.send(JSON.stringify({'svc': 'manager is OFFLINE...', 'date': Date.now()}));
-            }
-          }
-        }
+        if (operatorEmail) delete onlineOperators[operatorEmail];
+
         // ...delete client entry from 'onlineClients'
         let clientEmail = wsClients.get(ws);
-        if (clientEmail) {
-          delete onlineClients[clientEmail];
-        }
+        if (clientEmail) delete onlineClients[clientEmail];
+
         console.log('<=== server close ws ===>', '\t\nOnline clients...\t', Object.keys(onlineClients), '\t\nOnline operators...\t', Object.keys(onlineOperators));
       })
     })
@@ -176,8 +157,16 @@ const start = async () => {
         let number = onlineClientsNumber[key];
         onlineOperators[key]?.ws.send(JSON.stringify({'num': number }));
       }
-      
-      // console.log('online clients...', onlineClientsNumber);
+      /**
+       * регулярно отправляем пользователям состояние оператора
+       * "manager is ONLINE" или "manager is OFFLINE" в противном случае
+       */
+      for (const [key, value] of Object.entries(onlineClients)) {
+        let { email, ws } = value;
+        onlineOperators[email]
+          ? ws.send(JSON.stringify({'svc': 'manager is ONLINE...', 'date': Date.now()}))
+          : ws.send(JSON.stringify({'svc': 'manager is OFFLINE...', 'date': Date.now()}));
+      }
     }, 20000);
 
   } catch (e) {
