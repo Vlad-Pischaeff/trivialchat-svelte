@@ -30,12 +30,12 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-	}
+  }
   nav {
     display: flex;
     align-items: center;
   }
   nav a {
-		padding: 0 .2rem;
-	}
+    padding: 0 .2rem;
+  }
 </style>

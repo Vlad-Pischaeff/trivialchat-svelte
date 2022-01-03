@@ -1,7 +1,7 @@
 <script>
   import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
-	import { isAuthorized } from "../store/store";
+  import { isAuthorized } from "../store/store";
   import Clients from '../components/Clients.svelte';
   import Messages from '../components/Messages.svelte';
   import Templates from '../components/Templates.svelte';

@@ -8,7 +8,7 @@
 
   let refAvatar, refBg, inputRef, avatar;
 
-	const onFileSelected = (e) => {
+  const onFileSelected = (e) => {
     let image = e.target.files[0];
     let reader = new FileReader();
     reader.readAsDataURL(image);

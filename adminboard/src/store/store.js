@@ -23,7 +23,7 @@ export const modalDialogs = writable({
 });
 
 const createOperator = () => {
-	const { subscribe, set, update } = writable({});
+  const { subscribe, set, update } = writable({});
 
   const updateOperatorProfile = async (n, e) => {
     try {
@@ -36,9 +36,9 @@ const createOperator = () => {
 
   const handlingErrors = err => authErrors.set(err.val);
 
-	return {
-		subscribe,
-		login: async (e) => {
+  return {
+    subscribe,
+    login: async (e) => {
       try {
         const data = await httpRequest('/api/auth/login', 'POST', e);
         if (data) {
@@ -82,14 +82,14 @@ const createOperator = () => {
       updateOperatorProfile(n, {'notes': n.notes});
       return n;
     }),
-		reset: () => set({})
-	};
+    reset: () => set({})
+  };
 }
 
 export const operator = createOperator();
 
 const createClients = () => {
-	const { subscribe, set, update } = writable([]);
+  const { subscribe, set, update } = writable([]);
 
   function User(user, messages, date) {
     this.user = user;
@@ -98,8 +98,8 @@ const createClients = () => {
     this.cnt = 1;
   }
 
-	return {
-		subscribe,
+  return {
+    subscribe,
     modify: (data) => update(n => {
       let users = [ ...n ];
       if (!users.some(n => n.user === data.from)) {
@@ -129,9 +129,9 @@ const createClients = () => {
       selectedUserIdx.set(null);
       return n;
     }),
-		reset: () => set([]),
+    reset: () => set([]),
     restore: (n) => { if (n) set(n) }
-	};
+  };
 }
 
 export const clients = createClients();

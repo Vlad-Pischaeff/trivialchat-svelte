@@ -1,18 +1,18 @@
 <script>
-	import { iconOK } from './icons';
+  import { iconOK } from './icons';
 
   export let inputVal = '';
 
   export let sendMessage = () => {};
 
-	const onClick = () => {
-		if (inputVal !== '') { 
-			sendMessage(inputVal);
-			inputVal  = '';
-		}
-	}
+  const onClick = () => {
+    if (inputVal !== '') { 
+      sendMessage(inputVal);
+      inputVal  = '';
+    }
+  }
 
-	const onKeyPress = e => { if (e.charCode === 13) onClick() };
+  const onKeyPress = e => { if (e.charCode === 13) onClick() };
 
 </script>
 
