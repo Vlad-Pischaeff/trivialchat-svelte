@@ -1,25 +1,13 @@
 <script>
 	import { onMount } from 'svelte';
 	import { iconAvatar } from './icons';
-	import { random_id, isEmpty } from './helper';
+	import { random_id, isEmpty, WS_URL, URL } from './helper';
+	import Header from './Header.svelte';
 	import Message from './Message.svelte';
 	import Footer from './Footer.svelte';
 
-	const {	API_HOST_DEV,	API_PORT_DEV,	API_HOST,	API_PORT, isProd } = __app['env'];
-	let WS_URL, URL, HOST, USER;
-
-	if (isProd) {
-		URL = `https://${API_HOST}:${API_PORT}`;
-		WS_URL = `wss://${API_HOST}:${API_PORT}/ws`;
-	} else {
-		URL = `http://${API_HOST_DEV}:${API_PORT_DEV}`;
-		WS_URL = `ws://${API_HOST_DEV}:${API_PORT_DEV}/ws`;
-	}
-
-	let title = 'FAKE CORP.', desc = 'Manager', avatar = iconAvatar,
-      messages = [], inputVal = '',
-			Session, myWorker, 
-			isReadyServiceWorker = false, isNewSession = false;
+	let messages = [], inputVal = '', Session, myWorker;
+	let	isReadyServiceWorker = false, isNewSession = false;
 
 	const swListener = new BroadcastChannel('swListener');
 
@@ -54,7 +42,6 @@
 		messages = [ ...messages, message];
 		let swMessage = new innerMessageObj('post', message);
 		myWorker.postMessage(JSON.stringify(swMessage));
-		console.log('send message...', swMessage);
 	}
 
 	function MessageObj(msg) {
@@ -76,22 +63,14 @@
 		}
 	}
 
-	const restoreSession = () => {
-		USER = Session.userID;
-		HOST = Session.userHOST;
-		avatar = Session.userAvatar;
-		title = Session.userTitle;
-		desc = Session.userDesc;
-	}
-
 	const saveSession = () => {
 		sessionStorage.setItem('tchat', JSON.stringify(Session));
 	}
 
-	$: if (messages) saveMessages();
-	$: if (Session) restoreSession();
+	$: if (messages.length !== 0) saveMessages();
+
 	$: if (isReadyServiceWorker && isNewSession) {
-			let innerMsg = new innerMessageObj('init', `${WS_URL}?userName=${USER}&userHost=${HOST}`, `${USER}`);
+			let innerMsg = new innerMessageObj('init', `${WS_URL}?userName=${Session.userID}&userHost=${Session.userHOST}`, `${Session.userID}`);
 			myWorker.postMessage(JSON.stringify(innerMsg));
 			console.log('swState init...', innerMsg);
 		}
@@ -118,10 +97,18 @@
 														.catch(e => e);
 
       if (!response.message) {
-        ({ 	avatar : Session.userAvatar, 
-						greeting: Session.userGreeting, 
-						title: Session.userTitle, 
-						desc: Session.userDesc } = response);
+				Session.userTitle = response.title
+					? response.title
+					: 'FAKE corporation.';
+				Session.userDesc = response.desc
+					? response.desc
+					: 'I\'am Your online Manager';
+        Session.userAvatar = response.avatar
+					? response.avatar
+					:	iconAvatar;
+				Session.userGreeting = response.greeting
+					? response.greeting
+					: "Hello. What can I help You ?...";
       }
 
       Session.userMSGS = [{ to: 'me', msg: Session.userGreeting, date: Date.now() }];
@@ -172,16 +159,7 @@
 </script>
 
 <main class="cp" id="App">
-	<section class="cp_header">
-		<picture class="cp_header-avatar">
-			<img class="cp_header-avatarimg" src={avatar} alt="avatar">
-			<div class={Session?.online ? "online_status" : "online_status-off"}></div>
-		</picture>
-		<div class="cp_header-card">
-			<div class="cp_header-card-1">{title}</div>
-			<div class="cp_header-card-2">{desc}</div>
-		</div>
-	</section>
+	<Header Session={Session} />
 	<section class="cp_body">
 		<div class="chat_field">
 			{#if messages.length !== 0}
