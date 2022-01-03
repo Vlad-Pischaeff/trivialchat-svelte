@@ -1,4 +1,3 @@
-// const emitter = require('./service');
 const User = require('../models/User');
 
 let countedSites = {}, countedEmails = {};
@@ -19,8 +18,6 @@ exports.getUsers = async () => {
     console.log('getUsers error ...', e);
   }
 }
-
-// emitter.on('get users', getUsers);
 
 exports.Sites = function() {
   return countedSites;

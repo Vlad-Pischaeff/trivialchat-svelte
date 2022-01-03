@@ -36,9 +36,6 @@ app.use(cors());
 
 app.use('/upload', express.static(path.join(__dirname, 'upload' )));
 app.use('/img', express.static(path.join(__dirname, 'img' )));
-app.use('/fonts', express.static(path.join(__dirname, 'fonts' )));
-app.use('/css', express.static(path.join(__dirname, 'css' )));
-app.use('/js', express.static(path.join(__dirname, 'js' )));
 
 // for Svelte client
 app.use('/client', express.static(path.join(__dirname, 'client', 'public' )));
@@ -92,7 +89,6 @@ const start = async () => {
         let sites = manager.Sites();
         let email = sites[userHost];
         onlineClients[userName] = { ws, email };
-        console.log('onlineClients...', userName, onlineClients);
         wsClients.set(ws, userName);
       } else {
         onlineOperators[userName] = { ws };
