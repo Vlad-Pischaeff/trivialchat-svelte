@@ -26,7 +26,7 @@
 		}
 
 		if (message.wsUser) {
-			//...webSocket state messages
+			//...restore UserId
 			console.log('webSocket user...', message.wsUser);
 			Session.userID = message.wsUser;
 		} 
