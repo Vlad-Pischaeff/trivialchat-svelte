@@ -139,6 +139,8 @@ body {
 .chat_field-messageto .msg-text {
   font-family: "Jura", sans-serif;
   color: aqua;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .chat_field-messagefrom {
   border-radius: 1rem 1rem 0 1rem/1rem 1rem 0 1rem;
@@ -150,6 +152,8 @@ body {
   font-family: "Jura", sans-serif;
   color: black;
   text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .chat_input {
