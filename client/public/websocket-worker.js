@@ -43,7 +43,7 @@ self.addEventListener('message', event => {
 
   if (incomingMessage.type === 'init') {
 
-    if (!userId) {
+    // if (!userId) {
       userId = incomingMessage.userId;
       ws = new WebSocket(incomingMessage.msg);
       console.log('Открываем новый WebSocket...');
@@ -69,7 +69,7 @@ self.addEventListener('message', event => {
         swListener.postMessage(JSON.stringify({ 'wsState': 'close' }));
         console.log('ws закрыт...');
       }
-    }
+    // }
   }  
 
   if (incomingMessage.type === 'post') {
