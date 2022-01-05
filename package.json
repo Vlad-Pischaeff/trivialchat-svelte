@@ -8,6 +8,7 @@
     "adminboard": "npm run dev --prefix adminboard",
     "adminboard:install": "npm install --prefix adminboard",
     "adminboard:build": "npm run build --prefix adminboard",
+    "client:build": "npm run build --prefix client",
     "server": "node index",
     "dev-server": "nodemon index",
     "dev": "cross-env NODE_ENV=development concurrently --kill-others-on-fail \"npm run dev-server\" \"npm run adminboard\"",
