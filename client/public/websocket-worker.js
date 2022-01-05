@@ -4,11 +4,11 @@ const swListener = new BroadcastChannel('swListener');
 
 self.addEventListener('install', event => {
   console.log('Инициализация [Service Worker]...');
-  event.waitUntil(
-    caches.open(CACHE).then((cache) => cache.addAll([
-          './ping.txt'
-        ])
-  ));
+  // event.waitUntil(
+  //   caches.open(CACHE).then((cache) => cache.addAll([
+  //         './ping.txt'
+  //       ])
+  // ));
 });
 
 self.addEventListener('activate', (event) => {
@@ -44,12 +44,12 @@ self.addEventListener('message', event => {
         swListener.postMessage(event.data);
         console.log('ws получил сообщение...');
       }
-    
+
       ws.onopen = () => {
         swListener.postMessage(JSON.stringify({ 'wsState': 'open' }));
         console.log('ws открыт...');
       }
-    
+
       ws.onerror = () => {
         swListener.postMessage(JSON.stringify({ 'wsState': 'error' }));
         console.log('ws ошибка...');
