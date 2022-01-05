@@ -68,6 +68,7 @@ self.addEventListener('message', event => {
       ws.onclose = () => {
         swListener.postMessage(JSON.stringify({ 'wsState': 'close' }));
         console.log('ws закрыт...');
+        ws = new WebSocket(incomingMessage.msg);
       }
     // }
   }  
