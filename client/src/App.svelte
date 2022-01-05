@@ -79,8 +79,6 @@
       console.log('swState init...');
     }
 
-  // $: console.log('Session...', Session?.userID, Session?.userHOST);
-
   $: if (counter) pingTest();
 
   onMount(async () => {

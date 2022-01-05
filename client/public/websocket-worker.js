@@ -2,13 +2,7 @@ let ws, userId, isActivated = false;
 const CACHE = 'v1';
 const swListener = new BroadcastChannel('swListener');
 
-function swMessage(type, msg) {
-  this.type = type;
-  this.msg = msg;
-}
-
 self.addEventListener('install', event => {
-  // self.skipWaiting();
   console.log('Инициализация [Service Worker]...');
   event.waitUntil(
     caches.open(CACHE).then((cache) => cache.addAll([
@@ -19,21 +13,29 @@ self.addEventListener('install', event => {
 
 self.addEventListener('activate', (event) => {
   console.log('Активирован...', event);
-  isActivated = true;
+  return self.clients.claim();
 });
+
+// self.addEventListener('fetch', (event) => {
+//   console.log('Происходит запрос на сервер...', event);
+//   event.respondWith(fromCache(event.request));
+//   swListener.postMessage(JSON.stringify({ 'wsUser': userId }));
+// });
 
 self.addEventListener('fetch', (event) => {
   console.log('Происходит запрос на сервер...', event);
-  if (isActivated) event.respondWith(fromCache(event.request));
+  event.respondWith(
+    caches.match(event.request)
+  );
   swListener.postMessage(JSON.stringify({ 'wsUser': userId }));
 });
 
-function fromCache(request) {
-  return caches.open(CACHE).then((cache) =>
-    cache.match(request)
-        .then((matching) => matching || Promise.reject('no-match'))
-  );
-}
+// function fromCache(request) {
+//   return caches.open(CACHE).then((cache) =>
+//     cache.match(request)
+//         .then((matching) => matching || Promise.reject('no-match'))
+//   );
+// }
 
 self.addEventListener('message', event => {
   console.log('Пришло сообщение на сервер...', event.type, event.data, event.source);

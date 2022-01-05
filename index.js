@@ -163,7 +163,7 @@ const start = async () => {
           ? ws.send(JSON.stringify({'svc': 'manager is ONLINE...', 'date': Date.now()}))
           : ws.send(JSON.stringify({'svc': 'manager is OFFLINE...', 'date': Date.now()}));
       }
-    }, 20000);
+    }, 10000);
 
   } catch (e) {
     console.log('Server error ...', e);
