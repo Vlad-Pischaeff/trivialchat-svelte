@@ -106,7 +106,7 @@ const start = async () => {
           }
           // ...data.to - message to client from site manager
           if (data.to) {
-            onlineClients[data.to].ws.send(JSON.stringify(data));
+            onlineClients[data.to]?.ws.send(JSON.stringify(data));
           }
 
         } catch(e) {
