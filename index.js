@@ -90,6 +90,7 @@ const start = async () => {
         let email = sites[userHost];
         onlineClients[userName] = { ws, email };
         wsClients.set(ws, userName);
+        console.log('online clients...', userName, onlineClients[userName] ;
       } else {
         onlineOperators[userName] = { ws };
         wsOperators.set(ws, userName);
