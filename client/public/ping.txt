@@ -1,1 +1,35 @@
-dummy file for ServiceWorker
+    if (navigator.serviceWorker.controller) {
+      myWorker = navigator.serviceWorker.controller;
+      isReadyServiceWorker = true;
+    } else {
+      navigator.serviceWorker.register('websocket-worker.js')
+        .then(() => navigator.serviceWorker.ready.then((worker) => {
+          myWorker = worker.active;
+          isReadyServiceWorker = true;
+        }))
+        .catch((err) => console.log(err));
+
+      // navigator.serviceWorker
+      //   .register('websocket-worker.js')
+      //   .then((registration) => {
+      //     if (registration.installing) {
+      //       myWorker = registration.installing;
+      //       console.log('registration...', myWorker);
+      //     } else if (registration.waiting) {
+      //       myWorker = registration.waiting;
+      //       console.log('registration...', myWorker);
+      //     } else if (registration.active) {
+      //       myWorker = registration.active;
+      //       console.log('registration...', myWorker);
+      //     }
+
+      //     if (myWorker) {
+      //       myWorker.addEventListener('statechange', e => {
+      //         if (e.target.state === 'activated') {
+      //           isReadyServiceWorker = true;
+      //           console.log('activated...', isReadyServiceWorker,myWorker );
+      //         }
+      //       });
+      //     }
+      //   });
+    }

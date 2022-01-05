@@ -1,13 +1,13 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
   import { iconAvatar } from './icons';
   import { random_id, isEmpty, WS_URL, URL } from './helper';
   import Header from './Header.svelte';
   import Message from './Message.svelte';
   import Footer from './Footer.svelte';
 
-  let messages = [], inputVal = '', Session, myWorker;
-  let	isReadyServiceWorker = false, isNewSession = false;
+  let messages = [], inputVal = '', Session, myWorker, timerId, counter = 1;
+  let	isNewSession = false;
 
   const swListener = new BroadcastChannel('swListener');
 
@@ -27,7 +27,6 @@
 
     if (message.wsUser) {
       //...restore UserId
-      console.log('webSocket user...', message.wsUser);
       Session.userID = message.wsUser;
     } 
 
@@ -67,13 +66,22 @@
     sessionStorage.setItem('tchat', JSON.stringify(Session));
   }
 
+  const pingTest = async () => {
+    await fetch('./ping.txt');
+  }
+
   $: if (messages.length !== 0) saveMessages();
 
-  $: if (isReadyServiceWorker && isNewSession) {
+  $: if (myWorker && isNewSession) {
       let innerMsg = new innerMessageObj('init', `${WS_URL}?userName=${Session.userID}&userHost=${Session.userHOST}`, `${Session.userID}`);
       myWorker.postMessage(JSON.stringify(innerMsg));
-      console.log('swState init...', innerMsg);
+      isNewSession = false;
+      console.log('swState init...');
     }
+
+  // $: console.log('Session...', Session?.userID, Session?.userHOST);
+
+  $: if (counter) pingTest();
 
   onMount(async () => {
     Session = JSON.parse(sessionStorage.getItem('tchat')) || {};
@@ -124,35 +132,19 @@
      */
     if (navigator.serviceWorker.controller) {
       myWorker = navigator.serviceWorker.controller;
-      isReadyServiceWorker = true;
     } else {
-      navigator.serviceWorker
-        .register('websocket-worker.js')
-        .then((registration) => {
-          if (registration.installing) {
-            myWorker = registration.installing;
-          } else if (registration.waiting) {
-            myWorker = registration.waiting;
-          } else if (registration.active) {
-            myWorker = registration.active;
-          }
-
-          if (myWorker) {
-            myWorker.addEventListener('statechange', e => {
-              if (e.target.state === 'activated') {
-                isReadyServiceWorker = true;
-              }
-            });
-          }
-        });
+      navigator.serviceWorker.register('websocket-worker.js')
+        .then(() => navigator.serviceWorker.ready.then((worker) => {
+          myWorker = worker.active;
+        }))
+        .catch((err) => console.log(err));
     }
-    /**
-     * make queries for the cached empty file so that the sarviceWorker is always active
-     */
-    let timerId = setInterval(() => { fetch('/ping.txt')}, 20000);
-    return () => clearInterval(timerId);
+
+    timerId = setInterval(() => counter++, 10000);
 
   });
+
+  onDestroy(() => clearInterval(timerId));
 
 </script>
 
