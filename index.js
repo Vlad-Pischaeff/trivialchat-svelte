@@ -90,7 +90,7 @@ const start = async () => {
         let email = sites[userHost];
         onlineClients[userName] = { ws, email };
         wsClients.set(ws, userName);
-        console.log('online clients...', userName, onlineClients[userName] ;
+        console.log('online clients...', userName, onlineClients[userName].email) ;
       } else {
         onlineOperators[userName] = { ws };
         wsOperators.set(ws, userName);
@@ -122,13 +122,19 @@ const start = async () => {
       ws.on('close', () => {
         // ...delete operator entry from 'onlineOperators'
         let operatorEmail = wsOperators.get(ws);
-        if (operatorEmail) delete onlineOperators[operatorEmail];
+        if (operatorEmail) {
+          delete onlineOperators[operatorEmail];
+          console.log('close operator ws...', operatorEmail);
+        }
 
         // ...delete client entry from 'onlineClients'
         let clientEmail = wsClients.get(ws);
-        if (clientEmail) delete onlineClients[clientEmail];
+        if (clientEmail) {
+          delete onlineClients[clientEmail];
+          console.log('close client ws...', clientEmail);
+        }
 
-        console.log('<=== server close ws ===>', '\t\nOnline clients...\t', Object.keys(onlineClients), '\t\nOnline operators...\t', Object.keys(onlineOperators));
+        // console.log('<=== close ws ===>', '\t\nOnline clients...\t', Object.keys(onlineClients), '\t\nOnline operators...\t', Object.keys(onlineOperators));
       })
     })
     
