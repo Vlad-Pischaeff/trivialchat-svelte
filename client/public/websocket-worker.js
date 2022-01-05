@@ -1,5 +1,5 @@
 let ws, userId, isActivated = false;
-const CACHE = 'v1';
+const CACHE = 'v2';
 const swListener = new BroadcastChannel('swListener');
 
 self.addEventListener('install', event => {
@@ -16,17 +16,9 @@ self.addEventListener('activate', (event) => {
   return self.clients.claim();
 });
 
-// self.addEventListener('fetch', (event) => {
-//   console.log('Происходит запрос на сервер...', event);
-//   event.respondWith(fromCache(event.request));
-//   swListener.postMessage(JSON.stringify({ 'wsUser': userId }));
-// });
-
 self.addEventListener('fetch', (event) => {
   console.log('Происходит запрос на сервер...', event);
-  event.respondWith(
-    caches.match(event.request)
-  );
+  // event.respondWith(fromCache(event.request));
   swListener.postMessage(JSON.stringify({ 'wsUser': userId }));
 });
 
@@ -43,34 +35,31 @@ self.addEventListener('message', event => {
 
   if (incomingMessage.type === 'init') {
 
-    // if (!userId) {
+    if (!userId) {
       userId = incomingMessage.userId;
       ws = new WebSocket(incomingMessage.msg);
       console.log('Открываем новый WebSocket...');
 
       ws.onmessage = (event) => {
         swListener.postMessage(event.data);
+        console.log('ws получил сообщение...');
       }
     
       ws.onopen = () => {
         swListener.postMessage(JSON.stringify({ 'wsState': 'open' }));
-        ws.send(JSON.stringify({'newClientConnection': 'Session.userID', 
-                                'msg': 'initial connection...', 
-                                'date': Date.now()}));
         console.log('ws открыт...');
       }
     
       ws.onerror = () => {
         swListener.postMessage(JSON.stringify({ 'wsState': 'error' }));
-        console.log('ws response ошибка...');
+        console.log('ws ошибка...');
       }
 
       ws.onclose = () => {
         swListener.postMessage(JSON.stringify({ 'wsState': 'close' }));
         console.log('ws закрыт...');
-        ws = new WebSocket(incomingMessage.msg);
       }
-    // }
+    }
   }  
 
   if (incomingMessage.type === 'post') {
