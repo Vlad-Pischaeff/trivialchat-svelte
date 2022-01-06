@@ -105,10 +105,10 @@ router.get('/usersite/:id', async (req, res) => {
     if (user) {
       res.status(201).json({ avatar: user.avatar, title: user.title, desc: user.desc, greeting: user.greeting })
     } else {
-      res.status(401).json({ message: 'NO SUCH USER' })
+      res.status(401).json({ error: 'NO SUCH USER' })
     }
   } catch(e) {
-    res.status(500).json({ message:`Something wrong ..., details ${e}` })
+    res.status(500).json({ error:`Something wrong ..., details ${e}` })
   }
 })
 

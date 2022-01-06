@@ -6,7 +6,7 @@
   import Message from './Message.svelte';
   import Footer from './Footer.svelte';
 
-  let messages = [], inputVal = '', Session, myWorker, timerId, counter = 1;
+  let messages = [], inputVal = '', Session, myWorker, timerId, counter = 1, initWS = false;
   let	isNewSession = false;
 
   const swListener = new BroadcastChannel('swListener');
@@ -23,6 +23,7 @@
     if (message.wsState) {
       //...webSocket state messages
       console.log('webSocket state...', message.wsState);
+      if (message.wsState === 'init') initWS = true;
     }
 
     if (message.wsUser) {
@@ -72,7 +73,7 @@
 
   $: if (messages.length !== 0) saveMessages();
 
-  $: if (myWorker && isNewSession) {
+  $: if (myWorker && isNewSession && initWS) {
       let innerMsg = new innerMessageObj('init', `${WS_URL}?userName=${Session.userID}&userHost=${Session.userHOST}`, `${Session.userID}`);
       myWorker.postMessage(JSON.stringify(innerMsg));
       isNewSession = false;
@@ -102,7 +103,7 @@
                             .then(response => response.json())
                             .catch(e => e);
 
-      if (!response.message) {
+      if (!response.error) {
         Session.userTitle = response.title
           ? response.title
           : 'FAKE corporation.';
