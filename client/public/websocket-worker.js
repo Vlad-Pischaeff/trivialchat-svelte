@@ -13,9 +13,11 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  console.log('--self Запрос...');
-  swListener.postMessage(JSON.stringify({ 'wsState': 'init', 'wsUser': userId }));
-  // swListener.postMessage(JSON.stringify({ 'wsUser': userId }));
+  console.log('--self Запрос...', ws.readyState);
+  if (ws.readyState === WebSocket.CLOSED) {
+    swListener.postMessage(JSON.stringify({ 'wsState': 'init' }));
+  }
+  swListener.postMessage(JSON.stringify({ 'wsUser': userId }));
 });
 
 self.addEventListener('message', event => {
@@ -46,7 +48,7 @@ function wsConnect(url) {
   
   ws.onopen = () => {
     swListener.postMessage(JSON.stringify({ 'wsState': 'open' }));
-    clearInterval(timerId);
+    clearTimeout(timerId);
     console.log('--ws открыт...');
   }
   
@@ -58,7 +60,7 @@ function wsConnect(url) {
   ws.onclose = () => {
     swListener.postMessage(JSON.stringify({ 'wsState': 'close' }));
     console.log('--ws закрыт...');
-    // repeat 
-    timerId = setInterval(() => wsConnect(url), timeInterval += timeInterval);
+    // try to reconnect
+    timerId = setTimeout(() => wsConnect(url), timeInterval += timeInterval);
   }
 }
