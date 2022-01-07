@@ -11,6 +11,18 @@
   <!-- <link rel='stylesheet' href='/build/bundle.css'> -->
 
   <script defer src='./build/bundle.js'></script>
+
+  <script>
+    let timerId;
+
+    window.onload = () => {
+      timerId = setInterval(() => fetch('./ping.txt'), 10000)
+    };
+
+    window.onunload = () => {
+      clearInterval(timerId);
+    }
+  </script>
 </head>
 
 <body>

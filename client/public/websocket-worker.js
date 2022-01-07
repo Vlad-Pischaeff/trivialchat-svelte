@@ -1,4 +1,4 @@
-let ws, userId, timeInterval = 2500, timerId;
+let ws, userId, timeInterval = 5000, timerId;
 
 const swListener = new BroadcastChannel('swListener');
 
@@ -13,8 +13,8 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  console.log('--self Запрос...', ws.readyState);
-  if (ws.readyState === WebSocket.CLOSED) {
+  console.log('--self Запрос...');
+  if (ws === undefined || ws?.readyState === WebSocket.CLOSED) {
     swListener.postMessage(JSON.stringify({ 'wsState': 'init' }));
   }
   swListener.postMessage(JSON.stringify({ 'wsUser': userId }));
@@ -47,20 +47,20 @@ function wsConnect(url) {
   }
   
   ws.onopen = () => {
-    swListener.postMessage(JSON.stringify({ 'wsState': 'open' }));
+    // swListener.postMessage(JSON.stringify({ 'wsState': 'open' }));
     clearTimeout(timerId);
     console.log('--ws открыт...');
   }
   
   ws.onerror = () => {
-    swListener.postMessage(JSON.stringify({ 'wsState': 'error' }));
+    // swListener.postMessage(JSON.stringify({ 'wsState': 'error' }));
     console.log('--ws ошибка...');
   }
   
   ws.onclose = () => {
-    swListener.postMessage(JSON.stringify({ 'wsState': 'close' }));
+    // swListener.postMessage(JSON.stringify({ 'wsState': 'close' }));
     console.log('--ws закрыт...');
     // try to reconnect
-    timerId = setTimeout(() => wsConnect(url), timeInterval += timeInterval);
+    timerId = setTimeout(() => wsConnect(url), timeInterval);
   }
 }

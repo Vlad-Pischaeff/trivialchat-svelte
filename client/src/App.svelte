@@ -1,13 +1,13 @@
 <script>
-  import { onDestroy, onMount } from 'svelte';
+  import { onMount } from 'svelte';
   import { iconAvatar } from './icons';
   import { random_id, isEmpty, WS_URL, URL } from './helper';
   import Header from './Header.svelte';
   import Message from './Message.svelte';
   import Footer from './Footer.svelte';
 
-  let messages = [], inputVal = '', Session, myWorker, timerId, counter = 1, initWS = false;
-  let	isNewSession = false;
+  let messages = [], inputVal = '', Session, myWorker; 
+  let	isNewSession = false, initWS = false;
 
   const swListener = new BroadcastChannel('swListener');
 
@@ -22,7 +22,6 @@
 
     if (message.wsState) {
       //...webSocket state messages
-      console.log('webSocket state...', message.wsState);
       if (message.wsState === 'init') initWS = true;
     }
 
@@ -67,10 +66,6 @@
     sessionStorage.setItem('tchat', JSON.stringify(Session));
   }
 
-  const pingTest = async () => {
-    await fetch('./ping.txt');
-  }
-
   $: if (messages.length !== 0) saveMessages();
 
   $: if (myWorker && isNewSession && initWS) {
@@ -79,8 +74,6 @@
       isNewSession = false;
       console.log('swState init...');
     }
-
-  $: if (counter) pingTest();
 
   onMount(async () => {
     Session = JSON.parse(sessionStorage.getItem('tchat')) || {};
@@ -92,11 +85,11 @@
     if (isNewSession) {
 
     if (!Session.userID) Session.userID = random_id();
-      Session.online = false;													// ...operator is OFFLINE by default
+      Session.online = false;													// ... operator is OFFLINE by default
 
       let url = (window.location != window.parent.location)
-        ? document.referrer         									// ---- https://tele.scope.cf
-        : document.location.href;   									// ---- https://tchat.scope.cf:5001/client
+        ? document.referrer         									// ... https://tele.scope.cf
+        : document.location.href;   									// ... https://tchat.scope.cf:5001/client
       Session.userHOST = url.split(':')[1].split('/')[2];
 			
       let response = await fetch(`${URL}/api/auth/usersite/${Session.userHOST}`)
@@ -138,12 +131,7 @@
         }))
         .catch((err) => console.log(err));
     }
-
-    timerId = setInterval(() => counter++, 10000);
-
   });
-
-  onDestroy(() => clearInterval(timerId));
 
 </script>
 
