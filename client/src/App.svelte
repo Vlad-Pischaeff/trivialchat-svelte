@@ -22,7 +22,11 @@
 
     if (message.wsState) {
       //...webSocket state messages
-      if (message.wsState === 'init') initWS = true;
+      if (message.wsState === 'init') {
+        // initWS = true;
+        let innerMsg = new innerMessageObj('init', `${WS_URL}?userName=${Session.userID}&userHost=${Session.userHOST}`, `${Session.userID}`);
+        myWorker?.postMessage(JSON.stringify(innerMsg));
+      }
     }
 
     if (message.wsUser) {
@@ -68,12 +72,12 @@
 
   $: if (messages.length !== 0) saveMessages();
 
-  $: if (myWorker && isNewSession && initWS) {
-      let innerMsg = new innerMessageObj('init', `${WS_URL}?userName=${Session.userID}&userHost=${Session.userHOST}`, `${Session.userID}`);
-      myWorker.postMessage(JSON.stringify(innerMsg));
-      isNewSession = false;
-      console.log('swState init...');
-    }
+  // $: if (myWorker && isNewSession && initWS) {
+  //     let innerMsg = new innerMessageObj('init', `${WS_URL}?userName=${Session.userID}&userHost=${Session.userHOST}`, `${Session.userID}`);
+  //     myWorker.postMessage(JSON.stringify(innerMsg));
+  //     isNewSession = false;
+  //     console.log('swState init...');
+  //   }
 
   onMount(async () => {
     Session = JSON.parse(sessionStorage.getItem('tchat')) || {};
