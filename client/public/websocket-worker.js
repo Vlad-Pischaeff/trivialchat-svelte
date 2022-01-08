@@ -20,7 +20,7 @@ self.addEventListener('fetch', (event) => {
   if (ws === undefined || ws?.readyState === WebSocket.CLOSED) {
     swListener.postMessage(JSON.stringify({ 'wsState': 'init' }));
   }
-  swListener.postMessage(JSON.stringify({ 'wsUser': userId }));
+  if (userId) swListener.postMessage(JSON.stringify({ 'wsUser': userId }));
 });
 
 self.addEventListener('message', event => {
