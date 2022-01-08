@@ -7,7 +7,7 @@
   import Footer from './Footer.svelte';
 
   let messages = [], inputVal = '', Session, myWorker; 
-  let	isNewSession = false, initWS = false;
+  let	isNewSession = false;
 
   const swListener = new BroadcastChannel('swListener');
 
@@ -71,13 +71,6 @@
 
   $: if (messages.length !== 0) saveMessages();
 
-  // $: if (myWorker && isNewSession && initWS) {
-  //     let innerMsg = new innerMessageObj('init', `${WS_URL}?userName=${Session.userID}&userHost=${Session.userHOST}`, `${Session.userID}`);
-  //     myWorker.postMessage(JSON.stringify(innerMsg));
-  //     isNewSession = false;
-  //     console.log('swState init...');
-  //   }
-
   onMount(async () => {
     Session = JSON.parse(sessionStorage.getItem('tchat')) || {};
     isNewSession = isEmpty(Session) ? true : false;
@@ -94,7 +87,7 @@
         ? document.referrer         									// ... https://tele.scope.cf
         : document.location.href;   									// ... https://tchat.scope.cf:5001/client
       Session.userHOST = url.split(':')[1].split('/')[2];
-			
+      
       let response = await fetch(`${URL}/api/auth/usersite/${Session.userHOST}`)
                             .then(response => response.json())
                             .catch(e => e);
