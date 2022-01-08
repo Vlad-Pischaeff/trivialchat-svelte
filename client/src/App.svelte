@@ -23,7 +23,6 @@
     if (message.wsState) {
       //...webSocket state messages
       if (message.wsState === 'init') {
-        // initWS = true;
         let innerMsg = new innerMessageObj('init', `${WS_URL}?userName=${Session.userID}&userHost=${Session.userHOST}`, `${Session.userID}`);
         myWorker?.postMessage(JSON.stringify(innerMsg));
       }

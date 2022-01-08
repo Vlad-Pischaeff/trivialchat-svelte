@@ -4,12 +4,15 @@ const swListener = new BroadcastChannel('swListener');
 
 self.addEventListener('install', event => {
   console.log('--self Инициализация...');
+  event.waitUntil(self.skipWaiting());
 });
 
 self.addEventListener('activate', (event) => {
   console.log('--self Активирован...');
+  // swListener.postMessage(JSON.stringify({ 'wsState': 'init' }));
+  // return self.clients.claim();
+  event.waitUntil(clients.claim());
   swListener.postMessage(JSON.stringify({ 'wsState': 'init' }));
-  return self.clients.claim();
 });
 
 self.addEventListener('fetch', (event) => {
@@ -21,7 +24,7 @@ self.addEventListener('fetch', (event) => {
 });
 
 self.addEventListener('message', event => {
-  console.log('--self Сообщение...', 'event.type', event.data, 'event.source');
+  console.log('--self Сообщение...', event.data);
   let incomingMessage = JSON.parse(event.data);
 
   if (incomingMessage.type === 'init') {
@@ -47,18 +50,15 @@ function wsConnect(url) {
   }
   
   ws.onopen = () => {
-    // swListener.postMessage(JSON.stringify({ 'wsState': 'open' }));
     clearTimeout(timerId);
     console.log('--ws открыт...');
   }
   
   ws.onerror = () => {
-    // swListener.postMessage(JSON.stringify({ 'wsState': 'error' }));
     console.log('--ws ошибка...');
   }
   
   ws.onclose = () => {
-    // swListener.postMessage(JSON.stringify({ 'wsState': 'close' }));
     console.log('--ws закрыт...');
     // try to reconnect
     timerId = setTimeout(() => wsConnect(url), timeInterval);

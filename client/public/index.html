@@ -16,8 +16,8 @@
     let timerId;
 
     window.onload = () => {
-      timerId = setInterval(() => fetch('./ping.txt'), 10000)
-    };
+      timerId = setInterval(() => fetch('./ping.txt'), 10000);
+    }
 
     window.onunload = () => {
       clearInterval(timerId);
