@@ -9,8 +9,6 @@ self.addEventListener('install', event => {
 
 self.addEventListener('activate', (event) => {
   console.log('--self Активирован...');
-  // swListener.postMessage(JSON.stringify({ 'wsState': 'init' }));
-  // return self.clients.claim();
   event.waitUntil(clients.claim());
   swListener.postMessage(JSON.stringify({ 'wsState': 'init' }));
 });
