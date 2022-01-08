@@ -8,7 +8,7 @@
   </div>
   <div class={$enabledGreenLight ? "indicator-on" : "indicator-off"}>
   </div>
-  <img class="clients_img" alt="clients" src=" data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABmJLR0QA/wD/AP+gvaeTAAAB20lEQVRIidXWT4hOURjH8c87kUFJGSVTFlJK3mQxNeXPAgsLa7GwtaCsZ7KxUTbKQlZKyWqSkWxY0CAisZDydwyLYSENaSJjxuKcO92uc+97xszGU0/P7T6/83zP/3v5D6wbJ/AaP/Eep7FiISGLMIKZhD/BsoUCHayBFD44l2K7cQVvhekZws6YW4IbDaDHuZBBTCcKTGMgatbiaw3oSw6kvwZShu2I2rM1mk/Vol0J0GG0GjrSwtH4fK1G8y4HtLUBUlhfjKM1+Zs5oO4M0NIYvydyv3AhBzSeAfoQY28idwZjOaD7GaCRGDdX3o/ieEZ70NZ517WjdriSu5MLKexyA+hS1KzDj0T+Fg4Ih7qj9eJjosgYeqLmfENnZoQtvl/zUQHHEo2PxNxezdNb9otYnNoMhU0l3n2L8TlOYaJTb3EI5+qSbbxJ9O6usDaFrRKuod8Jbdn/6tAeYTGbGk3hOraX2u2Lo61rM3uu1gifhJw5L/sQVscafZhMaMaxCzYI35y5Qgp/hfURNoCHuIqTwqaZvdIezANS+O3qGlStJSxk0+7LsUksbxJ0CUOfr73MEW3BM/8+bU+xqROkVYr92IaN0XuE+2pl1EwI/2+f8SKO4h4eRWCj/QGeUvphJi2MTAAAAABJRU5ErkJggg==" />
+  <img class="clients_img" alt="clients" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABmJLR0QA/wD/AP+gvaeTAAAB20lEQVRIidXWT4hOURjH8c87kUFJGSVTFlJK3mQxNeXPAgsLa7GwtaCsZ7KxUTbKQlZKyWqSkWxY0CAisZDydwyLYSENaSJjxuKcO92uc+97xszGU0/P7T6/83zP/3v5D6wbJ/AaP/Eep7FiISGLMIKZhD/BsoUCHayBFD44l2K7cQVvhekZws6YW4IbDaDHuZBBTCcKTGMgatbiaw3oSw6kvwZShu2I2rM1mk/Vol0J0GG0GjrSwtH4fK1G8y4HtLUBUlhfjKM1+Zs5oO4M0NIYvydyv3AhBzSeAfoQY28idwZjOaD7GaCRGDdX3o/ieEZ70NZ517WjdriSu5MLKexyA+hS1KzDj0T+Fg4Ih7qj9eJjosgYeqLmfENnZoQtvl/zUQHHEo2PxNxezdNb9otYnNoMhU0l3n2L8TlOYaJTb3EI5+qSbbxJ9O6usDaFrRKuod8Jbdn/6tAeYTGbGk3hOraX2u2Lo61rM3uu1gifhJw5L/sQVscafZhMaMaxCzYI35y5Qgp/hfURNoCHuIqTwqaZvdIezANS+O3qGlStJSxk0+7LsUksbxJ0CUOfr73MEW3BM/8+bU+xqROkVYr92IaN0XuE+2pl1EwI/2+f8SKO4h4eRWCj/QGeUvphJi2MTAAAAABJRU5ErkJggg==" />
   <div class="clients_desc">
     {$clientsNumber}
   </div>
