@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { iconAvatar } from './icons';
-  import { random_id, isEmpty, WS_URL, URL } from './helper';
+  import { random_id, isEmpty, WS_URL, URL, HOST, swMessageObj, MessageObj } from './helper';
   import Header from './Header.svelte';
   import Message from './Message.svelte';
   import Footer from './Footer.svelte';
@@ -23,7 +23,7 @@
     if (message.wsState) {
       //...webSocket state messages
       if (message.wsState === 'init') {
-        let innerMsg = new innerMessageObj('init', `${WS_URL}?userName=${Session.userID}&userHost=${Session.userHOST}`, `${Session.userID}`);
+        let innerMsg = new swMessageObj('init', `${WS_URL}?userName=${Session.userID}&userHost=${Session.userHOST}`, `${Session.userID}`);
         myWorker?.postMessage(JSON.stringify(innerMsg));
       }
     }
@@ -40,22 +40,10 @@
   };
 
   const sendMessage = (val) => {
-    let message = new MessageObj(val)
+    let message = new MessageObj(val, Session.userID);
     messages = [ ...messages, message];
-    let swMessage = new innerMessageObj('post', message);
+    let swMessage = new swMessageObj('post', message);
     myWorker.postMessage(JSON.stringify(swMessage));
-  }
-
-  function MessageObj(msg) {
-    this.from = Session.userID;
-    this.msg = msg;
-    this.date = Date.now();
-  }
-
-  function innerMessageObj(type, msg, userId) {
-    this.type = type;
-    this.msg = msg;
-    this.userId = userId;
   }
 
   const saveMessages = () => {
@@ -82,11 +70,7 @@
 
     if (!Session.userID) Session.userID = random_id();
       Session.online = false;													// ... operator is OFFLINE by default
-
-      let url = (window.location != window.parent.location)
-        ? document.referrer         									// ... https://tele.scope.cf
-        : document.location.href;   									// ... https://tchat.scope.cf:5001/client
-      Session.userHOST = url.split(':')[1].split('/')[2];
+      Session.userHOST = HOST;
       
       let response = await fetch(`${URL}/api/auth/usersite/${Session.userHOST}`)
                             .then(response => response.json())

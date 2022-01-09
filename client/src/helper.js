@@ -24,3 +24,20 @@ if (isProd) {
   URL = `http://${API_HOST_DEV}:${API_PORT_DEV}`;
   WS_URL = `ws://${API_HOST_DEV}:${API_PORT_DEV}/ws`;
 }
+
+let url = (window.location != window.parent.location)
+  ? document.referrer         									// ... https://tele.scope.cf
+  : document.location.href;   									// ... https://tchat.scope.cf:5001/client
+export let HOST = url.split(':')[1].split('/')[2];
+
+export function MessageObj(msg, from) {
+  this.from = from;
+  this.msg = msg;
+  this.date = Date.now();
+}
+
+export function swMessageObj(type, msg, userId) {
+  this.type = type;
+  this.msg = msg;
+  this.userId = userId;
+}
