@@ -68,10 +68,8 @@
      */
     if (isNewSession) {
 
-    if (!Session.userID) Session.userID = random_id();
-      Session.online = false;													// ... operator is OFFLINE by default
-      Session.userHOST = HOST;
-      
+      if (!Session.userID) Session.userID = random_id();
+
       let response = await fetch(`${URL}/api/auth/usersite/${Session.userHOST}`)
                             .then(response => response.json())
                             .catch(e => e);
@@ -93,6 +91,8 @@
 
       Session.userMSGS = [{ to: 'me', msg: Session.userGreeting, date: Date.now() }];
       messages = Session.userMSGS;
+      Session.online = false;             // ... operator is OFFLINE by default
+      Session.userHOST = HOST;
 
       saveSession();
 
