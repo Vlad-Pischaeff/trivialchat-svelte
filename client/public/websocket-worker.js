@@ -14,7 +14,8 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  console.log('--self Запрос...');
+  console.log('--self Запрос...', event.request.url);
+  // let isPing = /ping/i.test(event.request.url);
   if (ws === undefined || ws?.readyState === WebSocket.CLOSED) {
     swListener.postMessage(JSON.stringify({ 'wsState': 'init' }));
   }
