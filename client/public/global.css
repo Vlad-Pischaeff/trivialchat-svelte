@@ -43,12 +43,12 @@ body {
   align-items: center;
   justify-content: center;
   width: 100%;
-  font-size: .7rem;
+  font-size: .6rem;
   padding: .2rem 0;
-  background: aqua;
+  background: #14262b;
 }
 .cp_logo a {
-  color: black;
+  color: aqua;
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: .2rem;
