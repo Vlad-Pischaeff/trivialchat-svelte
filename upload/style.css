@@ -29,7 +29,7 @@
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
-  background: transparent;
+  background: black;
 }
 .tchat_wrap-close::before, .tchat_wrap-close::after {
   position: absolute;
@@ -53,7 +53,7 @@
 }
 .tchat_wrap-close:hover {
   cursor: pointer;
-  background: #ff5b46aa;
+  background: #ff5c46;
 }
 
 .tchat_icon {
