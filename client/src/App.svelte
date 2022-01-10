@@ -70,29 +70,27 @@
 
       if (!Session.userID) Session.userID = random_id();
 
-      let response = await fetch(`${URL}/api/auth/usersite/${Session.userHOST}`)
+      let response = await fetch(`${URL}/api/auth/usersite/${HOST}`)
                             .then(response => response.json())
                             .catch(e => e);
 
-      if (!response.error) {
-        Session.userTitle = response.title
-          ? response.title
-          : 'FAKE corporation.';
-        Session.userDesc = response.desc
-          ? response.desc
-          : 'I\'am Your online Manager';
-        Session.userAvatar = response.avatar
-          ? response.avatar
-          :	iconAvatar;
-        Session.userGreeting = response.greeting
-          ? response.greeting
-          : "Hello. What can I help You ?...";
-      }
+      Session.userTitle = response.title
+        ? response.title
+        : 'FAKE corporation.';
+      Session.userDesc = response.desc
+        ? response.desc
+        : 'I\'am Your online Manager';
+      Session.userAvatar = response.avatar
+        ? response.avatar
+        :	iconAvatar;
+      Session.userGreeting = response.greeting
+        ? response.greeting
+        : "Hello. What can I help You ?...";
 
-      Session.userMSGS = [{ to: 'me', msg: Session.userGreeting, date: Date.now() }];
-      messages = Session.userMSGS;
       Session.online = false;             // ... operator is OFFLINE by default
       Session.userHOST = HOST;
+      Session.userMSGS = [{ to: 'me', msg: Session.userGreeting, date: Date.now() }];
+      messages = Session.userMSGS;
 
       saveSession();
 
