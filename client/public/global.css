@@ -91,7 +91,7 @@ body {
   -webkit-box-flex: 1;
       -ms-flex: 1 1 auto;
           flex: 1 1 auto;
-  margin: 0.5rem 2rem 0.5rem 0.5rem;
+  margin: 0.5rem;
   width: 50%;
 }
 .cp_header-card-1 {
@@ -162,6 +162,7 @@ body {
 }
 .chat_field-messageto .msg-text {
   font-family: "Jura", sans-serif;
+  line-height: 1.2rem;
   color: aqua;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -174,6 +175,7 @@ body {
 }
 .chat_field-messagefrom .msg-text {
   font-family: "Jura", sans-serif;
+  line-height: 1.2rem;
   color: black;
   text-align: right;
   overflow: hidden;
@@ -283,6 +285,29 @@ body {
   font-size: .9rem;
   color: #333;
   padding: .2rem;
+}
+
+/**
+ * icons style
+ */
+.b-icon, .w-icon {
+  height: 2rem;
+}
+.b-icon:hover,
+.w-icon:hover,
+.p_icon:hover {
+  cursor: pointer;
+  filter: drop-shadow(0px 0px .5rem aqua);
+}
+.w-icon, .p_icon {
+  filter: grayscale(100%);
+}
+.b-icon {
+  filter: grayscale(100%) invert(100%);
+}
+.p_icon {
+  width: 2.5rem;
+  margin: .5rem;
 }
 
 /**/
