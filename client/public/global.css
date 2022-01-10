@@ -51,6 +51,7 @@ body {
   color: black;
   text-decoration: none;
   text-transform: uppercase;
+  letter-spacing: .2rem;
 }
 .cp_header, .cp_footer {
   display: -webkit-box;
