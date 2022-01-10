@@ -2,6 +2,9 @@
   export let Session;
 </script>
 
+<section class="cp_logo">
+  <a href="https://tchat.scope.cf">trivial chat &copy;</a>
+</section>
 <section class="cp_header">
   <picture class="cp_header-avatar">
     <img class="cp_header-avatarimg" src={Session?.userAvatar} alt="avatar">
