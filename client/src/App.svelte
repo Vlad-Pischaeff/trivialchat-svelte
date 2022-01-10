@@ -118,7 +118,7 @@
   <section class="cp_body">
     <div class="chat_field">
       {#if messages.length !== 0}
-        {#each messages as message }
+        {#each messages as message (message.date)}
           <Message message={message} />
         {/each}
       {/if}
