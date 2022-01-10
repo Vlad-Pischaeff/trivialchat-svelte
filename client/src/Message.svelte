@@ -1,8 +1,11 @@
 <script>
-  export let message;
+  export let message, chatRef;
   let msgRef;
 
-  $: if (msgRef) msgRef.scrollIntoView({ behavior: 'smooth' });
+  $: if (msgRef) {
+      // msgRef.scrollIntoView({ behavior: 'smooth' });
+      chatRef.scrollTo({ top: msgRef.offsetTop, behavior: 'smooth'});
+    }
 </script>
 
 <div  class="chat_field-message" 

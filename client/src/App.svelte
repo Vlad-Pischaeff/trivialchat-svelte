@@ -6,7 +6,7 @@
   import Message from './Message.svelte';
   import Footer from './Footer.svelte';
 
-  let messages = [], inputVal = '', Session, myWorker; 
+  let messages = [], inputVal = '', Session, myWorker, chatRef; 
   let	isNewSession = false;
 
   const swListener = new BroadcastChannel('swListener');
@@ -116,10 +116,10 @@
 <main class="cp" id="App">
   <Header Session={Session} />
   <section class="cp_body">
-    <div class="chat_field">
+    <div class="chat_field" bind:this={chatRef}>
       {#if messages.length !== 0}
         {#each messages as message (message.date)}
-          <Message message={message} />
+          <Message message={message} chatRef={chatRef} />
         {/each}
       {/if}
     </div>

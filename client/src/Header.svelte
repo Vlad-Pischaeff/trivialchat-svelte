@@ -15,7 +15,7 @@
     <div class="cp_header-card-1">{Session?.userTitle}</div>
     <div class="cp_header-card-2">{Session?.userDesc}</div>
   </div>
-  <img class="w-icon" src={iconMail} alt="mail" title="temporarily unavailable">
+  <img class="w-icon" src={iconMail} alt="mail" title="temporarily unavailable" />
 </section>
 
 <style>

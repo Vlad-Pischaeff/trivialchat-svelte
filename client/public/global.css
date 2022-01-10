@@ -124,10 +124,10 @@ body {
   overflow: auto;
   min-width: 12rem;
 }
-
 .chat_field {
   padding: 1rem;
-  overflow: auto;
+  height: 100%;   /* to enable scrollTo */
+  overflow: auto; /* to enable scrollTo */
 }
 .chat_field-message {
   display: -webkit-box;

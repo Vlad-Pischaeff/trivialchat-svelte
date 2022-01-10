@@ -23,6 +23,6 @@
             placeholder="type your question ..."
             on:keypress={onKeyPress}>
     <img 	class="chat_input-icon" src={iconOK} alt="OK" 
-          on:click={onClick}>
+          on:click={onClick} />
   </div>
 </footer>
