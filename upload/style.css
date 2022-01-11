@@ -207,8 +207,8 @@
     opacity: 1;
   }
   100% {
-    -webkit-transform: perspective(45rem) rotate3d(0, 1, 0, 90deg);
-            transform: perspective(45rem) rotate3d(0, 1, 0, 90deg);
+    -webkit-transform: perspective(115rem) rotate3d(0, 1, 0, 90deg);
+            transform: perspective(115rem) rotate3d(0, 1, 0, 90deg);
     opacity: 0;
   }
 }
@@ -224,8 +224,8 @@
     opacity: 1;
   }
   100% {
-    -webkit-transform: perspective(45rem) rotate3d(0, 1, 0, 90deg);
-            transform: perspective(45rem) rotate3d(0, 1, 0, 90deg);
+    -webkit-transform: perspective(115rem) rotate3d(0, 1, 0, 90deg);
+            transform: perspective(115rem) rotate3d(0, 1, 0, 90deg);
     opacity: 0;
   }
 }
