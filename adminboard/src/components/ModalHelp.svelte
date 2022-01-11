@@ -17,8 +17,8 @@
       </section>
 
       <div class="card_form-fieldset">  
-        <p>To use an online helper, you need to set a call button on your site, 
-            placing the <a href="{url}/upload/code.txt" target="_blank" rel="noopener noreferrer">HTML code</a> anywhere (for example in the FOOTER)... </p>
+        <p> To use an online helper, you need to set a call button on your site, 
+            placing the <a href="{url}/upload/code.txt" target="_blank" rel="noopener noreferrer">HTML code</a> preferably before closing tag &lt;/body&gt;... </p>
         <p>Then plug in the <a href="{url}/upload/style.css" target="_blank" rel="noopener noreferrer">CSS styles</a>...</p>
         <p>Finally plug in a little <a href="{url}/upload/tchat.js" target="_blank" rel="noopener noreferrer">Javascript code</a>...</p>
         <p>Ensure that Your site address in Your profile is correct...</p>
