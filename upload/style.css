@@ -13,7 +13,7 @@
   width: 17rem;
   height: 27rem;
   opacity: 0;
-  bottom: 0;
+  bottom: 2rem;
   right: 0;
 }
 .tchat_wrap iframe {

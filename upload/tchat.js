@@ -7,7 +7,7 @@ button.addEventListener('click', () => {
   tchat.classList.remove('flipOutY');
   tchat.classList.remove('none');
   button_close.style.display = 'inherit';
-  button.style.display = 'none';
+  button.classList.add('none');
   button_close.blur();
   if (document.activeElement instanceof HTMLElement);
     document.activeElement.blur();
@@ -24,7 +24,7 @@ tchat.onanimationend = () => {
   if (tchat.classList.contains('flipOutY')) {
     tchat.classList.add('none');
     button_close.style.display = 'none';
-    button.style.display = 'inherit';
+    button.classList.remove('none');
     button.blur();
   }
 };
