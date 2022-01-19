@@ -24,8 +24,8 @@
 }
 .tchat_wrap-close {
   position: absolute;
-  right: 1rem;
-  top: 1rem;
+  right: 0rem;
+  top: 0rem;
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
@@ -58,8 +58,8 @@
 
 .tchat_icon {
   position: absolute;
-  bottom: 0rem;
-  right: 0rem;
+  bottom: 1rem;
+  right: 1rem;
   height: 4rem;
   width: 4rem;
 }
